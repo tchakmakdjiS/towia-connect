@@ -34,7 +34,7 @@ function OperatorMissions() {
         .select("*, missions(*)")
         .eq("operator_id", user!.id)
         .eq("status", "PENDING")
-        .order("created_at", { ascending: false });
+        .order("offered_at", { ascending: false });
       if (error) throw error;
       return data;
     },
