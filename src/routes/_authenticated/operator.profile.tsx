@@ -27,7 +27,7 @@ export const Route = createFileRoute("/_authenticated/operator/profile")({
 function OperatorProfile() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
-  const [radius, setRadius] = useState("25");
+  const [zone, setZone] = useState("");
   const [services, setServices] = useState<MissionCategory[]>([]);
 
   const operator = useQuery({
@@ -46,7 +46,7 @@ function OperatorProfile() {
 
   useEffect(() => {
     if (operator.data) {
-      setRadius(String(operator.data.radius_km ?? 25));
+      setZone(operator.data.intervention_zone ?? "");
       setServices((operator.data.services ?? []) as MissionCategory[]);
     }
   }, [operator.data]);
@@ -55,7 +55,7 @@ function OperatorProfile() {
     if (!user) return;
     const payload = {
       user_id: user.id,
-      radius_km: Number(radius),
+      intervention_zone: zone || null,
       services,
     };
     const { error } = operator.data
@@ -78,9 +78,8 @@ function OperatorProfile() {
       const { error } = await supabase
         .from("operators")
         .update({
-          current_latitude: pos.coords.latitude,
-          current_longitude: pos.coords.longitude,
-          location_updated_at: new Date().toISOString(),
+          last_latitude: pos.coords.latitude,
+          last_longitude: pos.coords.longitude,
         })
         .eq("id", operator.data!.id);
       if (error) {
@@ -119,15 +118,14 @@ function OperatorProfile() {
           </div>
         </Section>
 
-        <Section title="Rayon d'intervention">
+        <Section title="Zone d'intervention">
           <div className="space-y-2">
-            <Label htmlFor="radius">Rayon (km)</Label>
+            <Label htmlFor="zone">Zone couverte</Label>
             <Input
-              id="radius"
-              type="number"
-              min={1}
-              value={radius}
-              onChange={(e) => setRadius(e.target.value)}
+              id="zone"
+              value={zone}
+              onChange={(e) => setZone(e.target.value)}
+              placeholder="Ex : Lyon et périphérie"
               className="rounded-xl"
             />
           </div>
