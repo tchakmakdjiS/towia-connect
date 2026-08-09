@@ -21,6 +21,7 @@ import { Route as AuthenticatedClientProfileRouteImport } from './routes/_authen
 import { Route as AuthenticatedClientSosRouteImport } from './routes/_authenticated/client.sos'
 import { Route as AuthenticatedOperatorDashboardRouteImport } from './routes/_authenticated/operator.dashboard'
 import { Route as AuthenticatedOperatorMissionsRouteImport } from './routes/_authenticated/operator.missions'
+import { Route as AuthenticatedOperatorProfileRouteImport } from './routes/_authenticated/operator.profile'
 import { Route as AuthenticatedClientMissionIdRouteImport } from './routes/_authenticated/client.mission.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -87,6 +88,12 @@ const AuthenticatedOperatorMissionsRoute =
     path: '/operator/missions',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedOperatorProfileRoute =
+  AuthenticatedOperatorProfileRouteImport.update({
+    id: '/operator/profile',
+    path: '/operator/profile',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedClientMissionIdRoute =
   AuthenticatedClientMissionIdRouteImport.update({
     id: '/client/mission/$id',
@@ -106,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/client/sos': typeof AuthenticatedClientSosRoute
   '/operator/dashboard': typeof AuthenticatedOperatorDashboardRoute
   '/operator/missions': typeof AuthenticatedOperatorMissionsRoute
+  '/operator/profile': typeof AuthenticatedOperatorProfileRoute
   '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
 }
 export interface FileRoutesByTo {
@@ -120,6 +128,7 @@ export interface FileRoutesByTo {
   '/client/sos': typeof AuthenticatedClientSosRoute
   '/operator/dashboard': typeof AuthenticatedOperatorDashboardRoute
   '/operator/missions': typeof AuthenticatedOperatorMissionsRoute
+  '/operator/profile': typeof AuthenticatedOperatorProfileRoute
   '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
 }
 export interface FileRoutesById {
@@ -136,6 +145,7 @@ export interface FileRoutesById {
   '/_authenticated/client/sos': typeof AuthenticatedClientSosRoute
   '/_authenticated/operator/dashboard': typeof AuthenticatedOperatorDashboardRoute
   '/_authenticated/operator/missions': typeof AuthenticatedOperatorMissionsRoute
+  '/_authenticated/operator/profile': typeof AuthenticatedOperatorProfileRoute
   '/_authenticated/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
 }
 export interface FileRouteTypes {
@@ -152,6 +162,7 @@ export interface FileRouteTypes {
     | '/client/sos'
     | '/operator/dashboard'
     | '/operator/missions'
+    | '/operator/profile'
     | '/client/mission/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/client/sos'
     | '/operator/dashboard'
     | '/operator/missions'
+    | '/operator/profile'
     | '/client/mission/$id'
   id:
     | '__root__'
@@ -181,6 +193,7 @@ export interface FileRouteTypes {
     | '/_authenticated/client/sos'
     | '/_authenticated/operator/dashboard'
     | '/_authenticated/operator/missions'
+    | '/_authenticated/operator/profile'
     | '/_authenticated/client/mission/$id'
   fileRoutesById: FileRoutesById
 }
@@ -279,6 +292,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOperatorMissionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/operator/profile': {
+      id: '/_authenticated/operator/profile'
+      path: '/operator/profile'
+      fullPath: '/operator/profile'
+      preLoaderRoute: typeof AuthenticatedOperatorProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/client/mission/$id': {
       id: '/_authenticated/client/mission/$id'
       path: '/client/mission/$id'
@@ -296,6 +316,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedClientSosRoute: typeof AuthenticatedClientSosRoute
   AuthenticatedOperatorDashboardRoute: typeof AuthenticatedOperatorDashboardRoute
   AuthenticatedOperatorMissionsRoute: typeof AuthenticatedOperatorMissionsRoute
+  AuthenticatedOperatorProfileRoute: typeof AuthenticatedOperatorProfileRoute
   AuthenticatedClientMissionIdRoute: typeof AuthenticatedClientMissionIdRoute
 }
 
@@ -306,6 +327,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedClientSosRoute: AuthenticatedClientSosRoute,
   AuthenticatedOperatorDashboardRoute: AuthenticatedOperatorDashboardRoute,
   AuthenticatedOperatorMissionsRoute: AuthenticatedOperatorMissionsRoute,
+  AuthenticatedOperatorProfileRoute: AuthenticatedOperatorProfileRoute,
   AuthenticatedClientMissionIdRoute: AuthenticatedClientMissionIdRoute,
 }
 
