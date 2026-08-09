@@ -128,7 +128,7 @@ function SosPage() {
   };
 
   return (
-    <AppShell title="SOS assistance" subtitle="Étape " + nav={CLIENT_NAV}>
+    <AppShell title="SOS assistance" subtitle={`Étape ${step} sur 2`} nav={CLIENT_NAV}>
       <div className="mx-auto max-w-2xl space-y-6">
         <Section
           title="Étape 1 — Votre position"
