@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Users, Truck, Activity, Wallet } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/lib/auth";
+import { useCompany } from "@/lib/company";
 import { AppShell } from "@/components/AppShell";
 import { COMPANY_NAV } from "@/lib/nav";
 import { Section, StatCard, EmptyState, StatusBadge } from "@/components/ui-kit";
@@ -25,23 +25,6 @@ export const Route = createFileRoute("/_authenticated/company/dashboard")({
   }),
   component: CompanyDashboard,
 });
-
-export function useCompany() {
-  const { user } = useAuth();
-  return useQuery({
-    queryKey: ["company", user?.id],
-    enabled: !!user,
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("companies")
-        .select("*")
-        .eq("owner_id", user!.id)
-        .maybeSingle();
-      if (error) throw error;
-      return data;
-    },
-  });
-}
 
 function CompanyDashboard() {
   const company = useCompany();
