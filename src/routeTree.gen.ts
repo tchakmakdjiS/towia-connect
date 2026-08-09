@@ -20,6 +20,7 @@ import { Route as AuthenticatedClientMissionsRouteImport } from './routes/_authe
 import { Route as AuthenticatedClientProfileRouteImport } from './routes/_authenticated/client.profile'
 import { Route as AuthenticatedClientSosRouteImport } from './routes/_authenticated/client.sos'
 import { Route as AuthenticatedCompanyDashboardRouteImport } from './routes/_authenticated/company.dashboard'
+import { Route as AuthenticatedCompanyDocumentsRouteImport } from './routes/_authenticated/company.documents'
 import { Route as AuthenticatedCompanyEquipmentRouteImport } from './routes/_authenticated/company.equipment'
 import { Route as AuthenticatedCompanyMissionsRouteImport } from './routes/_authenticated/company.missions'
 import { Route as AuthenticatedCompanyOperatorsRouteImport } from './routes/_authenticated/company.operators'
@@ -87,6 +88,12 @@ const AuthenticatedCompanyDashboardRoute =
     path: '/company/dashboard',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedCompanyDocumentsRoute =
+  AuthenticatedCompanyDocumentsRouteImport.update({
+    id: '/company/documents',
+    path: '/company/documents',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedCompanyEquipmentRoute =
   AuthenticatedCompanyEquipmentRouteImport.update({
     id: '/company/equipment',
@@ -147,6 +154,7 @@ export interface FileRoutesByFullPath {
   '/client/profile': typeof AuthenticatedClientProfileRoute
   '/client/sos': typeof AuthenticatedClientSosRoute
   '/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
+  '/company/documents': typeof AuthenticatedCompanyDocumentsRoute
   '/company/equipment': typeof AuthenticatedCompanyEquipmentRoute
   '/company/missions': typeof AuthenticatedCompanyMissionsRoute
   '/company/operators': typeof AuthenticatedCompanyOperatorsRoute
@@ -167,6 +175,7 @@ export interface FileRoutesByTo {
   '/client/profile': typeof AuthenticatedClientProfileRoute
   '/client/sos': typeof AuthenticatedClientSosRoute
   '/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
+  '/company/documents': typeof AuthenticatedCompanyDocumentsRoute
   '/company/equipment': typeof AuthenticatedCompanyEquipmentRoute
   '/company/missions': typeof AuthenticatedCompanyMissionsRoute
   '/company/operators': typeof AuthenticatedCompanyOperatorsRoute
@@ -189,6 +198,7 @@ export interface FileRoutesById {
   '/_authenticated/client/profile': typeof AuthenticatedClientProfileRoute
   '/_authenticated/client/sos': typeof AuthenticatedClientSosRoute
   '/_authenticated/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
+  '/_authenticated/company/documents': typeof AuthenticatedCompanyDocumentsRoute
   '/_authenticated/company/equipment': typeof AuthenticatedCompanyEquipmentRoute
   '/_authenticated/company/missions': typeof AuthenticatedCompanyMissionsRoute
   '/_authenticated/company/operators': typeof AuthenticatedCompanyOperatorsRoute
@@ -211,6 +221,7 @@ export interface FileRouteTypes {
     | '/client/profile'
     | '/client/sos'
     | '/company/dashboard'
+    | '/company/documents'
     | '/company/equipment'
     | '/company/missions'
     | '/company/operators'
@@ -231,6 +242,7 @@ export interface FileRouteTypes {
     | '/client/profile'
     | '/client/sos'
     | '/company/dashboard'
+    | '/company/documents'
     | '/company/equipment'
     | '/company/missions'
     | '/company/operators'
@@ -252,6 +264,7 @@ export interface FileRouteTypes {
     | '/_authenticated/client/profile'
     | '/_authenticated/client/sos'
     | '/_authenticated/company/dashboard'
+    | '/_authenticated/company/documents'
     | '/_authenticated/company/equipment'
     | '/_authenticated/company/missions'
     | '/_authenticated/company/operators'
@@ -350,6 +363,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCompanyDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/company/documents': {
+      id: '/_authenticated/company/documents'
+      path: '/company/documents'
+      fullPath: '/company/documents'
+      preLoaderRoute: typeof AuthenticatedCompanyDocumentsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/company/equipment': {
       id: '/_authenticated/company/equipment'
       path: '/company/equipment'
@@ -415,6 +435,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedClientProfileRoute: typeof AuthenticatedClientProfileRoute
   AuthenticatedClientSosRoute: typeof AuthenticatedClientSosRoute
   AuthenticatedCompanyDashboardRoute: typeof AuthenticatedCompanyDashboardRoute
+  AuthenticatedCompanyDocumentsRoute: typeof AuthenticatedCompanyDocumentsRoute
   AuthenticatedCompanyEquipmentRoute: typeof AuthenticatedCompanyEquipmentRoute
   AuthenticatedCompanyMissionsRoute: typeof AuthenticatedCompanyMissionsRoute
   AuthenticatedCompanyOperatorsRoute: typeof AuthenticatedCompanyOperatorsRoute
@@ -431,6 +452,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedClientProfileRoute: AuthenticatedClientProfileRoute,
   AuthenticatedClientSosRoute: AuthenticatedClientSosRoute,
   AuthenticatedCompanyDashboardRoute: AuthenticatedCompanyDashboardRoute,
+  AuthenticatedCompanyDocumentsRoute: AuthenticatedCompanyDocumentsRoute,
   AuthenticatedCompanyEquipmentRoute: AuthenticatedCompanyEquipmentRoute,
   AuthenticatedCompanyMissionsRoute: AuthenticatedCompanyMissionsRoute,
   AuthenticatedCompanyOperatorsRoute: AuthenticatedCompanyOperatorsRoute,
