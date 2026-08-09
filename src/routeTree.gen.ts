@@ -16,6 +16,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedClientDashboardRouteImport } from './routes/_authenticated/client.dashboard'
+import { Route as AuthenticatedClientMissionsRouteImport } from './routes/_authenticated/client.missions'
 import { Route as AuthenticatedClientSosRouteImport } from './routes/_authenticated/client.sos'
 
 const IndexRoute = IndexRouteImport.update({
@@ -53,6 +54,12 @@ const AuthenticatedClientDashboardRoute =
     path: '/client/dashboard',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedClientMissionsRoute =
+  AuthenticatedClientMissionsRouteImport.update({
+    id: '/client/missions',
+    path: '/client/missions',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedClientSosRoute = AuthenticatedClientSosRouteImport.update({
   id: '/client/sos',
   path: '/client/sos',
@@ -66,6 +73,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/client/dashboard': typeof AuthenticatedClientDashboardRoute
+  '/client/missions': typeof AuthenticatedClientMissionsRoute
   '/client/sos': typeof AuthenticatedClientSosRoute
 }
 export interface FileRoutesByTo {
@@ -75,6 +83,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/client/dashboard': typeof AuthenticatedClientDashboardRoute
+  '/client/missions': typeof AuthenticatedClientMissionsRoute
   '/client/sos': typeof AuthenticatedClientSosRoute
 }
 export interface FileRoutesById {
@@ -86,6 +95,7 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/client/dashboard': typeof AuthenticatedClientDashboardRoute
+  '/_authenticated/client/missions': typeof AuthenticatedClientMissionsRoute
   '/_authenticated/client/sos': typeof AuthenticatedClientSosRoute
 }
 export interface FileRouteTypes {
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/client/dashboard'
+    | '/client/missions'
     | '/client/sos'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/client/dashboard'
+    | '/client/missions'
     | '/client/sos'
   id:
     | '__root__'
@@ -116,6 +128,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/_authenticated/client/dashboard'
+    | '/_authenticated/client/missions'
     | '/_authenticated/client/sos'
   fileRoutesById: FileRoutesById
 }
@@ -179,6 +192,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedClientDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/client/missions': {
+      id: '/_authenticated/client/missions'
+      path: '/client/missions'
+      fullPath: '/client/missions'
+      preLoaderRoute: typeof AuthenticatedClientMissionsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/client/sos': {
       id: '/_authenticated/client/sos'
       path: '/client/sos'
@@ -191,11 +211,13 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedClientDashboardRoute: typeof AuthenticatedClientDashboardRoute
+  AuthenticatedClientMissionsRoute: typeof AuthenticatedClientMissionsRoute
   AuthenticatedClientSosRoute: typeof AuthenticatedClientSosRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedClientDashboardRoute: AuthenticatedClientDashboardRoute,
+  AuthenticatedClientMissionsRoute: AuthenticatedClientMissionsRoute,
   AuthenticatedClientSosRoute: AuthenticatedClientSosRoute,
 }
 
