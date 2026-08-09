@@ -15,6 +15,7 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedClientDashboardRouteImport } from './routes/_authenticated/client.dashboard'
 import { Route as AuthenticatedClientMissionsRouteImport } from './routes/_authenticated/client.missions'
 import { Route as AuthenticatedClientProfileRouteImport } from './routes/_authenticated/client.profile'
@@ -60,6 +61,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedClientDashboardRoute =
   AuthenticatedClientDashboardRouteImport.update({
@@ -178,6 +184,7 @@ export interface FileRoutesByFullPath {
   '/operator/dashboard': typeof AuthenticatedOperatorDashboardRoute
   '/operator/missions': typeof AuthenticatedOperatorMissionsRoute
   '/operator/profile': typeof AuthenticatedOperatorProfileRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
   '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
 }
 export interface FileRoutesByTo {
@@ -201,6 +208,7 @@ export interface FileRoutesByTo {
   '/operator/dashboard': typeof AuthenticatedOperatorDashboardRoute
   '/operator/missions': typeof AuthenticatedOperatorMissionsRoute
   '/operator/profile': typeof AuthenticatedOperatorProfileRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
   '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
 }
 export interface FileRoutesById {
@@ -226,6 +234,7 @@ export interface FileRoutesById {
   '/_authenticated/operator/dashboard': typeof AuthenticatedOperatorDashboardRoute
   '/_authenticated/operator/missions': typeof AuthenticatedOperatorMissionsRoute
   '/_authenticated/operator/profile': typeof AuthenticatedOperatorProfileRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
 }
 export interface FileRouteTypes {
@@ -251,6 +260,7 @@ export interface FileRouteTypes {
     | '/operator/dashboard'
     | '/operator/missions'
     | '/operator/profile'
+    | '/admin/'
     | '/client/mission/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -274,6 +284,7 @@ export interface FileRouteTypes {
     | '/operator/dashboard'
     | '/operator/missions'
     | '/operator/profile'
+    | '/admin'
     | '/client/mission/$id'
   id:
     | '__root__'
@@ -298,6 +309,7 @@ export interface FileRouteTypes {
     | '/_authenticated/operator/dashboard'
     | '/_authenticated/operator/missions'
     | '/_authenticated/operator/profile'
+    | '/_authenticated/admin/'
     | '/_authenticated/client/mission/$id'
   fileRoutesById: FileRoutesById
 }
@@ -353,6 +365,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/client/dashboard': {
       id: '/_authenticated/client/dashboard'
@@ -485,6 +504,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedOperatorDashboardRoute: typeof AuthenticatedOperatorDashboardRoute
   AuthenticatedOperatorMissionsRoute: typeof AuthenticatedOperatorMissionsRoute
   AuthenticatedOperatorProfileRoute: typeof AuthenticatedOperatorProfileRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
   AuthenticatedClientMissionIdRoute: typeof AuthenticatedClientMissionIdRoute
 }
 
@@ -504,6 +524,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedOperatorDashboardRoute: AuthenticatedOperatorDashboardRoute,
   AuthenticatedOperatorMissionsRoute: AuthenticatedOperatorMissionsRoute,
   AuthenticatedOperatorProfileRoute: AuthenticatedOperatorProfileRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   AuthenticatedClientMissionIdRoute: AuthenticatedClientMissionIdRoute,
 }
 
