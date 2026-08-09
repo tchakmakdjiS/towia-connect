@@ -18,6 +18,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedClientDashboardRouteImport } from './routes/_authenticated/client.dashboard'
 import { Route as AuthenticatedClientMissionsRouteImport } from './routes/_authenticated/client.missions'
 import { Route as AuthenticatedClientSosRouteImport } from './routes/_authenticated/client.sos'
+import { Route as AuthenticatedClientMissionIdRouteImport } from './routes/_authenticated/client.mission.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -65,6 +66,12 @@ const AuthenticatedClientSosRoute = AuthenticatedClientSosRouteImport.update({
   path: '/client/sos',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedClientMissionIdRoute =
+  AuthenticatedClientMissionIdRouteImport.update({
+    id: '/client/mission/$id',
+    path: '/client/mission/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -75,6 +82,7 @@ export interface FileRoutesByFullPath {
   '/client/dashboard': typeof AuthenticatedClientDashboardRoute
   '/client/missions': typeof AuthenticatedClientMissionsRoute
   '/client/sos': typeof AuthenticatedClientSosRoute
+  '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -85,6 +93,7 @@ export interface FileRoutesByTo {
   '/client/dashboard': typeof AuthenticatedClientDashboardRoute
   '/client/missions': typeof AuthenticatedClientMissionsRoute
   '/client/sos': typeof AuthenticatedClientSosRoute
+  '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -97,6 +106,7 @@ export interface FileRoutesById {
   '/_authenticated/client/dashboard': typeof AuthenticatedClientDashboardRoute
   '/_authenticated/client/missions': typeof AuthenticatedClientMissionsRoute
   '/_authenticated/client/sos': typeof AuthenticatedClientSosRoute
+  '/_authenticated/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/client/dashboard'
     | '/client/missions'
     | '/client/sos'
+    | '/client/mission/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/client/dashboard'
     | '/client/missions'
     | '/client/sos'
+    | '/client/mission/$id'
   id:
     | '__root__'
     | '/'
@@ -130,6 +142,7 @@ export interface FileRouteTypes {
     | '/_authenticated/client/dashboard'
     | '/_authenticated/client/missions'
     | '/_authenticated/client/sos'
+    | '/_authenticated/client/mission/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -206,6 +219,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedClientSosRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/client/mission/$id': {
+      id: '/_authenticated/client/mission/$id'
+      path: '/client/mission/$id'
+      fullPath: '/client/mission/$id'
+      preLoaderRoute: typeof AuthenticatedClientMissionIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -213,12 +233,14 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedClientDashboardRoute: typeof AuthenticatedClientDashboardRoute
   AuthenticatedClientMissionsRoute: typeof AuthenticatedClientMissionsRoute
   AuthenticatedClientSosRoute: typeof AuthenticatedClientSosRoute
+  AuthenticatedClientMissionIdRoute: typeof AuthenticatedClientMissionIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedClientDashboardRoute: AuthenticatedClientDashboardRoute,
   AuthenticatedClientMissionsRoute: AuthenticatedClientMissionsRoute,
   AuthenticatedClientSosRoute: AuthenticatedClientSosRoute,
+  AuthenticatedClientMissionIdRoute: AuthenticatedClientMissionIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
