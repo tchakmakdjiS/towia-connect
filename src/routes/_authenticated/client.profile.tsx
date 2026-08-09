@@ -72,7 +72,10 @@ function ClientProfile() {
       .from("profiles")
       .update({ first_name: firstName, last_name: lastName, phone })
       .eq("id", user!.id);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Profil mis à jour");
   };
 
@@ -80,7 +83,10 @@ function ClientProfile() {
     const { error } = await supabase
       .from("vehicles")
       .insert({ owner_id: user!.id, brand, model, plate });
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     setBrand("");
     setModel("");
     setPlate("");
@@ -89,7 +95,10 @@ function ClientProfile() {
 
   const removeVehicle = async (id: string) => {
     const { error } = await supabase.from("vehicles").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     void queryClient.invalidateQueries({ queryKey: ["vehicles", user?.id] });
   };
 
