@@ -16,6 +16,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminMissionsRouteImport } from './routes/_authenticated/admin.missions'
 import { Route as AuthenticatedClientDashboardRouteImport } from './routes/_authenticated/client.dashboard'
 import { Route as AuthenticatedClientMissionsRouteImport } from './routes/_authenticated/client.missions'
 import { Route as AuthenticatedClientProfileRouteImport } from './routes/_authenticated/client.profile'
@@ -67,6 +68,12 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminMissionsRoute =
+  AuthenticatedAdminMissionsRouteImport.update({
+    id: '/admin/missions',
+    path: '/admin/missions',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedClientDashboardRoute =
   AuthenticatedClientDashboardRouteImport.update({
     id: '/client/dashboard',
@@ -169,6 +176,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/admin/missions': typeof AuthenticatedAdminMissionsRoute
   '/client/dashboard': typeof AuthenticatedClientDashboardRoute
   '/client/missions': typeof AuthenticatedClientMissionsRoute
   '/client/profile': typeof AuthenticatedClientProfileRoute
@@ -193,6 +201,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/admin/missions': typeof AuthenticatedAdminMissionsRoute
   '/client/dashboard': typeof AuthenticatedClientDashboardRoute
   '/client/missions': typeof AuthenticatedClientMissionsRoute
   '/client/profile': typeof AuthenticatedClientProfileRoute
@@ -219,6 +228,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/admin/missions': typeof AuthenticatedAdminMissionsRoute
   '/_authenticated/client/dashboard': typeof AuthenticatedClientDashboardRoute
   '/_authenticated/client/missions': typeof AuthenticatedClientMissionsRoute
   '/_authenticated/client/profile': typeof AuthenticatedClientProfileRoute
@@ -245,6 +255,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/admin/missions'
     | '/client/dashboard'
     | '/client/missions'
     | '/client/profile'
@@ -269,6 +280,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/admin/missions'
     | '/client/dashboard'
     | '/client/missions'
     | '/client/profile'
@@ -294,6 +306,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/_authenticated/admin/missions'
     | '/_authenticated/client/dashboard'
     | '/_authenticated/client/missions'
     | '/_authenticated/client/profile'
@@ -371,6 +384,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/missions': {
+      id: '/_authenticated/admin/missions'
+      path: '/admin/missions'
+      fullPath: '/admin/missions'
+      preLoaderRoute: typeof AuthenticatedAdminMissionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/client/dashboard': {
@@ -489,6 +509,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminMissionsRoute: typeof AuthenticatedAdminMissionsRoute
   AuthenticatedClientDashboardRoute: typeof AuthenticatedClientDashboardRoute
   AuthenticatedClientMissionsRoute: typeof AuthenticatedClientMissionsRoute
   AuthenticatedClientProfileRoute: typeof AuthenticatedClientProfileRoute
@@ -509,6 +530,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminMissionsRoute: AuthenticatedAdminMissionsRoute,
   AuthenticatedClientDashboardRoute: AuthenticatedClientDashboardRoute,
   AuthenticatedClientMissionsRoute: AuthenticatedClientMissionsRoute,
   AuthenticatedClientProfileRoute: AuthenticatedClientProfileRoute,
