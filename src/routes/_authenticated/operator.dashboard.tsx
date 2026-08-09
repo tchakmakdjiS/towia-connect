@@ -99,10 +99,13 @@ function OperatorDashboard() {
   };
 
   const advance = async (missionId: string, next: MissionStatus) => {
-    const patch: Record<string, unknown> = { status: next };
-    if (next === "EN_ROUTE") patch["departure_time"] = new Date().toISOString();
-    if (next === "ARRIVED") patch["arrival_at"] = new Date().toISOString();
-    if (next === "COMPLETED") patch["completed_at"] = new Date().toISOString();
+    const now = new Date().toISOString();
+    const patch = {
+      status: next,
+      ...(next === "EN_ROUTE" ? { departure_time: now } : {}),
+      ...(next === "ARRIVED" ? { arrival_at: now } : {}),
+      ...(next === "COMPLETED" ? { completed_at: now } : {}),
+    };
     const { error } = await supabase.from("missions").update(patch).eq("id", missionId);
     if (error) {
       toast.error(error.message);
