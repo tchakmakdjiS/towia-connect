@@ -1,5 +1,5 @@
-import { Link, useRouterState } from "@tanstack/react-router";
-import type { ReactNode } from "react";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
+import { useEffect, type ReactNode } from "react";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { LogOut, Menu } from "lucide-react";
@@ -11,8 +11,11 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { TowiaLogo } from "@/components/TowiaLogo";
+import { UserMenu } from "@/components/UserMenu";
+import { requiredRoleForPath, roleHome } from "@/lib/towia";
 
 export type NavItem = { to: string; label: string };
+
 
 export function AppShell({
   title,
