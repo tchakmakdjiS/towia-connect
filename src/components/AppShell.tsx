@@ -30,8 +30,20 @@ export function AppShell({
   children: ReactNode;
   action?: ReactNode;
 }) {
-  const { user, role, signOut } = useAuth();
+  const { user, role, loading, signOut } = useAuth();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+
+  // Protection par rôle : un utilisateur ne peut pas accéder à l'espace d'un autre rôle.
+  const required = requiredRoleForPath(pathname);
+  useEffect(() => {
+    if (loading || !role || !required) return;
+    if (role !== required && role !== "admin") {
+      void navigate({ to: roleHome(role), replace: true });
+    }
+  }, [loading, role, required, navigate]);
+
+
 
   const navLinks = (
     <nav className="flex flex-col gap-1">
