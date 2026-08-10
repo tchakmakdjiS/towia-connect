@@ -33,6 +33,9 @@ function CompanyProfile() {
     email: "",
     phone: "",
     address: "",
+    city: "",
+    postal_code: "",
+    manager_name: "",
     intervention_zone: "",
   });
 
@@ -45,10 +48,26 @@ function CompanyProfile() {
         email: company.data.email ?? "",
         phone: company.data.phone ?? "",
         address: company.data.address ?? "",
+        city: company.data.city ?? "",
+        postal_code: company.data.postal_code ?? "",
+        manager_name: company.data.manager_name ?? "",
         intervention_zone: company.data.intervention_zone ?? "",
       });
     }
   }, [company.data]);
+
+  const operatorsCount = useQuery({
+    queryKey: ["company-operators-count", company.data?.id],
+    enabled: !!company.data?.id,
+    queryFn: async () => {
+      const { count, error } = await supabase
+        .from("operators")
+        .select("id", { count: "exact", head: true })
+        .eq("company_id", company.data!.id);
+      if (error) throw error;
+      return count ?? 0;
+    },
+  });
 
   const save = async () => {
     if (!user) return;
@@ -57,12 +76,13 @@ function CompanyProfile() {
       ? await supabase.from("companies").update(payload).eq("id", company.data.id)
       : await supabase.from("companies").insert(payload);
     if (error) {
-      toast.error(error.message);
+      toast.error("Enregistrement impossible. Veuillez réessayer.");
       return;
     }
     toast.success("Profil entreprise enregistré");
     void company.refetch();
   };
+
 
   const field = (key: keyof typeof form, label: string) => (
     <div className="space-y-2">
