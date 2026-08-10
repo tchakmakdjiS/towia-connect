@@ -30,8 +30,8 @@ export const Route = createFileRoute("/register")({
 });
 
 const ACCOUNT_TYPES: { role: Exclude<AppRole, "admin">; icon: typeof Car; title: string; text: string }[] = [
-  { role: "client", icon: Car, title: "🚗 Automobiliste", text: "Je cherche une assistance" },
-  { role: "operator", icon: Truck, title: "🛻 Dépanneur", text: "Je propose mes services" },
+  { role: "customer", icon: Car, title: "🚗 Automobiliste", text: "Je cherche une assistance" },
+  { role: "tow_operator", icon: Truck, title: "🛻 Dépanneur", text: "Je propose mes services" },
   {
     role: "company",
     icon: Building2,

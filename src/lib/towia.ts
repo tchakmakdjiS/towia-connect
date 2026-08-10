@@ -3,7 +3,7 @@
  * No fictional data, no invented prices, no invented GPS positions.
  */
 
-export type AppRole = "client" | "operator" | "company" | "admin";
+export type AppRole = "customer" | "tow_operator" | "company" | "admin";
 
 export type MissionStatus =
   | "CREATED"
@@ -114,7 +114,7 @@ export const NOTIFICATION_EVENTS = [
 
 export function roleHome(role: AppRole | null): string {
   switch (role) {
-    case "operator":
+    case "tow_operator":
       return "/depanneur/dashboard";
     case "company":
       return "/entreprise/dashboard";

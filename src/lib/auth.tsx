@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const { data } = await supabase.from("user_roles").select("role").eq("user_id", userId);
       if (!active) return;
       const roles = (data ?? []).map((r) => r.role as AppRole);
-      const priority: AppRole[] = ["admin", "company", "operator", "client"];
+      const priority: AppRole[] = ["admin", "company", "tow_operator", "customer"];
       setRole(priority.find((p) => roles.includes(p)) ?? null);
     };
 
