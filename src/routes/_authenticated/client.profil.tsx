@@ -160,6 +160,7 @@ function ClientProfile() {
                 >
                   <span>
                     {v.brand} {v.model} — {v.plate}
+                    {v.vehicle_type ? ` · ${v.vehicle_type}` : ""}
                   </span>
                   <Button
                     size="icon"
@@ -173,19 +174,32 @@ function ClientProfile() {
               ))}
             </ul>
           )}
-          <div className="mt-4 grid gap-3 sm:grid-cols-4">
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
             <Input placeholder="Marque" value={brand} onChange={(e) => setBrand(e.target.value)} className="rounded-xl" />
             <Input placeholder="Modèle" value={model} onChange={(e) => setModel(e.target.value)} className="rounded-xl" />
-            <Input placeholder="Plaque" value={plate} onChange={(e) => setPlate(e.target.value)} className="rounded-xl" />
+            <Input placeholder="Immatriculation" value={plate} onChange={(e) => setPlate(e.target.value)} className="rounded-xl" />
+            <select
+              aria-label="Type de véhicule"
+              value={vehicleType}
+              onChange={(e) => setVehicleType(e.target.value)}
+              className="h-9 rounded-xl border border-input bg-transparent px-3 text-sm"
+            >
+              {VEHICLE_TYPES.map((t) => (
+                <option key={t} value={t} className="bg-card">
+                  {t}
+                </option>
+              ))}
+            </select>
             <Button
-              className="rounded-xl"
+              className="rounded-xl sm:col-span-2"
               variant="secondary"
               disabled={!brand || !model || !plate}
               onClick={() => void addVehicle()}
             >
-              Ajouter
+              Ajouter le véhicule
             </Button>
           </div>
+
         </Section>
 
         <Button variant="secondary" className="rounded-xl" onClick={() => void signOut()}>
