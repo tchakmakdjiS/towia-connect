@@ -1,5 +1,5 @@
 /** Traduction en français des erreurs Supabase Auth. */
-export function authErrorMessage(error: { message?: string; status?: number } | null): string {
+export function authErrorMessage(error: { message?: string } | null | undefined): string {
   const raw = (error?.message ?? "").toLowerCase();
 
   if (!raw) return "Une erreur est survenue. Veuillez réessayer.";
