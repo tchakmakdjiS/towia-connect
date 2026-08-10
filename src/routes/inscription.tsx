@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export const Route = createFileRoute("/register")({
+export const Route = createFileRoute("/inscription")({
   head: () => ({
     meta: [
       { title: "Créer un compte — TowIA" },
@@ -97,7 +97,7 @@ function RegisterPage() {
                 dès validation.
               </p>
               <Button asChild variant="secondary" className="mt-6 rounded-xl">
-                <Link to="/login">Retour à la connexion</Link>
+                <Link to="/connexion">Retour à la connexion</Link>
               </Button>
             </div>
           ) : !role ? (
@@ -125,7 +125,7 @@ function RegisterPage() {
               </div>
               <p className="mt-6 text-center text-sm text-muted-foreground">
                 Déjà inscrit ?{" "}
-                <Link to="/login" className="text-primary">
+                <Link to="/connexion" className="text-primary">
                   Se connecter
                 </Link>
               </p>

@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export const Route = createFileRoute("/login")({
+export const Route = createFileRoute("/connexion")({
   head: () => ({
     meta: [
       { title: "Connexion — TowIA" },
@@ -89,10 +89,10 @@ function LoginPage() {
             </Button>
           </form>
           <div className="mt-5 flex flex-col gap-2 text-center text-sm">
-            <Link to="/forgot-password" className="text-muted-foreground hover:text-foreground">
+            <Link to="/mot-de-passe-oublie" className="text-muted-foreground hover:text-foreground">
               Mot de passe oublié ?
             </Link>
-            <Link to="/register" className="text-primary">
+            <Link to="/inscription" className="text-primary">
               Créer un compte
             </Link>
           </div>

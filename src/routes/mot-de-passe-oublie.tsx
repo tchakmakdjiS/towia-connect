@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export const Route = createFileRoute("/forgot-password")({
+export const Route = createFileRoute("/mot-de-passe-oublie")({
   head: () => ({
     meta: [
       { title: "Mot de passe oublié — TowIA" },
@@ -76,7 +76,7 @@ function ForgotPasswordPage() {
             </form>
           )}
           <p className="mt-5 text-center text-sm">
-            <Link to="/login" className="text-muted-foreground hover:text-foreground">
+            <Link to="/connexion" className="text-muted-foreground hover:text-foreground">
               Retour à la connexion
             </Link>
           </p>
