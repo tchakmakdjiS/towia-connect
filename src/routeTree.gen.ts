@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as ConnexionRouteImport } from './routes/connexion'
 import { Route as InscriptionRouteImport } from './routes/inscription'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as MotDePasseOublieRouteImport } from './routes/mot-de-passe-oublie'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
@@ -60,6 +61,11 @@ const ConnexionRoute = ConnexionRouteImport.update({
 const InscriptionRoute = InscriptionRouteImport.update({
   id: '/inscription',
   path: '/inscription',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MotDePasseOublieRoute = MotDePasseOublieRouteImport.update({
@@ -236,6 +242,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/connexion': typeof ConnexionRoute
   '/inscription': typeof InscriptionRoute
+  '/login': typeof LoginRoute
   '/mot-de-passe-oublie': typeof MotDePasseOublieRoute
   '/reset-password': typeof ResetPasswordRoute
   '/admin/companies': typeof AuthenticatedAdminCompaniesRoute
@@ -270,6 +277,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/connexion': typeof ConnexionRoute
   '/inscription': typeof InscriptionRoute
+  '/login': typeof LoginRoute
   '/mot-de-passe-oublie': typeof MotDePasseOublieRoute
   '/reset-password': typeof ResetPasswordRoute
   '/admin/companies': typeof AuthenticatedAdminCompaniesRoute
@@ -306,6 +314,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/connexion': typeof ConnexionRoute
   '/inscription': typeof InscriptionRoute
+  '/login': typeof LoginRoute
   '/mot-de-passe-oublie': typeof MotDePasseOublieRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/admin/companies': typeof AuthenticatedAdminCompaniesRoute
@@ -342,6 +351,7 @@ export interface FileRouteTypes {
     | '/'
     | '/connexion'
     | '/inscription'
+    | '/login'
     | '/mot-de-passe-oublie'
     | '/reset-password'
     | '/admin/companies'
@@ -376,6 +386,7 @@ export interface FileRouteTypes {
     | '/'
     | '/connexion'
     | '/inscription'
+    | '/login'
     | '/mot-de-passe-oublie'
     | '/reset-password'
     | '/admin/companies'
@@ -411,6 +422,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/connexion'
     | '/inscription'
+    | '/login'
     | '/mot-de-passe-oublie'
     | '/reset-password'
     | '/_authenticated/admin/companies'
@@ -447,6 +459,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   ConnexionRoute: typeof ConnexionRoute
   InscriptionRoute: typeof InscriptionRoute
+  LoginRoute: typeof LoginRoute
   MotDePasseOublieRoute: typeof MotDePasseOublieRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
 }
@@ -479,6 +492,13 @@ declare module '@tanstack/react-router' {
       path: '/inscription'
       fullPath: '/inscription'
       preLoaderRoute: typeof InscriptionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mot-de-passe-oublie': {
@@ -755,6 +775,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   ConnexionRoute: ConnexionRoute,
   InscriptionRoute: InscriptionRoute,
+  LoginRoute: LoginRoute,
   MotDePasseOublieRoute: MotDePasseOublieRoute,
   ResetPasswordRoute: ResetPasswordRoute,
 }
