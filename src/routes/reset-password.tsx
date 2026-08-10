@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
+import { authErrorMessage } from "@/lib/auth-errors";
 import { supabase } from "@/integrations/supabase/client";
 import { TowiaLogo } from "@/components/TowiaLogo";
 import { Button } from "@/components/ui/button";
@@ -31,11 +32,11 @@ function ResetPasswordPage() {
     const { error } = await supabase.auth.updateUser({ password });
     setSubmitting(false);
     if (error) {
-      toast.error(error.message);
+      toast.error(authErrorMessage(error));
       return;
     }
     toast.success("Mot de passe mis à jour");
-    void navigate({ to: "/client/dashboard" });
+    void navigate({ to: "/connexion" });
   };
 
   return (
