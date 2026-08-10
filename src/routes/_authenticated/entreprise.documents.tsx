@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { formatDate } from "@/lib/towia";
 
-export const Route = createFileRoute("/_authenticated/company/documents")({
+export const Route = createFileRoute("/_authenticated/entreprise/documents")({
   head: () => ({
     meta: [
       { title: "Documents — TowIA" },

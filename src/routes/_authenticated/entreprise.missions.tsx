@@ -12,7 +12,7 @@ import {
   type MissionStatus,
 } from "@/lib/towia";
 
-export const Route = createFileRoute("/_authenticated/company/missions")({
+export const Route = createFileRoute("/_authenticated/entreprise/missions")({
   head: () => ({
     meta: [
       { title: "Missions entreprise — TowIA" },

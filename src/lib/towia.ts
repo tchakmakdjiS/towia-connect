@@ -3,7 +3,7 @@
  * No fictional data, no invented prices, no invented GPS positions.
  */
 
-export type AppRole = "client" | "operator" | "company" | "admin";
+export type AppRole = "customer" | "tow_operator" | "company" | "admin";
 
 export type MissionStatus =
   | "CREATED"
@@ -114,10 +114,10 @@ export const NOTIFICATION_EVENTS = [
 
 export function roleHome(role: AppRole | null): string {
   switch (role) {
-    case "operator":
-      return "/operator/dashboard";
+    case "tow_operator":
+      return "/depanneur/dashboard";
     case "company":
-      return "/company/dashboard";
+      return "/entreprise/dashboard";
     case "admin":
       return "/admin";
     default:
@@ -139,4 +139,41 @@ export function formatDate(value?: string | null) {
 export function formatAmount(value?: number | null, currency = "EUR") {
   if (value == null) return "—";
   return new Intl.NumberFormat("fr-FR", { style: "currency", currency }).format(value);
+}
+
+export const ROLE_LABELS: Record<AppRole, string> = {
+  customer: "Automobiliste",
+  tow_operator: "Dépanneur",
+  company: "Entreprise",
+  admin: "Administrateur",
+};
+
+/** Préfixe d'espace privé par rôle. */
+export const ROLE_SECTION: Record<AppRole, string> = {
+  customer: "/client",
+  tow_operator: "/depanneur",
+  company: "/entreprise",
+  admin: "/admin",
+};
+
+export function profilePath(role: AppRole | null): string {
+  switch (role) {
+    case "tow_operator":
+      return "/depanneur/profil";
+    case "company":
+      return "/entreprise/profil";
+    case "admin":
+      return "/admin/settings";
+    default:
+      return "/client/profil";
+  }
+}
+
+/** Rôle requis pour un chemin privé donné, null si le chemin est public. */
+export function requiredRoleForPath(pathname: string): AppRole | null {
+  if (pathname.startsWith("/client")) return "customer";
+  if (pathname.startsWith("/depanneur")) return "tow_operator";
+  if (pathname.startsWith("/entreprise")) return "company";
+  if (pathname.startsWith("/admin")) return "admin";
+  return null;
 }

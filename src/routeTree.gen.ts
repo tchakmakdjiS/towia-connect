@@ -11,8 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as ConnexionRouteImport } from './routes/connexion'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as InscriptionRouteImport } from './routes/inscription'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as MotDePasseOublieRouteImport } from './routes/mot-de-passe-oublie'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
@@ -23,21 +26,24 @@ import { Route as AuthenticatedAdminPaymentsRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminReviewsRouteImport } from './routes/_authenticated/admin.reviews'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
+import { Route as AuthenticatedClientIndexRouteImport } from './routes/_authenticated/client.index'
 import { Route as AuthenticatedClientDashboardRouteImport } from './routes/_authenticated/client.dashboard'
 import { Route as AuthenticatedClientMissionsRouteImport } from './routes/_authenticated/client.missions'
-import { Route as AuthenticatedClientProfileRouteImport } from './routes/_authenticated/client.profile'
+import { Route as AuthenticatedClientProfilRouteImport } from './routes/_authenticated/client.profil'
 import { Route as AuthenticatedClientSosRouteImport } from './routes/_authenticated/client.sos'
-import { Route as AuthenticatedCompanyDashboardRouteImport } from './routes/_authenticated/company.dashboard'
-import { Route as AuthenticatedCompanyDocumentsRouteImport } from './routes/_authenticated/company.documents'
-import { Route as AuthenticatedCompanyEquipmentRouteImport } from './routes/_authenticated/company.equipment'
-import { Route as AuthenticatedCompanyMissionsRouteImport } from './routes/_authenticated/company.missions'
-import { Route as AuthenticatedCompanyOperatorsRouteImport } from './routes/_authenticated/company.operators'
-import { Route as AuthenticatedCompanyProfileRouteImport } from './routes/_authenticated/company.profile'
-import { Route as AuthenticatedCompanyRevenueRouteImport } from './routes/_authenticated/company.revenue'
-import { Route as AuthenticatedCompanyVehiclesRouteImport } from './routes/_authenticated/company.vehicles'
-import { Route as AuthenticatedOperatorDashboardRouteImport } from './routes/_authenticated/operator.dashboard'
-import { Route as AuthenticatedOperatorMissionsRouteImport } from './routes/_authenticated/operator.missions'
-import { Route as AuthenticatedOperatorProfileRouteImport } from './routes/_authenticated/operator.profile'
+import { Route as AuthenticatedDepanneurIndexRouteImport } from './routes/_authenticated/depanneur.index'
+import { Route as AuthenticatedDepanneurDashboardRouteImport } from './routes/_authenticated/depanneur.dashboard'
+import { Route as AuthenticatedDepanneurMissionsRouteImport } from './routes/_authenticated/depanneur.missions'
+import { Route as AuthenticatedDepanneurProfilRouteImport } from './routes/_authenticated/depanneur.profil'
+import { Route as AuthenticatedEntrepriseIndexRouteImport } from './routes/_authenticated/entreprise.index'
+import { Route as AuthenticatedEntrepriseDashboardRouteImport } from './routes/_authenticated/entreprise.dashboard'
+import { Route as AuthenticatedEntrepriseDocumentsRouteImport } from './routes/_authenticated/entreprise.documents'
+import { Route as AuthenticatedEntrepriseEquipmentRouteImport } from './routes/_authenticated/entreprise.equipment'
+import { Route as AuthenticatedEntrepriseMissionsRouteImport } from './routes/_authenticated/entreprise.missions'
+import { Route as AuthenticatedEntrepriseOperatorsRouteImport } from './routes/_authenticated/entreprise.operators'
+import { Route as AuthenticatedEntrepriseProfilRouteImport } from './routes/_authenticated/entreprise.profil'
+import { Route as AuthenticatedEntrepriseRevenueRouteImport } from './routes/_authenticated/entreprise.revenue'
+import { Route as AuthenticatedEntrepriseVehiclesRouteImport } from './routes/_authenticated/entreprise.vehicles'
 import { Route as AuthenticatedClientMissionIdRouteImport } from './routes/_authenticated/client.mission.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -49,14 +55,29 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConnexionRoute = ConnexionRouteImport.update({
+  id: '/connexion',
+  path: '/connexion',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   id: '/forgot-password',
   path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InscriptionRoute = InscriptionRouteImport.update({
+  id: '/inscription',
+  path: '/inscription',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MotDePasseOublieRoute = MotDePasseOublieRouteImport.update({
+  id: '/mot-de-passe-oublie',
+  path: '/mot-de-passe-oublie',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegisterRoute = RegisterRouteImport.update({
@@ -115,6 +136,12 @@ const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   path: '/admin/users',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedClientIndexRoute =
+  AuthenticatedClientIndexRouteImport.update({
+    id: '/client/',
+    path: '/client/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedClientDashboardRoute =
   AuthenticatedClientDashboardRouteImport.update({
     id: '/client/dashboard',
@@ -127,10 +154,10 @@ const AuthenticatedClientMissionsRoute =
     path: '/client/missions',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedClientProfileRoute =
-  AuthenticatedClientProfileRouteImport.update({
-    id: '/client/profile',
-    path: '/client/profile',
+const AuthenticatedClientProfilRoute =
+  AuthenticatedClientProfilRouteImport.update({
+    id: '/client/profil',
+    path: '/client/profil',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedClientSosRoute = AuthenticatedClientSosRouteImport.update({
@@ -138,70 +165,82 @@ const AuthenticatedClientSosRoute = AuthenticatedClientSosRouteImport.update({
   path: '/client/sos',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedCompanyDashboardRoute =
-  AuthenticatedCompanyDashboardRouteImport.update({
-    id: '/company/dashboard',
-    path: '/company/dashboard',
+const AuthenticatedDepanneurIndexRoute =
+  AuthenticatedDepanneurIndexRouteImport.update({
+    id: '/depanneur/',
+    path: '/depanneur/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedCompanyDocumentsRoute =
-  AuthenticatedCompanyDocumentsRouteImport.update({
-    id: '/company/documents',
-    path: '/company/documents',
+const AuthenticatedDepanneurDashboardRoute =
+  AuthenticatedDepanneurDashboardRouteImport.update({
+    id: '/depanneur/dashboard',
+    path: '/depanneur/dashboard',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedCompanyEquipmentRoute =
-  AuthenticatedCompanyEquipmentRouteImport.update({
-    id: '/company/equipment',
-    path: '/company/equipment',
+const AuthenticatedDepanneurMissionsRoute =
+  AuthenticatedDepanneurMissionsRouteImport.update({
+    id: '/depanneur/missions',
+    path: '/depanneur/missions',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedCompanyMissionsRoute =
-  AuthenticatedCompanyMissionsRouteImport.update({
-    id: '/company/missions',
-    path: '/company/missions',
+const AuthenticatedDepanneurProfilRoute =
+  AuthenticatedDepanneurProfilRouteImport.update({
+    id: '/depanneur/profil',
+    path: '/depanneur/profil',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedCompanyOperatorsRoute =
-  AuthenticatedCompanyOperatorsRouteImport.update({
-    id: '/company/operators',
-    path: '/company/operators',
+const AuthenticatedEntrepriseIndexRoute =
+  AuthenticatedEntrepriseIndexRouteImport.update({
+    id: '/entreprise/',
+    path: '/entreprise/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedCompanyProfileRoute =
-  AuthenticatedCompanyProfileRouteImport.update({
-    id: '/company/profile',
-    path: '/company/profile',
+const AuthenticatedEntrepriseDashboardRoute =
+  AuthenticatedEntrepriseDashboardRouteImport.update({
+    id: '/entreprise/dashboard',
+    path: '/entreprise/dashboard',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedCompanyRevenueRoute =
-  AuthenticatedCompanyRevenueRouteImport.update({
-    id: '/company/revenue',
-    path: '/company/revenue',
+const AuthenticatedEntrepriseDocumentsRoute =
+  AuthenticatedEntrepriseDocumentsRouteImport.update({
+    id: '/entreprise/documents',
+    path: '/entreprise/documents',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedCompanyVehiclesRoute =
-  AuthenticatedCompanyVehiclesRouteImport.update({
-    id: '/company/vehicles',
-    path: '/company/vehicles',
+const AuthenticatedEntrepriseEquipmentRoute =
+  AuthenticatedEntrepriseEquipmentRouteImport.update({
+    id: '/entreprise/equipment',
+    path: '/entreprise/equipment',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedOperatorDashboardRoute =
-  AuthenticatedOperatorDashboardRouteImport.update({
-    id: '/operator/dashboard',
-    path: '/operator/dashboard',
+const AuthenticatedEntrepriseMissionsRoute =
+  AuthenticatedEntrepriseMissionsRouteImport.update({
+    id: '/entreprise/missions',
+    path: '/entreprise/missions',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedOperatorMissionsRoute =
-  AuthenticatedOperatorMissionsRouteImport.update({
-    id: '/operator/missions',
-    path: '/operator/missions',
+const AuthenticatedEntrepriseOperatorsRoute =
+  AuthenticatedEntrepriseOperatorsRouteImport.update({
+    id: '/entreprise/operators',
+    path: '/entreprise/operators',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedOperatorProfileRoute =
-  AuthenticatedOperatorProfileRouteImport.update({
-    id: '/operator/profile',
-    path: '/operator/profile',
+const AuthenticatedEntrepriseProfilRoute =
+  AuthenticatedEntrepriseProfilRouteImport.update({
+    id: '/entreprise/profil',
+    path: '/entreprise/profil',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEntrepriseRevenueRoute =
+  AuthenticatedEntrepriseRevenueRouteImport.update({
+    id: '/entreprise/revenue',
+    path: '/entreprise/revenue',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEntrepriseVehiclesRoute =
+  AuthenticatedEntrepriseVehiclesRouteImport.update({
+    id: '/entreprise/vehicles',
+    path: '/entreprise/vehicles',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedClientMissionIdRoute =
@@ -213,8 +252,11 @@ const AuthenticatedClientMissionIdRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/connexion': typeof ConnexionRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/inscription': typeof InscriptionRoute
   '/login': typeof LoginRoute
+  '/mot-de-passe-oublie': typeof MotDePasseOublieRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/admin/companies': typeof AuthenticatedAdminCompaniesRoute
@@ -226,26 +268,32 @@ export interface FileRoutesByFullPath {
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/client/dashboard': typeof AuthenticatedClientDashboardRoute
   '/client/missions': typeof AuthenticatedClientMissionsRoute
-  '/client/profile': typeof AuthenticatedClientProfileRoute
+  '/client/profil': typeof AuthenticatedClientProfilRoute
   '/client/sos': typeof AuthenticatedClientSosRoute
-  '/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
-  '/company/documents': typeof AuthenticatedCompanyDocumentsRoute
-  '/company/equipment': typeof AuthenticatedCompanyEquipmentRoute
-  '/company/missions': typeof AuthenticatedCompanyMissionsRoute
-  '/company/operators': typeof AuthenticatedCompanyOperatorsRoute
-  '/company/profile': typeof AuthenticatedCompanyProfileRoute
-  '/company/revenue': typeof AuthenticatedCompanyRevenueRoute
-  '/company/vehicles': typeof AuthenticatedCompanyVehiclesRoute
-  '/operator/dashboard': typeof AuthenticatedOperatorDashboardRoute
-  '/operator/missions': typeof AuthenticatedOperatorMissionsRoute
-  '/operator/profile': typeof AuthenticatedOperatorProfileRoute
+  '/depanneur/dashboard': typeof AuthenticatedDepanneurDashboardRoute
+  '/depanneur/missions': typeof AuthenticatedDepanneurMissionsRoute
+  '/depanneur/profil': typeof AuthenticatedDepanneurProfilRoute
+  '/entreprise/dashboard': typeof AuthenticatedEntrepriseDashboardRoute
+  '/entreprise/documents': typeof AuthenticatedEntrepriseDocumentsRoute
+  '/entreprise/equipment': typeof AuthenticatedEntrepriseEquipmentRoute
+  '/entreprise/missions': typeof AuthenticatedEntrepriseMissionsRoute
+  '/entreprise/operators': typeof AuthenticatedEntrepriseOperatorsRoute
+  '/entreprise/profil': typeof AuthenticatedEntrepriseProfilRoute
+  '/entreprise/revenue': typeof AuthenticatedEntrepriseRevenueRoute
+  '/entreprise/vehicles': typeof AuthenticatedEntrepriseVehiclesRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/client/': typeof AuthenticatedClientIndexRoute
+  '/depanneur/': typeof AuthenticatedDepanneurIndexRoute
+  '/entreprise/': typeof AuthenticatedEntrepriseIndexRoute
   '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/connexion': typeof ConnexionRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/inscription': typeof InscriptionRoute
   '/login': typeof LoginRoute
+  '/mot-de-passe-oublie': typeof MotDePasseOublieRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/admin/companies': typeof AuthenticatedAdminCompaniesRoute
@@ -257,28 +305,34 @@ export interface FileRoutesByTo {
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/client/dashboard': typeof AuthenticatedClientDashboardRoute
   '/client/missions': typeof AuthenticatedClientMissionsRoute
-  '/client/profile': typeof AuthenticatedClientProfileRoute
+  '/client/profil': typeof AuthenticatedClientProfilRoute
   '/client/sos': typeof AuthenticatedClientSosRoute
-  '/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
-  '/company/documents': typeof AuthenticatedCompanyDocumentsRoute
-  '/company/equipment': typeof AuthenticatedCompanyEquipmentRoute
-  '/company/missions': typeof AuthenticatedCompanyMissionsRoute
-  '/company/operators': typeof AuthenticatedCompanyOperatorsRoute
-  '/company/profile': typeof AuthenticatedCompanyProfileRoute
-  '/company/revenue': typeof AuthenticatedCompanyRevenueRoute
-  '/company/vehicles': typeof AuthenticatedCompanyVehiclesRoute
-  '/operator/dashboard': typeof AuthenticatedOperatorDashboardRoute
-  '/operator/missions': typeof AuthenticatedOperatorMissionsRoute
-  '/operator/profile': typeof AuthenticatedOperatorProfileRoute
+  '/depanneur/dashboard': typeof AuthenticatedDepanneurDashboardRoute
+  '/depanneur/missions': typeof AuthenticatedDepanneurMissionsRoute
+  '/depanneur/profil': typeof AuthenticatedDepanneurProfilRoute
+  '/entreprise/dashboard': typeof AuthenticatedEntrepriseDashboardRoute
+  '/entreprise/documents': typeof AuthenticatedEntrepriseDocumentsRoute
+  '/entreprise/equipment': typeof AuthenticatedEntrepriseEquipmentRoute
+  '/entreprise/missions': typeof AuthenticatedEntrepriseMissionsRoute
+  '/entreprise/operators': typeof AuthenticatedEntrepriseOperatorsRoute
+  '/entreprise/profil': typeof AuthenticatedEntrepriseProfilRoute
+  '/entreprise/revenue': typeof AuthenticatedEntrepriseRevenueRoute
+  '/entreprise/vehicles': typeof AuthenticatedEntrepriseVehiclesRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/client': typeof AuthenticatedClientIndexRoute
+  '/depanneur': typeof AuthenticatedDepanneurIndexRoute
+  '/entreprise': typeof AuthenticatedEntrepriseIndexRoute
   '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/connexion': typeof ConnexionRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/inscription': typeof InscriptionRoute
   '/login': typeof LoginRoute
+  '/mot-de-passe-oublie': typeof MotDePasseOublieRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/admin/companies': typeof AuthenticatedAdminCompaniesRoute
@@ -290,28 +344,34 @@ export interface FileRoutesById {
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/client/dashboard': typeof AuthenticatedClientDashboardRoute
   '/_authenticated/client/missions': typeof AuthenticatedClientMissionsRoute
-  '/_authenticated/client/profile': typeof AuthenticatedClientProfileRoute
+  '/_authenticated/client/profil': typeof AuthenticatedClientProfilRoute
   '/_authenticated/client/sos': typeof AuthenticatedClientSosRoute
-  '/_authenticated/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
-  '/_authenticated/company/documents': typeof AuthenticatedCompanyDocumentsRoute
-  '/_authenticated/company/equipment': typeof AuthenticatedCompanyEquipmentRoute
-  '/_authenticated/company/missions': typeof AuthenticatedCompanyMissionsRoute
-  '/_authenticated/company/operators': typeof AuthenticatedCompanyOperatorsRoute
-  '/_authenticated/company/profile': typeof AuthenticatedCompanyProfileRoute
-  '/_authenticated/company/revenue': typeof AuthenticatedCompanyRevenueRoute
-  '/_authenticated/company/vehicles': typeof AuthenticatedCompanyVehiclesRoute
-  '/_authenticated/operator/dashboard': typeof AuthenticatedOperatorDashboardRoute
-  '/_authenticated/operator/missions': typeof AuthenticatedOperatorMissionsRoute
-  '/_authenticated/operator/profile': typeof AuthenticatedOperatorProfileRoute
+  '/_authenticated/depanneur/dashboard': typeof AuthenticatedDepanneurDashboardRoute
+  '/_authenticated/depanneur/missions': typeof AuthenticatedDepanneurMissionsRoute
+  '/_authenticated/depanneur/profil': typeof AuthenticatedDepanneurProfilRoute
+  '/_authenticated/entreprise/dashboard': typeof AuthenticatedEntrepriseDashboardRoute
+  '/_authenticated/entreprise/documents': typeof AuthenticatedEntrepriseDocumentsRoute
+  '/_authenticated/entreprise/equipment': typeof AuthenticatedEntrepriseEquipmentRoute
+  '/_authenticated/entreprise/missions': typeof AuthenticatedEntrepriseMissionsRoute
+  '/_authenticated/entreprise/operators': typeof AuthenticatedEntrepriseOperatorsRoute
+  '/_authenticated/entreprise/profil': typeof AuthenticatedEntrepriseProfilRoute
+  '/_authenticated/entreprise/revenue': typeof AuthenticatedEntrepriseRevenueRoute
+  '/_authenticated/entreprise/vehicles': typeof AuthenticatedEntrepriseVehiclesRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/client/': typeof AuthenticatedClientIndexRoute
+  '/_authenticated/depanneur/': typeof AuthenticatedDepanneurIndexRoute
+  '/_authenticated/entreprise/': typeof AuthenticatedEntrepriseIndexRoute
   '/_authenticated/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/connexion'
     | '/forgot-password'
+    | '/inscription'
     | '/login'
+    | '/mot-de-passe-oublie'
     | '/register'
     | '/reset-password'
     | '/admin/companies'
@@ -323,26 +383,32 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/client/dashboard'
     | '/client/missions'
-    | '/client/profile'
+    | '/client/profil'
     | '/client/sos'
-    | '/company/dashboard'
-    | '/company/documents'
-    | '/company/equipment'
-    | '/company/missions'
-    | '/company/operators'
-    | '/company/profile'
-    | '/company/revenue'
-    | '/company/vehicles'
-    | '/operator/dashboard'
-    | '/operator/missions'
-    | '/operator/profile'
+    | '/depanneur/dashboard'
+    | '/depanneur/missions'
+    | '/depanneur/profil'
+    | '/entreprise/dashboard'
+    | '/entreprise/documents'
+    | '/entreprise/equipment'
+    | '/entreprise/missions'
+    | '/entreprise/operators'
+    | '/entreprise/profil'
+    | '/entreprise/revenue'
+    | '/entreprise/vehicles'
     | '/admin/'
+    | '/client/'
+    | '/depanneur/'
+    | '/entreprise/'
     | '/client/mission/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/connexion'
     | '/forgot-password'
+    | '/inscription'
     | '/login'
+    | '/mot-de-passe-oublie'
     | '/register'
     | '/reset-password'
     | '/admin/companies'
@@ -354,27 +420,33 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/client/dashboard'
     | '/client/missions'
-    | '/client/profile'
+    | '/client/profil'
     | '/client/sos'
-    | '/company/dashboard'
-    | '/company/documents'
-    | '/company/equipment'
-    | '/company/missions'
-    | '/company/operators'
-    | '/company/profile'
-    | '/company/revenue'
-    | '/company/vehicles'
-    | '/operator/dashboard'
-    | '/operator/missions'
-    | '/operator/profile'
+    | '/depanneur/dashboard'
+    | '/depanneur/missions'
+    | '/depanneur/profil'
+    | '/entreprise/dashboard'
+    | '/entreprise/documents'
+    | '/entreprise/equipment'
+    | '/entreprise/missions'
+    | '/entreprise/operators'
+    | '/entreprise/profil'
+    | '/entreprise/revenue'
+    | '/entreprise/vehicles'
     | '/admin'
+    | '/client'
+    | '/depanneur'
+    | '/entreprise'
     | '/client/mission/$id'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/connexion'
     | '/forgot-password'
+    | '/inscription'
     | '/login'
+    | '/mot-de-passe-oublie'
     | '/register'
     | '/reset-password'
     | '/_authenticated/admin/companies'
@@ -386,28 +458,34 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/users'
     | '/_authenticated/client/dashboard'
     | '/_authenticated/client/missions'
-    | '/_authenticated/client/profile'
+    | '/_authenticated/client/profil'
     | '/_authenticated/client/sos'
-    | '/_authenticated/company/dashboard'
-    | '/_authenticated/company/documents'
-    | '/_authenticated/company/equipment'
-    | '/_authenticated/company/missions'
-    | '/_authenticated/company/operators'
-    | '/_authenticated/company/profile'
-    | '/_authenticated/company/revenue'
-    | '/_authenticated/company/vehicles'
-    | '/_authenticated/operator/dashboard'
-    | '/_authenticated/operator/missions'
-    | '/_authenticated/operator/profile'
+    | '/_authenticated/depanneur/dashboard'
+    | '/_authenticated/depanneur/missions'
+    | '/_authenticated/depanneur/profil'
+    | '/_authenticated/entreprise/dashboard'
+    | '/_authenticated/entreprise/documents'
+    | '/_authenticated/entreprise/equipment'
+    | '/_authenticated/entreprise/missions'
+    | '/_authenticated/entreprise/operators'
+    | '/_authenticated/entreprise/profil'
+    | '/_authenticated/entreprise/revenue'
+    | '/_authenticated/entreprise/vehicles'
     | '/_authenticated/admin/'
+    | '/_authenticated/client/'
+    | '/_authenticated/depanneur/'
+    | '/_authenticated/entreprise/'
     | '/_authenticated/client/mission/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  ConnexionRoute: typeof ConnexionRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
+  InscriptionRoute: typeof InscriptionRoute
   LoginRoute: typeof LoginRoute
+  MotDePasseOublieRoute: typeof MotDePasseOublieRoute
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
 }
@@ -428,6 +506,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/connexion': {
+      id: '/connexion'
+      path: '/connexion'
+      fullPath: '/connexion'
+      preLoaderRoute: typeof ConnexionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/forgot-password': {
       id: '/forgot-password'
       path: '/forgot-password'
@@ -435,11 +520,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/inscription': {
+      id: '/inscription'
+      path: '/inscription'
+      fullPath: '/inscription'
+      preLoaderRoute: typeof InscriptionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mot-de-passe-oublie': {
+      id: '/mot-de-passe-oublie'
+      path: '/mot-de-passe-oublie'
+      fullPath: '/mot-de-passe-oublie'
+      preLoaderRoute: typeof MotDePasseOublieRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register': {
@@ -512,6 +611,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/client/': {
+      id: '/_authenticated/client/'
+      path: '/client'
+      fullPath: '/client/'
+      preLoaderRoute: typeof AuthenticatedClientIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/client/dashboard': {
       id: '/_authenticated/client/dashboard'
       path: '/client/dashboard'
@@ -526,11 +632,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedClientMissionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/client/profile': {
-      id: '/_authenticated/client/profile'
-      path: '/client/profile'
-      fullPath: '/client/profile'
-      preLoaderRoute: typeof AuthenticatedClientProfileRouteImport
+    '/_authenticated/client/profil': {
+      id: '/_authenticated/client/profil'
+      path: '/client/profil'
+      fullPath: '/client/profil'
+      preLoaderRoute: typeof AuthenticatedClientProfilRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/client/sos': {
@@ -540,81 +646,95 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedClientSosRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/company/dashboard': {
-      id: '/_authenticated/company/dashboard'
-      path: '/company/dashboard'
-      fullPath: '/company/dashboard'
-      preLoaderRoute: typeof AuthenticatedCompanyDashboardRouteImport
+    '/_authenticated/depanneur/': {
+      id: '/_authenticated/depanneur/'
+      path: '/depanneur'
+      fullPath: '/depanneur/'
+      preLoaderRoute: typeof AuthenticatedDepanneurIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/company/documents': {
-      id: '/_authenticated/company/documents'
-      path: '/company/documents'
-      fullPath: '/company/documents'
-      preLoaderRoute: typeof AuthenticatedCompanyDocumentsRouteImport
+    '/_authenticated/depanneur/dashboard': {
+      id: '/_authenticated/depanneur/dashboard'
+      path: '/depanneur/dashboard'
+      fullPath: '/depanneur/dashboard'
+      preLoaderRoute: typeof AuthenticatedDepanneurDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/company/equipment': {
-      id: '/_authenticated/company/equipment'
-      path: '/company/equipment'
-      fullPath: '/company/equipment'
-      preLoaderRoute: typeof AuthenticatedCompanyEquipmentRouteImport
+    '/_authenticated/depanneur/missions': {
+      id: '/_authenticated/depanneur/missions'
+      path: '/depanneur/missions'
+      fullPath: '/depanneur/missions'
+      preLoaderRoute: typeof AuthenticatedDepanneurMissionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/company/missions': {
-      id: '/_authenticated/company/missions'
-      path: '/company/missions'
-      fullPath: '/company/missions'
-      preLoaderRoute: typeof AuthenticatedCompanyMissionsRouteImport
+    '/_authenticated/depanneur/profil': {
+      id: '/_authenticated/depanneur/profil'
+      path: '/depanneur/profil'
+      fullPath: '/depanneur/profil'
+      preLoaderRoute: typeof AuthenticatedDepanneurProfilRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/company/operators': {
-      id: '/_authenticated/company/operators'
-      path: '/company/operators'
-      fullPath: '/company/operators'
-      preLoaderRoute: typeof AuthenticatedCompanyOperatorsRouteImport
+    '/_authenticated/entreprise/': {
+      id: '/_authenticated/entreprise/'
+      path: '/entreprise'
+      fullPath: '/entreprise/'
+      preLoaderRoute: typeof AuthenticatedEntrepriseIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/company/profile': {
-      id: '/_authenticated/company/profile'
-      path: '/company/profile'
-      fullPath: '/company/profile'
-      preLoaderRoute: typeof AuthenticatedCompanyProfileRouteImport
+    '/_authenticated/entreprise/dashboard': {
+      id: '/_authenticated/entreprise/dashboard'
+      path: '/entreprise/dashboard'
+      fullPath: '/entreprise/dashboard'
+      preLoaderRoute: typeof AuthenticatedEntrepriseDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/company/revenue': {
-      id: '/_authenticated/company/revenue'
-      path: '/company/revenue'
-      fullPath: '/company/revenue'
-      preLoaderRoute: typeof AuthenticatedCompanyRevenueRouteImport
+    '/_authenticated/entreprise/documents': {
+      id: '/_authenticated/entreprise/documents'
+      path: '/entreprise/documents'
+      fullPath: '/entreprise/documents'
+      preLoaderRoute: typeof AuthenticatedEntrepriseDocumentsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/company/vehicles': {
-      id: '/_authenticated/company/vehicles'
-      path: '/company/vehicles'
-      fullPath: '/company/vehicles'
-      preLoaderRoute: typeof AuthenticatedCompanyVehiclesRouteImport
+    '/_authenticated/entreprise/equipment': {
+      id: '/_authenticated/entreprise/equipment'
+      path: '/entreprise/equipment'
+      fullPath: '/entreprise/equipment'
+      preLoaderRoute: typeof AuthenticatedEntrepriseEquipmentRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/operator/dashboard': {
-      id: '/_authenticated/operator/dashboard'
-      path: '/operator/dashboard'
-      fullPath: '/operator/dashboard'
-      preLoaderRoute: typeof AuthenticatedOperatorDashboardRouteImport
+    '/_authenticated/entreprise/missions': {
+      id: '/_authenticated/entreprise/missions'
+      path: '/entreprise/missions'
+      fullPath: '/entreprise/missions'
+      preLoaderRoute: typeof AuthenticatedEntrepriseMissionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/operator/missions': {
-      id: '/_authenticated/operator/missions'
-      path: '/operator/missions'
-      fullPath: '/operator/missions'
-      preLoaderRoute: typeof AuthenticatedOperatorMissionsRouteImport
+    '/_authenticated/entreprise/operators': {
+      id: '/_authenticated/entreprise/operators'
+      path: '/entreprise/operators'
+      fullPath: '/entreprise/operators'
+      preLoaderRoute: typeof AuthenticatedEntrepriseOperatorsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/operator/profile': {
-      id: '/_authenticated/operator/profile'
-      path: '/operator/profile'
-      fullPath: '/operator/profile'
-      preLoaderRoute: typeof AuthenticatedOperatorProfileRouteImport
+    '/_authenticated/entreprise/profil': {
+      id: '/_authenticated/entreprise/profil'
+      path: '/entreprise/profil'
+      fullPath: '/entreprise/profil'
+      preLoaderRoute: typeof AuthenticatedEntrepriseProfilRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/entreprise/revenue': {
+      id: '/_authenticated/entreprise/revenue'
+      path: '/entreprise/revenue'
+      fullPath: '/entreprise/revenue'
+      preLoaderRoute: typeof AuthenticatedEntrepriseRevenueRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/entreprise/vehicles': {
+      id: '/_authenticated/entreprise/vehicles'
+      path: '/entreprise/vehicles'
+      fullPath: '/entreprise/vehicles'
+      preLoaderRoute: typeof AuthenticatedEntrepriseVehiclesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/client/mission/$id': {
@@ -637,20 +757,23 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedClientDashboardRoute: typeof AuthenticatedClientDashboardRoute
   AuthenticatedClientMissionsRoute: typeof AuthenticatedClientMissionsRoute
-  AuthenticatedClientProfileRoute: typeof AuthenticatedClientProfileRoute
+  AuthenticatedClientProfilRoute: typeof AuthenticatedClientProfilRoute
   AuthenticatedClientSosRoute: typeof AuthenticatedClientSosRoute
-  AuthenticatedCompanyDashboardRoute: typeof AuthenticatedCompanyDashboardRoute
-  AuthenticatedCompanyDocumentsRoute: typeof AuthenticatedCompanyDocumentsRoute
-  AuthenticatedCompanyEquipmentRoute: typeof AuthenticatedCompanyEquipmentRoute
-  AuthenticatedCompanyMissionsRoute: typeof AuthenticatedCompanyMissionsRoute
-  AuthenticatedCompanyOperatorsRoute: typeof AuthenticatedCompanyOperatorsRoute
-  AuthenticatedCompanyProfileRoute: typeof AuthenticatedCompanyProfileRoute
-  AuthenticatedCompanyRevenueRoute: typeof AuthenticatedCompanyRevenueRoute
-  AuthenticatedCompanyVehiclesRoute: typeof AuthenticatedCompanyVehiclesRoute
-  AuthenticatedOperatorDashboardRoute: typeof AuthenticatedOperatorDashboardRoute
-  AuthenticatedOperatorMissionsRoute: typeof AuthenticatedOperatorMissionsRoute
-  AuthenticatedOperatorProfileRoute: typeof AuthenticatedOperatorProfileRoute
+  AuthenticatedDepanneurDashboardRoute: typeof AuthenticatedDepanneurDashboardRoute
+  AuthenticatedDepanneurMissionsRoute: typeof AuthenticatedDepanneurMissionsRoute
+  AuthenticatedDepanneurProfilRoute: typeof AuthenticatedDepanneurProfilRoute
+  AuthenticatedEntrepriseDashboardRoute: typeof AuthenticatedEntrepriseDashboardRoute
+  AuthenticatedEntrepriseDocumentsRoute: typeof AuthenticatedEntrepriseDocumentsRoute
+  AuthenticatedEntrepriseEquipmentRoute: typeof AuthenticatedEntrepriseEquipmentRoute
+  AuthenticatedEntrepriseMissionsRoute: typeof AuthenticatedEntrepriseMissionsRoute
+  AuthenticatedEntrepriseOperatorsRoute: typeof AuthenticatedEntrepriseOperatorsRoute
+  AuthenticatedEntrepriseProfilRoute: typeof AuthenticatedEntrepriseProfilRoute
+  AuthenticatedEntrepriseRevenueRoute: typeof AuthenticatedEntrepriseRevenueRoute
+  AuthenticatedEntrepriseVehiclesRoute: typeof AuthenticatedEntrepriseVehiclesRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedClientIndexRoute: typeof AuthenticatedClientIndexRoute
+  AuthenticatedDepanneurIndexRoute: typeof AuthenticatedDepanneurIndexRoute
+  AuthenticatedEntrepriseIndexRoute: typeof AuthenticatedEntrepriseIndexRoute
   AuthenticatedClientMissionIdRoute: typeof AuthenticatedClientMissionIdRoute
 }
 
@@ -664,20 +787,23 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedClientDashboardRoute: AuthenticatedClientDashboardRoute,
   AuthenticatedClientMissionsRoute: AuthenticatedClientMissionsRoute,
-  AuthenticatedClientProfileRoute: AuthenticatedClientProfileRoute,
+  AuthenticatedClientProfilRoute: AuthenticatedClientProfilRoute,
   AuthenticatedClientSosRoute: AuthenticatedClientSosRoute,
-  AuthenticatedCompanyDashboardRoute: AuthenticatedCompanyDashboardRoute,
-  AuthenticatedCompanyDocumentsRoute: AuthenticatedCompanyDocumentsRoute,
-  AuthenticatedCompanyEquipmentRoute: AuthenticatedCompanyEquipmentRoute,
-  AuthenticatedCompanyMissionsRoute: AuthenticatedCompanyMissionsRoute,
-  AuthenticatedCompanyOperatorsRoute: AuthenticatedCompanyOperatorsRoute,
-  AuthenticatedCompanyProfileRoute: AuthenticatedCompanyProfileRoute,
-  AuthenticatedCompanyRevenueRoute: AuthenticatedCompanyRevenueRoute,
-  AuthenticatedCompanyVehiclesRoute: AuthenticatedCompanyVehiclesRoute,
-  AuthenticatedOperatorDashboardRoute: AuthenticatedOperatorDashboardRoute,
-  AuthenticatedOperatorMissionsRoute: AuthenticatedOperatorMissionsRoute,
-  AuthenticatedOperatorProfileRoute: AuthenticatedOperatorProfileRoute,
+  AuthenticatedDepanneurDashboardRoute: AuthenticatedDepanneurDashboardRoute,
+  AuthenticatedDepanneurMissionsRoute: AuthenticatedDepanneurMissionsRoute,
+  AuthenticatedDepanneurProfilRoute: AuthenticatedDepanneurProfilRoute,
+  AuthenticatedEntrepriseDashboardRoute: AuthenticatedEntrepriseDashboardRoute,
+  AuthenticatedEntrepriseDocumentsRoute: AuthenticatedEntrepriseDocumentsRoute,
+  AuthenticatedEntrepriseEquipmentRoute: AuthenticatedEntrepriseEquipmentRoute,
+  AuthenticatedEntrepriseMissionsRoute: AuthenticatedEntrepriseMissionsRoute,
+  AuthenticatedEntrepriseOperatorsRoute: AuthenticatedEntrepriseOperatorsRoute,
+  AuthenticatedEntrepriseProfilRoute: AuthenticatedEntrepriseProfilRoute,
+  AuthenticatedEntrepriseRevenueRoute: AuthenticatedEntrepriseRevenueRoute,
+  AuthenticatedEntrepriseVehiclesRoute: AuthenticatedEntrepriseVehiclesRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedClientIndexRoute: AuthenticatedClientIndexRoute,
+  AuthenticatedDepanneurIndexRoute: AuthenticatedDepanneurIndexRoute,
+  AuthenticatedEntrepriseIndexRoute: AuthenticatedEntrepriseIndexRoute,
   AuthenticatedClientMissionIdRoute: AuthenticatedClientMissionIdRoute,
 }
 
@@ -687,8 +813,11 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  ConnexionRoute: ConnexionRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
+  InscriptionRoute: InscriptionRoute,
   LoginRoute: LoginRoute,
+  MotDePasseOublieRoute: MotDePasseOublieRoute,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
 }

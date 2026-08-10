@@ -1,5 +1,5 @@
-import { Link, useRouterState } from "@tanstack/react-router";
-import type { ReactNode } from "react";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
+import { useEffect, type ReactNode } from "react";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { LogOut, Menu } from "lucide-react";
@@ -11,8 +11,11 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { TowiaLogo } from "@/components/TowiaLogo";
+import { UserMenu } from "@/components/UserMenu";
+import { requiredRoleForPath, roleHome } from "@/lib/towia";
 
 export type NavItem = { to: string; label: string };
+
 
 export function AppShell({
   title,
@@ -27,8 +30,20 @@ export function AppShell({
   children: ReactNode;
   action?: ReactNode;
 }) {
-  const { user, role, signOut } = useAuth();
+  const { user, role, loading, signOut } = useAuth();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+
+  // Protection par rôle : un utilisateur ne peut pas accéder à l'espace d'un autre rôle.
+  const required = requiredRoleForPath(pathname);
+  useEffect(() => {
+    if (loading || !role || !required) return;
+    if (role !== required && role !== "admin") {
+      void navigate({ to: roleHome(role), replace: true });
+    }
+  }, [loading, role, required, navigate]);
+
+
 
   const navLinks = (
     <nav className="flex flex-col gap-1">
@@ -100,7 +115,9 @@ export function AppShell({
             ) : null}
           </div>
           {action}
+          <UserMenu />
         </header>
+
 
         <main className="flex-1 px-4 py-6 lg:px-8">{children}</main>
       </div>

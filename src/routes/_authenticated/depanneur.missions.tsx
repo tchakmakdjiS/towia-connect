@@ -9,7 +9,7 @@ import { Section, EmptyState, PriorityBadge } from "@/components/ui-kit";
 import { Button } from "@/components/ui/button";
 import { CATEGORY_LABELS, formatDate, type MissionPriority } from "@/lib/towia";
 
-export const Route = createFileRoute("/_authenticated/operator/missions")({
+export const Route = createFileRoute("/_authenticated/depanneur/missions")({
   head: () => ({
     meta: [
       { title: "Missions disponibles — TowIA" },

@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      activity_logs: {
+        Row: {
+          action: string
+          created_at: string
+          entity: string | null
+          entity_id: string | null
+          id: string
+          metadata: Json
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          entity?: string | null
+          entity_id?: string | null
+          id?: string
+          metadata?: Json
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          entity?: string | null
+          entity_id?: string | null
+          id?: string
+          metadata?: Json
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       ai_conversations: {
         Row: {
           created_at: string
@@ -55,6 +85,7 @@ export type Database = {
       companies: {
         Row: {
           address: string | null
+          city: string | null
           created_at: string
           email: string | null
           id: string
@@ -62,15 +93,18 @@ export type Database = {
           is_demo: boolean
           legal_name: string | null
           logo_url: string | null
+          manager_name: string | null
           name: string
           owner_id: string
           phone: string | null
+          postal_code: string | null
           siret: string | null
           updated_at: string
           verification: Database["public"]["Enums"]["verification_status"]
         }
         Insert: {
           address?: string | null
+          city?: string | null
           created_at?: string
           email?: string | null
           id?: string
@@ -78,15 +112,18 @@ export type Database = {
           is_demo?: boolean
           legal_name?: string | null
           logo_url?: string | null
+          manager_name?: string | null
           name: string
           owner_id: string
           phone?: string | null
+          postal_code?: string | null
           siret?: string | null
           updated_at?: string
           verification?: Database["public"]["Enums"]["verification_status"]
         }
         Update: {
           address?: string | null
+          city?: string | null
           created_at?: string
           email?: string | null
           id?: string
@@ -94,9 +131,11 @@ export type Database = {
           is_demo?: boolean
           legal_name?: string | null
           logo_url?: string | null
+          manager_name?: string | null
           name?: string
           owner_id?: string
           phone?: string | null
+          postal_code?: string | null
           siret?: string | null
           updated_at?: string
           verification?: Database["public"]["Enums"]["verification_status"]
@@ -509,8 +548,13 @@ export type Database = {
       }
       operators: {
         Row: {
+          address: string | null
+          availability: Database["public"]["Enums"]["availability_status"]
+          city: string | null
           company_id: string | null
+          company_name: string | null
           created_at: string
+          email: string | null
           equipment: string[]
           first_name: string | null
           id: string
@@ -522,16 +566,25 @@ export type Database = {
           last_name: string | null
           phone: string | null
           photo_url: string | null
+          postal_code: string | null
           rating: number | null
+          service_radius_km: number
           services: string[]
+          siret: string | null
           updated_at: string
           user_id: string | null
           vehicle_label: string | null
+          vehicle_type: string | null
           verification: Database["public"]["Enums"]["verification_status"]
         }
         Insert: {
+          address?: string | null
+          availability?: Database["public"]["Enums"]["availability_status"]
+          city?: string | null
           company_id?: string | null
+          company_name?: string | null
           created_at?: string
+          email?: string | null
           equipment?: string[]
           first_name?: string | null
           id?: string
@@ -543,16 +596,25 @@ export type Database = {
           last_name?: string | null
           phone?: string | null
           photo_url?: string | null
+          postal_code?: string | null
           rating?: number | null
+          service_radius_km?: number
           services?: string[]
+          siret?: string | null
           updated_at?: string
           user_id?: string | null
           vehicle_label?: string | null
+          vehicle_type?: string | null
           verification?: Database["public"]["Enums"]["verification_status"]
         }
         Update: {
+          address?: string | null
+          availability?: Database["public"]["Enums"]["availability_status"]
+          city?: string | null
           company_id?: string | null
+          company_name?: string | null
           created_at?: string
+          email?: string | null
           equipment?: string[]
           first_name?: string | null
           id?: string
@@ -564,11 +626,15 @@ export type Database = {
           last_name?: string | null
           phone?: string | null
           photo_url?: string | null
+          postal_code?: string | null
           rating?: number | null
+          service_radius_km?: number
           services?: string[]
+          siret?: string | null
           updated_at?: string
           user_id?: string | null
           vehicle_label?: string | null
+          vehicle_type?: string | null
           verification?: Database["public"]["Enums"]["verification_status"]
         }
         Relationships: [
@@ -652,33 +718,48 @@ export type Database = {
       }
       profiles: {
         Row: {
+          address: string | null
           avatar_url: string | null
+          city: string | null
           created_at: string
+          email: string | null
           first_name: string | null
           id: string
+          is_active: boolean
           is_demo: boolean
           last_name: string | null
           phone: string | null
+          postal_code: string | null
           updated_at: string
         }
         Insert: {
+          address?: string | null
           avatar_url?: string | null
+          city?: string | null
           created_at?: string
+          email?: string | null
           first_name?: string | null
           id: string
+          is_active?: boolean
           is_demo?: boolean
           last_name?: string | null
           phone?: string | null
+          postal_code?: string | null
           updated_at?: string
         }
         Update: {
+          address?: string | null
           avatar_url?: string | null
+          city?: string | null
           created_at?: string
+          email?: string | null
           first_name?: string | null
           id?: string
+          is_active?: boolean
           is_demo?: boolean
           last_name?: string | null
           phone?: string | null
+          postal_code?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -780,6 +861,7 @@ export type Database = {
           owner_id: string | null
           plate: string | null
           updated_at: string
+          vehicle_type: string | null
           year: number | null
         }
         Insert: {
@@ -794,6 +876,7 @@ export type Database = {
           owner_id?: string | null
           plate?: string | null
           updated_at?: string
+          vehicle_type?: string | null
           year?: number | null
         }
         Update: {
@@ -808,6 +891,7 @@ export type Database = {
           owner_id?: string | null
           plate?: string | null
           updated_at?: string
+          vehicle_type?: string | null
           year?: number | null
         }
         Relationships: [
@@ -839,7 +923,8 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "client" | "operator" | "company" | "admin"
+      app_role: "customer" | "tow_operator" | "company" | "admin"
+      availability_status: "AVAILABLE" | "UNAVAILABLE" | "ON_MISSION"
       mission_category:
         | "PANNE"
         | "REMORQUAGE"
@@ -1003,7 +1088,8 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["client", "operator", "company", "admin"],
+      app_role: ["customer", "tow_operator", "company", "admin"],
+      availability_status: ["AVAILABLE", "UNAVAILABLE", "ON_MISSION"],
       mission_category: [
         "PANNE",
         "REMORQUAGE",

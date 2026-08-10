@@ -10,7 +10,7 @@ import { Section, EmptyState } from "@/components/ui-kit";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-export const Route = createFileRoute("/_authenticated/company/operators")({
+export const Route = createFileRoute("/_authenticated/entreprise/operators")({
   head: () => ({
     meta: [
       { title: "Équipe — TowIA" },

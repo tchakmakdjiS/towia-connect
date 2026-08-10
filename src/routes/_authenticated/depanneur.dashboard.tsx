@@ -18,7 +18,7 @@ import {
   type MissionStatus,
 } from "@/lib/towia";
 
-export const Route = createFileRoute("/_authenticated/operator/dashboard")({
+export const Route = createFileRoute("/_authenticated/depanneur/dashboard")({
   head: () => ({
     meta: [
       { title: "Tableau de bord dépanneur — TowIA" },

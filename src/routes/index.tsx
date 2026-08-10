@@ -70,10 +70,10 @@ function Landing() {
         <TowiaLogo />
         <div className="flex items-center gap-2">
           <Button asChild variant="ghost" className="rounded-xl">
-            <Link to="/login">Connexion</Link>
+            <Link to="/connexion">Connexion</Link>
           </Button>
           <Button asChild className="rounded-xl bg-gradient-primary">
-            <Link to="/register">Créer un compte</Link>
+            <Link to="/inscription">Créer un compte</Link>
           </Button>
         </div>
       </header>
@@ -93,12 +93,12 @@ function Landing() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg" className="rounded-2xl bg-gradient-primary shadow-elevated">
-              <Link to="/register">
+              <Link to="/inscription">
                 <Siren className="mr-2 size-5" /> Demander une assistance
               </Link>
             </Button>
             <Button asChild size="lg" variant="secondary" className="rounded-2xl">
-              <Link to="/register">Je suis un professionnel</Link>
+              <Link to="/inscription">Je suis un professionnel</Link>
             </Button>
           </div>
         </div>
