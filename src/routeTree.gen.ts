@@ -32,6 +32,7 @@ import { Route as AuthenticatedDepanneurIndexRouteImport } from './routes/_authe
 import { Route as AuthenticatedDepanneurDashboardRouteImport } from './routes/_authenticated/depanneur.dashboard'
 import { Route as AuthenticatedDepanneurMissionsRouteImport } from './routes/_authenticated/depanneur.missions'
 import { Route as AuthenticatedDepanneurProfilRouteImport } from './routes/_authenticated/depanneur.profil'
+import { Route as AuthenticatedEntrepriseIndexRouteImport } from './routes/_authenticated/entreprise.index'
 import { Route as AuthenticatedEntrepriseDashboardRouteImport } from './routes/_authenticated/entreprise.dashboard'
 import { Route as AuthenticatedEntrepriseDocumentsRouteImport } from './routes/_authenticated/entreprise.documents'
 import { Route as AuthenticatedEntrepriseEquipmentRouteImport } from './routes/_authenticated/entreprise.equipment'
@@ -170,6 +171,12 @@ const AuthenticatedDepanneurProfilRoute =
     path: '/depanneur/profil',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedEntrepriseIndexRoute =
+  AuthenticatedEntrepriseIndexRouteImport.update({
+    id: '/entreprise/',
+    path: '/entreprise/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedEntrepriseDashboardRoute =
   AuthenticatedEntrepriseDashboardRouteImport.update({
     id: '/entreprise/dashboard',
@@ -256,6 +263,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/client/': typeof AuthenticatedClientIndexRoute
   '/depanneur/': typeof AuthenticatedDepanneurIndexRoute
+  '/entreprise/': typeof AuthenticatedEntrepriseIndexRoute
   '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
 }
 export interface FileRoutesByTo {
@@ -289,6 +297,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/client': typeof AuthenticatedClientIndexRoute
   '/depanneur': typeof AuthenticatedDepanneurIndexRoute
+  '/entreprise': typeof AuthenticatedEntrepriseIndexRoute
   '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
 }
 export interface FileRoutesById {
@@ -324,6 +333,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/client/': typeof AuthenticatedClientIndexRoute
   '/_authenticated/depanneur/': typeof AuthenticatedDepanneurIndexRoute
+  '/_authenticated/entreprise/': typeof AuthenticatedEntrepriseIndexRoute
   '/_authenticated/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
 }
 export interface FileRouteTypes {
@@ -359,6 +369,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/client/'
     | '/depanneur/'
+    | '/entreprise/'
     | '/client/mission/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -392,6 +403,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/client'
     | '/depanneur'
+    | '/entreprise'
     | '/client/mission/$id'
   id:
     | '__root__'
@@ -426,6 +438,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/'
     | '/_authenticated/client/'
     | '/_authenticated/depanneur/'
+    | '/_authenticated/entreprise/'
     | '/_authenticated/client/mission/$id'
   fileRoutesById: FileRoutesById
 }
@@ -601,6 +614,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDepanneurProfilRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/entreprise/': {
+      id: '/_authenticated/entreprise/'
+      path: '/entreprise'
+      fullPath: '/entreprise/'
+      preLoaderRoute: typeof AuthenticatedEntrepriseIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/entreprise/dashboard': {
       id: '/_authenticated/entreprise/dashboard'
       path: '/entreprise/dashboard'
@@ -693,6 +713,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
   AuthenticatedClientIndexRoute: typeof AuthenticatedClientIndexRoute
   AuthenticatedDepanneurIndexRoute: typeof AuthenticatedDepanneurIndexRoute
+  AuthenticatedEntrepriseIndexRoute: typeof AuthenticatedEntrepriseIndexRoute
   AuthenticatedClientMissionIdRoute: typeof AuthenticatedClientMissionIdRoute
 }
 
@@ -722,6 +743,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   AuthenticatedClientIndexRoute: AuthenticatedClientIndexRoute,
   AuthenticatedDepanneurIndexRoute: AuthenticatedDepanneurIndexRoute,
+  AuthenticatedEntrepriseIndexRoute: AuthenticatedEntrepriseIndexRoute,
   AuthenticatedClientMissionIdRoute: AuthenticatedClientMissionIdRoute,
 }
 
