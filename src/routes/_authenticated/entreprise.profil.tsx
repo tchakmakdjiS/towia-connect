@@ -108,14 +108,21 @@ function CompanyProfile() {
             {field("name", "Nom commercial")}
             {field("legal_name", "Raison sociale")}
             {field("siret", "SIRET")}
+            {field("manager_name", "Nom du responsable")}
             {field("email", "Email")}
             {field("phone", "Téléphone")}
-            {field("intervention_zone", "Zone d'intervention")}
             <div className="sm:col-span-2">{field("address", "Adresse")}</div>
+            {field("city", "Ville")}
+            {field("postal_code", "Code postal")}
+            <div className="sm:col-span-2">{field("intervention_zone", "Zone d'intervention")}</div>
           </div>
+          <p className="mt-4 text-sm text-muted-foreground">
+            Dépanneurs rattachés : {operatorsCount.data ?? 0}
+          </p>
           <Button className="mt-4 rounded-xl bg-gradient-primary" onClick={() => void save()}>
             Enregistrer
           </Button>
+
         </Section>
       </div>
     </AppShell>
