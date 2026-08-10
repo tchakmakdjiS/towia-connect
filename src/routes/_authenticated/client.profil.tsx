@@ -134,19 +134,15 @@ function ClientProfile() {
       <div className="mx-auto max-w-2xl space-y-6">
         <Section title="Mes informations">
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="fn">Prénom</Label>
-              <Input id="fn" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="rounded-xl" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="ln">Nom</Label>
-              <Input id="ln" value={lastName} onChange={(e) => setLastName(e.target.value)} className="rounded-xl" />
-            </div>
-            <div className="space-y-2 sm:col-span-2">
-              <Label htmlFor="ph">Téléphone</Label>
-              <Input id="ph" value={phone} onChange={(e) => setPhone(e.target.value)} className="rounded-xl" />
-            </div>
+            {field("first_name", "Prénom")}
+            {field("last_name", "Nom")}
+            {field("phone", "Téléphone")}
+            {field("email", "Email")}
+            <div className="sm:col-span-2">{field("address", "Adresse")}</div>
+            {field("city", "Ville")}
+            {field("postal_code", "Code postal")}
           </div>
+
           <Button className="mt-4 rounded-xl bg-gradient-primary" onClick={() => void saveProfile()}>
             Enregistrer
           </Button>
