@@ -115,7 +115,9 @@ export function AppShell({
             ) : null}
           </div>
           {action}
+          <UserMenu />
         </header>
+
 
         <main className="flex-1 px-4 py-6 lg:px-8">{children}</main>
       </div>
