@@ -115,9 +115,9 @@ export const NOTIFICATION_EVENTS = [
 export function roleHome(role: AppRole | null): string {
   switch (role) {
     case "operator":
-      return "/operator/dashboard";
+      return "/depanneur/dashboard";
     case "company":
-      return "/company/dashboard";
+      return "/entreprise/dashboard";
     case "admin":
       return "/admin";
     default:

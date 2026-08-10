@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MISSION_CATEGORIES, type MissionCategory } from "@/lib/towia";
 
-export const Route = createFileRoute("/_authenticated/operator/profile")({
+export const Route = createFileRoute("/_authenticated/depanneur/profil")({
   head: () => ({
     meta: [
       { title: "Profil dépanneur — TowIA" },

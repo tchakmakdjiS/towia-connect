@@ -7,7 +7,7 @@ import { COMPANY_NAV } from "@/lib/nav";
 import { Section, StatCard, EmptyState } from "@/components/ui-kit";
 import { formatAmount, formatDate } from "@/lib/towia";
 
-export const Route = createFileRoute("/_authenticated/company/revenue")({
+export const Route = createFileRoute("/_authenticated/entreprise/revenue")({
   head: () => ({
     meta: [
       { title: "Revenus — TowIA" },
