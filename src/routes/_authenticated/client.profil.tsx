@@ -80,6 +80,7 @@ function ClientProfile() {
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
   const [plate, setPlate] = useState("");
+  const [color, setColor] = useState("");
   const [vehicleType, setVehicleType] = useState(VEHICLE_TYPES[0]!);
 
   const saveProfile = async () => {
@@ -96,7 +97,7 @@ function ClientProfile() {
   const addVehicle = async () => {
     const { error } = await supabase
       .from("vehicles")
-      .insert({ owner_id: user!.id, brand, model, plate, vehicle_type: vehicleType });
+      .insert({ owner_id: user!.id, brand, model, plate, color, vehicle_type: vehicleType });
     if (error) {
       toast.error("Ajout du véhicule impossible.");
       return;
@@ -104,6 +105,7 @@ function ClientProfile() {
     setBrand("");
     setModel("");
     setPlate("");
+    setColor("");
     void queryClient.invalidateQueries({ queryKey: ["vehicles", user?.id] });
   };
 
@@ -161,6 +163,7 @@ function ClientProfile() {
                   <span>
                     {v.brand} {v.model} — {v.plate}
                     {v.vehicle_type ? ` · ${v.vehicle_type}` : ""}
+                    {v.color ? ` · ${v.color}` : ""}
                   </span>
                   <Button
                     size="icon"
@@ -178,6 +181,7 @@ function ClientProfile() {
             <Input placeholder="Marque" value={brand} onChange={(e) => setBrand(e.target.value)} className="rounded-xl" />
             <Input placeholder="Modèle" value={model} onChange={(e) => setModel(e.target.value)} className="rounded-xl" />
             <Input placeholder="Immatriculation" value={plate} onChange={(e) => setPlate(e.target.value)} className="rounded-xl" />
+            <Input placeholder="Couleur" value={color} onChange={(e) => setColor(e.target.value)} className="rounded-xl" />
             <select
               aria-label="Type de véhicule"
               value={vehicleType}
