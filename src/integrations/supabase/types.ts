@@ -87,9 +87,11 @@ export type Database = {
           address: string | null
           city: string | null
           created_at: string
+          description: string | null
           email: string | null
           id: string
           intervention_zone: string | null
+          is_active: boolean
           is_demo: boolean
           legal_name: string | null
           logo_url: string | null
@@ -106,9 +108,11 @@ export type Database = {
           address?: string | null
           city?: string | null
           created_at?: string
+          description?: string | null
           email?: string | null
           id?: string
           intervention_zone?: string | null
+          is_active?: boolean
           is_demo?: boolean
           legal_name?: string | null
           logo_url?: string | null
@@ -125,9 +129,11 @@ export type Database = {
           address?: string | null
           city?: string | null
           created_at?: string
+          description?: string | null
           email?: string | null
           id?: string
           intervention_zone?: string | null
+          is_active?: boolean
           is_demo?: boolean
           legal_name?: string | null
           logo_url?: string | null
@@ -567,6 +573,7 @@ export type Database = {
           phone: string | null
           photo_url: string | null
           postal_code: string | null
+          professional_name: string | null
           rating: number | null
           service_radius_km: number
           services: string[]
@@ -597,6 +604,7 @@ export type Database = {
           phone?: string | null
           photo_url?: string | null
           postal_code?: string | null
+          professional_name?: string | null
           rating?: number | null
           service_radius_km?: number
           services?: string[]
@@ -627,6 +635,7 @@ export type Database = {
           phone?: string | null
           photo_url?: string | null
           postal_code?: string | null
+          professional_name?: string | null
           rating?: number | null
           service_radius_km?: number
           services?: string[]
@@ -851,6 +860,7 @@ export type Database = {
       vehicles: {
         Row: {
           brand: string | null
+          color: string | null
           company_id: string | null
           created_at: string
           energy: string | null
@@ -866,6 +876,7 @@ export type Database = {
         }
         Insert: {
           brand?: string | null
+          color?: string | null
           company_id?: string | null
           created_at?: string
           energy?: string | null
@@ -881,6 +892,7 @@ export type Database = {
         }
         Update: {
           brand?: string | null
+          color?: string | null
           company_id?: string | null
           created_at?: string
           energy?: string | null
@@ -960,7 +972,7 @@ export type Database = {
         | "FAILED"
         | "REFUNDED"
         | "CANCELLED"
-      verification_status: "PENDING" | "VERIFIED" | "REJECTED"
+      verification_status: "PENDING" | "VERIFIED" | "REJECTED" | "SUSPENDED"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1123,7 +1135,7 @@ export const Constants = {
         "REFUNDED",
         "CANCELLED",
       ],
-      verification_status: ["PENDING", "VERIFIED", "REJECTED"],
+      verification_status: ["PENDING", "VERIFIED", "REJECTED", "SUSPENDED"],
     },
   },
 } as const
