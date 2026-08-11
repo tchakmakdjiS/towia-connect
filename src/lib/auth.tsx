@@ -96,7 +96,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setRole(null);
     setProfile(null);
     setSession(null);
-    if (typeof window !== "undefined") window.location.assign("/connexion");
+    if (typeof window !== "undefined") window.location.assign("/");
   };
 
   return (
