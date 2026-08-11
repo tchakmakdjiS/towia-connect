@@ -80,6 +80,7 @@ function ClientProfile() {
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
   const [plate, setPlate] = useState("");
+  const [color, setColor] = useState("");
   const [vehicleType, setVehicleType] = useState(VEHICLE_TYPES[0]!);
 
   const saveProfile = async () => {
