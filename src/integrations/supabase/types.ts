@@ -97,6 +97,7 @@ export type Database = {
           logo_url: string | null
           manager_name: string | null
           name: string
+          operators_count: number | null
           owner_id: string
           phone: string | null
           postal_code: string | null
@@ -118,6 +119,7 @@ export type Database = {
           logo_url?: string | null
           manager_name?: string | null
           name: string
+          operators_count?: number | null
           owner_id: string
           phone?: string | null
           postal_code?: string | null
@@ -139,6 +141,7 @@ export type Database = {
           logo_url?: string | null
           manager_name?: string | null
           name?: string
+          operators_count?: number | null
           owner_id?: string
           phone?: string | null
           postal_code?: string | null
@@ -556,6 +559,7 @@ export type Database = {
         Row: {
           address: string | null
           availability: Database["public"]["Enums"]["availability_status"]
+          available_24_7: boolean
           city: string | null
           company_id: string | null
           company_name: string | null
@@ -563,6 +567,7 @@ export type Database = {
           email: string | null
           equipment: string[]
           first_name: string | null
+          iban: string | null
           id: string
           intervention_zone: string | null
           is_available: boolean
@@ -587,6 +592,7 @@ export type Database = {
         Insert: {
           address?: string | null
           availability?: Database["public"]["Enums"]["availability_status"]
+          available_24_7?: boolean
           city?: string | null
           company_id?: string | null
           company_name?: string | null
@@ -594,6 +600,7 @@ export type Database = {
           email?: string | null
           equipment?: string[]
           first_name?: string | null
+          iban?: string | null
           id?: string
           intervention_zone?: string | null
           is_available?: boolean
@@ -618,6 +625,7 @@ export type Database = {
         Update: {
           address?: string | null
           availability?: Database["public"]["Enums"]["availability_status"]
+          available_24_7?: boolean
           city?: string | null
           company_id?: string | null
           company_name?: string | null
@@ -625,6 +633,7 @@ export type Database = {
           email?: string | null
           equipment?: string[]
           first_name?: string | null
+          iban?: string | null
           id?: string
           intervention_zone?: string | null
           is_available?: boolean
