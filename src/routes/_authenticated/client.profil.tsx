@@ -181,6 +181,7 @@ function ClientProfile() {
             <Input placeholder="Marque" value={brand} onChange={(e) => setBrand(e.target.value)} className="rounded-xl" />
             <Input placeholder="Modèle" value={model} onChange={(e) => setModel(e.target.value)} className="rounded-xl" />
             <Input placeholder="Immatriculation" value={plate} onChange={(e) => setPlate(e.target.value)} className="rounded-xl" />
+            <Input placeholder="Couleur" value={color} onChange={(e) => setColor(e.target.value)} className="rounded-xl" />
             <select
               aria-label="Type de véhicule"
               value={vehicleType}
