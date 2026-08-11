@@ -163,6 +163,7 @@ function ClientProfile() {
                   <span>
                     {v.brand} {v.model} — {v.plate}
                     {v.vehicle_type ? ` · ${v.vehicle_type}` : ""}
+                    {v.color ? ` · ${v.color}` : ""}
                   </span>
                   <Button
                     size="icon"
