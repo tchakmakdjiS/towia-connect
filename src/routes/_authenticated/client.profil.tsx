@@ -97,7 +97,7 @@ function ClientProfile() {
   const addVehicle = async () => {
     const { error } = await supabase
       .from("vehicles")
-      .insert({ owner_id: user!.id, brand, model, plate, vehicle_type: vehicleType });
+      .insert({ owner_id: user!.id, brand, model, plate, color, vehicle_type: vehicleType });
     if (error) {
       toast.error("Ajout du véhicule impossible.");
       return;
@@ -105,6 +105,7 @@ function ClientProfile() {
     setBrand("");
     setModel("");
     setPlate("");
+    setColor("");
     void queryClient.invalidateQueries({ queryKey: ["vehicles", user?.id] });
   };
 
