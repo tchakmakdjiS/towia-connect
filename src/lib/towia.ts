@@ -28,7 +28,10 @@ export type MissionCategory =
   | "ERREUR_CARBURANT"
   | "ACCIDENT"
   | "VEHICULE_ELECTRIQUE"
+  | "CLES_ENFERMEES"
+  | "FUMEE_DANGER"
   | "AUTRE";
+
 
 export type OfferStatus = "PENDING" | "ACCEPTED" | "DECLINED" | "EXPIRED" | "CANCELLED";
 
