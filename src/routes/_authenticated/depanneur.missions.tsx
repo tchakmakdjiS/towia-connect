@@ -25,9 +25,25 @@ function OperatorMissions() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
-  const offers = useQuery({
-    queryKey: ["operator-offers", user?.id],
+  const operator = useQuery({
+    queryKey: ["operator", user?.id],
     enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("operators")
+        .select("id")
+        .eq("user_id", user!.id)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const operatorId = operator.data?.id;
+
+  const offers = useQuery({
+    queryKey: ["operator-offers", operatorId],
+    enabled: !!operatorId,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("mission_offers")
@@ -54,7 +70,7 @@ function OperatorMissions() {
         .from("missions")
         .update({
           status: "ACCEPTED",
-          operator_id: user!.id,
+          operator_id: operatorId!,
           accepted_at: new Date().toISOString(),
         })
         .eq("id", missionId);
@@ -66,7 +82,7 @@ function OperatorMissions() {
     } else {
       toast.success("Proposition refusée");
     }
-    void queryClient.invalidateQueries({ queryKey: ["operator-offers", user?.id] });
+    void queryClient.invalidateQueries({ queryKey: ["operator-offers", operatorId] });
   };
 
   const list = offers.data ?? [];
