@@ -14,6 +14,8 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import type { TablesUpdate } from "@/integrations/supabase/types";
+
 import { useAuth } from "@/lib/auth";
 import { AppShell } from "@/components/AppShell";
 import { CLIENT_NAV } from "@/lib/nav";
