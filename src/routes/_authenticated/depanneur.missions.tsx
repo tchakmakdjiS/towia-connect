@@ -48,7 +48,7 @@ function OperatorMissions() {
       const { data, error } = await supabase
         .from("mission_offers")
         .select("*, missions(*)")
-        .eq("operator_id", user!.id)
+        .eq("operator_id", operatorId!)
         .eq("status", "PENDING")
         .order("offered_at", { ascending: false });
       if (error) throw error;
