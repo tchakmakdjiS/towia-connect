@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
-import { MapPin, Navigation, Star } from "lucide-react";
+import { MapPin, Navigation, Star, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { AppShell } from "@/components/AppShell";
@@ -18,6 +18,7 @@ import {
   type MissionStatus,
   type MissionPriority,
 } from "@/lib/towia";
+import { MISSION_TIMELINE, TIMELINE_ORDER, URGENCY_LABELS } from "@/lib/sos";
 
 export const Route = createFileRoute("/_authenticated/client/mission/$id")({
   head: () => ({
@@ -41,6 +42,7 @@ function ClientMissionDetail() {
 
   const mission = useQuery({
     queryKey: ["mission", id],
+    refetchInterval: 15000,
     queryFn: async () => {
       const { data, error } = await supabase.from("missions").select("*").eq("id", id).maybeSingle();
       if (error) throw error;
@@ -53,6 +55,66 @@ function ClientMissionDetail() {
     queryFn: async () => {
       const { data } = await supabase.from("payments").select("*").eq("mission_id", id).maybeSingle();
       return data;
+    },
+  });
+
+  const events = useQuery({
+    queryKey: ["mission-events", id],
+    refetchInterval: 15000,
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("mission_events")
+        .select("*")
+        .eq("mission_id", id)
+        .order("created_at");
+      return data ?? [];
+    },
+  });
+
+  const operator = useQuery({
+    queryKey: ["mission-operator", mission.data?.operator_id],
+    enabled: !!mission.data?.operator_id,
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("operators")
+        .select("*")
+        .eq("id", mission.data!.operator_id!)
+        .maybeSingle();
+      return data;
+    },
+  });
+
+  const offer = useQuery({
+    queryKey: ["mission-offer", id, mission.data?.operator_id],
+    enabled: !!mission.data?.operator_id,
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("mission_offers")
+        .select("distance_km, estimated_arrival")
+        .eq("mission_id", id)
+        .eq("operator_id", mission.data!.operator_id!)
+        .maybeSingle();
+      return data;
+    },
+  });
+
+  const photos = useQuery({
+    queryKey: ["mission-photos", id],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("mission_photos")
+        .select("storage_path")
+        .eq("mission_id", id);
+      if (!data) return [];
+      const signed = await Promise.all(
+        data.map(async (p) => {
+          const { data: url } = await supabase.storage
+            .from("mission-photos")
+            .createSignedUrl(p.storage_path, 3600);
+          return { url: url?.signedUrl ?? "" };
+        }),
+      );
+      return signed.filter((p) => p.url);
     },
   });
 
@@ -126,14 +188,95 @@ function ClientMissionDetail() {
             )}
           </Section>
 
-          <Section title="Chronologie">
-            <ul className="space-y-2 text-sm">
-              <li>Créée : {formatDate(m.created_at)}</li>
-              <li>Acceptée : {formatDate(m.accepted_at)}</li>
-              <li>Départ : {formatDate(m.departure_time)}</li>
-              <li>Arrivée : {formatDate(m.arrival_at)}</li>
-              <li>Terminée : {formatDate(m.completed_at)}</li>
-            </ul>
+          {m.status === "SEARCHING" || m.status === "PROPOSED" ? (
+            <Section
+              title="Nous recherchons votre dépanneur"
+              description="Recherche d'un professionnel disponible près de vous…"
+            >
+              <ul className="space-y-2 text-sm">
+                <li>📍 {m.address ?? m.city ?? "Position partagée"}</li>
+                <li>
+                  🚗 {[m.vehicle_make, m.vehicle_model, m.vehicle_year].filter(Boolean).join(" ") || "Véhicule non précisé"}
+                </li>
+                <li>🔧 {CATEGORY_LABELS[m.category]}</li>
+                <li>🚨 Urgence : {URGENCY_LABELS[m.priority as MissionPriority]}</li>
+              </ul>
+            </Section>
+          ) : null}
+
+          {operator.data ? (
+            <Section title="Votre dépanneur a accepté la mission">
+              <div className="space-y-1 text-sm">
+                <p className="font-medium">
+                  {[operator.data.first_name, operator.data.last_name].filter(Boolean).join(" ") ||
+                    operator.data.professional_name ||
+                    "Professionnel TowIA"}
+                </p>
+                {operator.data.company_name ? (
+                  <p className="text-muted-foreground">{operator.data.company_name}</p>
+                ) : null}
+                {operator.data.phone ? (
+                  <a className="flex items-center gap-2 text-primary" href={`tel:${operator.data.phone}`}>
+                    <Phone className="size-4" /> {operator.data.phone}
+                  </a>
+                ) : null}
+                {operator.data.vehicle_type ? (
+                  <p className="text-muted-foreground">Véhicule : {operator.data.vehicle_type}</p>
+                ) : null}
+                {offer.data?.distance_km != null ? (
+                  <p className="text-muted-foreground">
+                    Distance : {Number(offer.data.distance_km).toFixed(1)} km
+                  </p>
+                ) : null}
+                {offer.data?.estimated_arrival ? (
+                  <p className="text-muted-foreground">
+                    Arrivée estimée : {formatDate(offer.data.estimated_arrival)}
+                  </p>
+                ) : null}
+              </div>
+            </Section>
+          ) : null}
+
+          {photos.data && photos.data.length > 0 ? (
+            <Section title="Photos">
+              <div className="grid grid-cols-3 gap-2">
+                {photos.data.map((p) => (
+                  <img
+                    key={p.url}
+                    src={p.url}
+                    alt="Photo de la panne"
+                    className="h-24 w-full rounded-xl border border-border object-cover"
+                  />
+                ))}
+              </div>
+            </Section>
+          ) : null}
+
+          <Section title="Suivi de la mission">
+            <ol className="space-y-3">
+              {MISSION_TIMELINE.map((step) => {
+                const event = (events.data ?? []).find((e) => e.status === step.status);
+                const reached =
+                  !!event || TIMELINE_ORDER.indexOf(m.status) >= TIMELINE_ORDER.indexOf(step.status);
+                return (
+                  <li key={step.status} className="flex items-start gap-3 text-sm">
+                    <span className={reached ? "text-success" : "text-muted-foreground"}>
+                      {reached ? "✓" : "○"}
+                    </span>
+                    <span className="flex-1">
+                      <span className={reached ? "font-medium" : "text-muted-foreground"}>
+                        {step.label}
+                      </span>
+                      {event ? (
+                        <span className="block text-xs text-muted-foreground">
+                          {formatDate(event.created_at)}
+                        </span>
+                      ) : null}
+                    </span>
+                  </li>
+                );
+              })}
+            </ol>
           </Section>
 
           <Section title="Paiement" description="Intégration Stripe prévue côté serveur.">

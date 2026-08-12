@@ -82,6 +82,86 @@ export type Database = {
           },
         ]
       }
+      assistance_requests: {
+        Row: {
+          address: string | null
+          answers: Json
+          city: string | null
+          created_at: string
+          id: string
+          latitude: number | null
+          longitude: number | null
+          messages: Json
+          mission_id: string | null
+          postal_code: string | null
+          problem_description: string | null
+          safety_notice: string | null
+          service_type: Database["public"]["Enums"]["mission_category"] | null
+          status: string
+          updated_at: string
+          urgency: Database["public"]["Enums"]["mission_priority"]
+          user_id: string
+          vehicle_make: string | null
+          vehicle_model: string | null
+          vehicle_registration: string | null
+          vehicle_year: number | null
+        }
+        Insert: {
+          address?: string | null
+          answers?: Json
+          city?: string | null
+          created_at?: string
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          messages?: Json
+          mission_id?: string | null
+          postal_code?: string | null
+          problem_description?: string | null
+          safety_notice?: string | null
+          service_type?: Database["public"]["Enums"]["mission_category"] | null
+          status?: string
+          updated_at?: string
+          urgency?: Database["public"]["Enums"]["mission_priority"]
+          user_id: string
+          vehicle_make?: string | null
+          vehicle_model?: string | null
+          vehicle_registration?: string | null
+          vehicle_year?: number | null
+        }
+        Update: {
+          address?: string | null
+          answers?: Json
+          city?: string | null
+          created_at?: string
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          messages?: Json
+          mission_id?: string | null
+          postal_code?: string | null
+          problem_description?: string | null
+          safety_notice?: string | null
+          service_type?: Database["public"]["Enums"]["mission_category"] | null
+          status?: string
+          updated_at?: string
+          urgency?: Database["public"]["Enums"]["mission_priority"]
+          user_id?: string
+          vehicle_make?: string | null
+          vehicle_model?: string | null
+          vehicle_registration?: string | null
+          vehicle_year?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assistance_requests_mission_id_fkey"
+            columns: ["mission_id"]
+            isOneToOne: false
+            referencedRelation: "missions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       companies: {
         Row: {
           address: string | null
@@ -360,6 +440,44 @@ export type Database = {
           },
         ]
       }
+      mission_events: {
+        Row: {
+          actor_id: string | null
+          created_at: string
+          id: string
+          label: string
+          metadata: Json
+          mission_id: string
+          status: Database["public"]["Enums"]["mission_status"] | null
+        }
+        Insert: {
+          actor_id?: string | null
+          created_at?: string
+          id?: string
+          label: string
+          metadata?: Json
+          mission_id: string
+          status?: Database["public"]["Enums"]["mission_status"] | null
+        }
+        Update: {
+          actor_id?: string | null
+          created_at?: string
+          id?: string
+          label?: string
+          metadata?: Json
+          mission_id?: string
+          status?: Database["public"]["Enums"]["mission_status"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mission_events_mission_id_fkey"
+            columns: ["mission_id"]
+            isOneToOne: false
+            referencedRelation: "missions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       mission_offers: {
         Row: {
           distance_km: number | null
@@ -417,6 +535,48 @@ export type Database = {
           },
         ]
       }
+      mission_photos: {
+        Row: {
+          created_at: string
+          id: string
+          mission_id: string | null
+          request_id: string | null
+          storage_path: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          mission_id?: string | null
+          request_id?: string | null
+          storage_path: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          mission_id?: string | null
+          request_id?: string | null
+          storage_path?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mission_photos_mission_id_fkey"
+            columns: ["mission_id"]
+            isOneToOne: false
+            referencedRelation: "missions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mission_photos_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "assistance_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       missions: {
         Row: {
           accepted_at: string | null
@@ -424,6 +584,7 @@ export type Database = {
           arrival_at: string | null
           cancelled_at: string | null
           category: Database["public"]["Enums"]["mission_category"]
+          city: string | null
           client_id: string
           company_id: string | null
           completed_at: string | null
@@ -436,10 +597,16 @@ export type Database = {
           longitude: number | null
           operator_id: string | null
           photo_url: string | null
+          postal_code: string | null
           priority: Database["public"]["Enums"]["mission_priority"]
+          request_id: string | null
           status: Database["public"]["Enums"]["mission_status"]
           updated_at: string
           vehicle_id: string | null
+          vehicle_make: string | null
+          vehicle_model: string | null
+          vehicle_registration: string | null
+          vehicle_year: number | null
         }
         Insert: {
           accepted_at?: string | null
@@ -447,6 +614,7 @@ export type Database = {
           arrival_at?: string | null
           cancelled_at?: string | null
           category?: Database["public"]["Enums"]["mission_category"]
+          city?: string | null
           client_id: string
           company_id?: string | null
           completed_at?: string | null
@@ -459,10 +627,16 @@ export type Database = {
           longitude?: number | null
           operator_id?: string | null
           photo_url?: string | null
+          postal_code?: string | null
           priority?: Database["public"]["Enums"]["mission_priority"]
+          request_id?: string | null
           status?: Database["public"]["Enums"]["mission_status"]
           updated_at?: string
           vehicle_id?: string | null
+          vehicle_make?: string | null
+          vehicle_model?: string | null
+          vehicle_registration?: string | null
+          vehicle_year?: number | null
         }
         Update: {
           accepted_at?: string | null
@@ -470,6 +644,7 @@ export type Database = {
           arrival_at?: string | null
           cancelled_at?: string | null
           category?: Database["public"]["Enums"]["mission_category"]
+          city?: string | null
           client_id?: string
           company_id?: string | null
           completed_at?: string | null
@@ -482,10 +657,16 @@ export type Database = {
           longitude?: number | null
           operator_id?: string | null
           photo_url?: string | null
+          postal_code?: string | null
           priority?: Database["public"]["Enums"]["mission_priority"]
+          request_id?: string | null
           status?: Database["public"]["Enums"]["mission_status"]
           updated_at?: string
           vehicle_id?: string | null
+          vehicle_make?: string | null
+          vehicle_model?: string | null
+          vehicle_registration?: string | null
+          vehicle_year?: number | null
         }
         Relationships: [
           {
@@ -500,6 +681,13 @@ export type Database = {
             columns: ["operator_id"]
             isOneToOne: false
             referencedRelation: "operators"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "missions_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "assistance_requests"
             referencedColumns: ["id"]
           },
           {
@@ -955,6 +1143,8 @@ export type Database = {
         | "ACCIDENT"
         | "VEHICULE_ELECTRIQUE"
         | "AUTRE"
+        | "CLES_ENFERMEES"
+        | "FUMEE_DANGER"
       mission_priority: "NORMAL" | "HIGH" | "EMERGENCY"
       mission_status:
         | "CREATED"
@@ -1120,6 +1310,8 @@ export const Constants = {
         "ACCIDENT",
         "VEHICULE_ELECTRIQUE",
         "AUTRE",
+        "CLES_ENFERMEES",
+        "FUMEE_DANGER",
       ],
       mission_priority: ["NORMAL", "HIGH", "EMERGENCY"],
       mission_status: [
