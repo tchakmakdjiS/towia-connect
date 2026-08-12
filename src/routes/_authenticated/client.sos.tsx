@@ -81,11 +81,12 @@ function SosPage() {
 
   const persist = async (
     id: string,
-    patch: Parameters<ReturnType<typeof supabase.from<"assistance_requests">>["update"]>[0],
+    patch: TablesUpdate<"assistance_requests">,
   ): Promise<void> => {
     const { error } = await supabase.from("assistance_requests").update(patch).eq("id", id);
     if (error) toast.error(error.message);
   };
+
 
 
   /** 1 — bouton SOS : crée une demande "draft" liée à l'utilisateur connecté. */
