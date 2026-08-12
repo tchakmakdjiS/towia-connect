@@ -78,6 +78,12 @@ function OperatorMissions() {
         toast.error(missionError.message);
         return;
       }
+      await supabase.from("mission_events").insert({
+        mission_id: missionId,
+        status: "ACCEPTED",
+        label: "Mission acceptée par le dépanneur",
+        actor_id: user!.id,
+      });
       toast.success("Mission acceptée");
     } else {
       toast.success("Proposition refusée");
