@@ -113,8 +113,21 @@ function OperatorDashboard() {
       toast.error(error.message);
       return;
     }
-    void queryClient.invalidateQueries({ queryKey: ["operator-missions", user?.id] });
+    const labels: Partial<Record<MissionStatus, string>> = {
+      EN_ROUTE: "Dépanneur en route",
+      ARRIVED: "Dépanneur arrivé",
+      IN_PROGRESS: "Intervention en cours",
+      COMPLETED: "Intervention terminée",
+    };
+    await supabase.from("mission_events").insert({
+      mission_id: missionId,
+      status: next,
+      label: labels[next] ?? next,
+      actor_id: user!.id,
+    });
+    void queryClient.invalidateQueries({ queryKey: ["operator-missions", operatorId] });
   };
+
 
   const list = missions.data ?? [];
   const active = list.filter((m) => ACTIVE_STATUSES.includes(m.status as MissionStatus));
