@@ -64,15 +64,18 @@ export const MISSION_PRIORITY_LABELS: Record<MissionPriority, string> = {
 };
 
 export const MISSION_CATEGORIES: { value: MissionCategory; label: string; icon: string }[] = [
-  { value: "PANNE", label: "Panne", icon: "AlertTriangle" },
-  { value: "REMORQUAGE", label: "Remorquage", icon: "Truck" },
+  { value: "PANNE", label: "Panne mécanique", icon: "AlertTriangle" },
   { value: "BATTERIE", label: "Batterie", icon: "BatteryWarning" },
   { value: "CREVAISON", label: "Crevaison", icon: "CircleDot" },
-  { value: "ERREUR_CARBURANT", label: "Erreur carburant", icon: "Fuel" },
+  { value: "CLES_ENFERMEES", label: "Clés enfermées", icon: "KeyRound" },
+  { value: "ERREUR_CARBURANT", label: "Panne de carburant", icon: "Fuel" },
   { value: "ACCIDENT", label: "Accident", icon: "CarFront" },
+  { value: "FUMEE_DANGER", label: "Fumée / danger", icon: "Flame" },
+  { value: "REMORQUAGE", label: "Remorquage", icon: "Truck" },
   { value: "VEHICULE_ELECTRIQUE", label: "Véhicule électrique", icon: "Zap" },
   { value: "AUTRE", label: "Autre", icon: "HelpCircle" },
 ];
+
 
 export const CATEGORY_LABELS = Object.fromEntries(
   MISSION_CATEGORIES.map((c) => [c.value, c.label]),
