@@ -183,3 +183,83 @@ export function inPeriod(dateValue: string | null | undefined, period: PeriodFil
   const start = periodStart(period);
   return !!start && new Date(dateValue) >= start;
 }
+
+/** Le dépanneur accepte une proposition : la mission lui est attribuée. */
+export async function acceptOffer(params: {
+  offerId: string;
+  missionId: string;
+  operatorId: string;
+  companyId?: string | null;
+  actorId: string;
+  clientId: string;
+}): Promise<string | null> {
+  const now = new Date().toISOString();
+  const { error } = await supabase
+    .from("missions")
+    .update({
+      status: "ACCEPTED",
+      operator_id: params.operatorId,
+      accepted_at: now,
+      ...(params.companyId ? { company_id: params.companyId } : {}),
+    })
+    .eq("id", params.missionId);
+  if (error) return error.message;
+
+  await supabase
+    .from("mission_offers")
+    .update({ status: "ACCEPTED", responded_at: now })
+    .eq("id", params.offerId);
+  await supabase
+    .from("mission_offers")
+    .update({ status: "CANCELLED", responded_at: now })
+    .eq("mission_id", params.missionId)
+    .neq("id", params.offerId)
+    .eq("status", "PENDING");
+
+  const pos = await currentPosition();
+  await supabase.from("mission_events").insert({
+    mission_id: params.missionId,
+    status: "ACCEPTED",
+    previous_status: "PROPOSED",
+    label: STATUS_EVENT_LABELS.ACCEPTED!,
+    actor_id: params.actorId,
+    latitude: pos?.latitude ?? null,
+    longitude: pos?.longitude ?? null,
+  });
+  await notifyMissionUser({
+    userId: params.clientId,
+    missionId: params.missionId,
+    status: "ACCEPTED",
+  });
+  return null;
+}
+
+/** Le dépanneur refuse : la mission repart en recherche pour un autre professionnel. */
+export async function declineOffer(params: {
+  offerId: string;
+  missionId: string;
+  actorId: string;
+}): Promise<string | null> {
+  const now = new Date().toISOString();
+  const { error: missionError } = await supabase
+    .from("missions")
+    .update({ status: "SEARCHING" })
+    .eq("id", params.missionId)
+    .neq("status", "ACCEPTED");
+  if (missionError) return missionError.message;
+
+  const { error } = await supabase
+    .from("mission_offers")
+    .update({ status: "DECLINED", responded_at: now })
+    .eq("id", params.offerId);
+  if (error) return error.message;
+
+  await supabase.from("mission_events").insert({
+    mission_id: params.missionId,
+    status: "SEARCHING",
+    previous_status: "PROPOSED",
+    label: "Proposition refusée par un dépanneur",
+    actor_id: params.actorId,
+  });
+  return null;
+}
