@@ -25,7 +25,7 @@ export const Route = createFileRoute("/_authenticated/depanneur/missions")({
       { property: "og:description", content: "Historique des interventions dépanneur." },
     ],
   }),
-  component: OperatorMissions;
+  component: OperatorMissions,
 });
 
 function OperatorMissions() {
