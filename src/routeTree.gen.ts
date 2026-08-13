@@ -35,6 +35,7 @@ import { Route as AuthenticatedDepanneurIndexRouteImport } from './routes/_authe
 import { Route as AuthenticatedDepanneurDashboardRouteImport } from './routes/_authenticated/depanneur.dashboard'
 import { Route as AuthenticatedDepanneurMissionsRouteImport } from './routes/_authenticated/depanneur.missions'
 import { Route as AuthenticatedDepanneurProfilRouteImport } from './routes/_authenticated/depanneur.profil'
+import { Route as AuthenticatedDepanneurRevenusRouteImport } from './routes/_authenticated/depanneur.revenus'
 import { Route as AuthenticatedEntrepriseIndexRouteImport } from './routes/_authenticated/entreprise.index'
 import { Route as AuthenticatedEntrepriseDashboardRouteImport } from './routes/_authenticated/entreprise.dashboard'
 import { Route as AuthenticatedEntrepriseDocumentsRouteImport } from './routes/_authenticated/entreprise.documents'
@@ -190,6 +191,12 @@ const AuthenticatedDepanneurProfilRoute =
     path: '/depanneur/profil',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedDepanneurRevenusRoute =
+  AuthenticatedDepanneurRevenusRouteImport.update({
+    id: '/depanneur/revenus',
+    path: '/depanneur/revenus',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedEntrepriseIndexRoute =
   AuthenticatedEntrepriseIndexRouteImport.update({
     id: '/entreprise/',
@@ -280,6 +287,7 @@ export interface FileRoutesByFullPath {
   '/depanneur/dashboard': typeof AuthenticatedDepanneurDashboardRoute
   '/depanneur/missions': typeof AuthenticatedDepanneurMissionsRoute
   '/depanneur/profil': typeof AuthenticatedDepanneurProfilRoute
+  '/depanneur/revenus': typeof AuthenticatedDepanneurRevenusRoute
   '/entreprise/dashboard': typeof AuthenticatedEntrepriseDashboardRoute
   '/entreprise/documents': typeof AuthenticatedEntrepriseDocumentsRoute
   '/entreprise/equipment': typeof AuthenticatedEntrepriseEquipmentRoute
@@ -318,6 +326,7 @@ export interface FileRoutesByTo {
   '/depanneur/dashboard': typeof AuthenticatedDepanneurDashboardRoute
   '/depanneur/missions': typeof AuthenticatedDepanneurMissionsRoute
   '/depanneur/profil': typeof AuthenticatedDepanneurProfilRoute
+  '/depanneur/revenus': typeof AuthenticatedDepanneurRevenusRoute
   '/entreprise/dashboard': typeof AuthenticatedEntrepriseDashboardRoute
   '/entreprise/documents': typeof AuthenticatedEntrepriseDocumentsRoute
   '/entreprise/equipment': typeof AuthenticatedEntrepriseEquipmentRoute
@@ -358,6 +367,7 @@ export interface FileRoutesById {
   '/_authenticated/depanneur/dashboard': typeof AuthenticatedDepanneurDashboardRoute
   '/_authenticated/depanneur/missions': typeof AuthenticatedDepanneurMissionsRoute
   '/_authenticated/depanneur/profil': typeof AuthenticatedDepanneurProfilRoute
+  '/_authenticated/depanneur/revenus': typeof AuthenticatedDepanneurRevenusRoute
   '/_authenticated/entreprise/dashboard': typeof AuthenticatedEntrepriseDashboardRoute
   '/_authenticated/entreprise/documents': typeof AuthenticatedEntrepriseDocumentsRoute
   '/_authenticated/entreprise/equipment': typeof AuthenticatedEntrepriseEquipmentRoute
@@ -398,6 +408,7 @@ export interface FileRouteTypes {
     | '/depanneur/dashboard'
     | '/depanneur/missions'
     | '/depanneur/profil'
+    | '/depanneur/revenus'
     | '/entreprise/dashboard'
     | '/entreprise/documents'
     | '/entreprise/equipment'
@@ -436,6 +447,7 @@ export interface FileRouteTypes {
     | '/depanneur/dashboard'
     | '/depanneur/missions'
     | '/depanneur/profil'
+    | '/depanneur/revenus'
     | '/entreprise/dashboard'
     | '/entreprise/documents'
     | '/entreprise/equipment'
@@ -475,6 +487,7 @@ export interface FileRouteTypes {
     | '/_authenticated/depanneur/dashboard'
     | '/_authenticated/depanneur/missions'
     | '/_authenticated/depanneur/profil'
+    | '/_authenticated/depanneur/revenus'
     | '/_authenticated/entreprise/dashboard'
     | '/_authenticated/entreprise/documents'
     | '/_authenticated/entreprise/equipment'
@@ -687,6 +700,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDepanneurProfilRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/depanneur/revenus': {
+      id: '/_authenticated/depanneur/revenus'
+      path: '/depanneur/revenus'
+      fullPath: '/depanneur/revenus'
+      preLoaderRoute: typeof AuthenticatedDepanneurRevenusRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/entreprise/': {
       id: '/_authenticated/entreprise/'
       path: '/entreprise'
@@ -782,6 +802,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDepanneurDashboardRoute: typeof AuthenticatedDepanneurDashboardRoute
   AuthenticatedDepanneurMissionsRoute: typeof AuthenticatedDepanneurMissionsRoute
   AuthenticatedDepanneurProfilRoute: typeof AuthenticatedDepanneurProfilRoute
+  AuthenticatedDepanneurRevenusRoute: typeof AuthenticatedDepanneurRevenusRoute
   AuthenticatedEntrepriseDashboardRoute: typeof AuthenticatedEntrepriseDashboardRoute
   AuthenticatedEntrepriseDocumentsRoute: typeof AuthenticatedEntrepriseDocumentsRoute
   AuthenticatedEntrepriseEquipmentRoute: typeof AuthenticatedEntrepriseEquipmentRoute
@@ -813,6 +834,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDepanneurDashboardRoute: AuthenticatedDepanneurDashboardRoute,
   AuthenticatedDepanneurMissionsRoute: AuthenticatedDepanneurMissionsRoute,
   AuthenticatedDepanneurProfilRoute: AuthenticatedDepanneurProfilRoute,
+  AuthenticatedDepanneurRevenusRoute: AuthenticatedDepanneurRevenusRoute,
   AuthenticatedEntrepriseDashboardRoute: AuthenticatedEntrepriseDashboardRoute,
   AuthenticatedEntrepriseDocumentsRoute: AuthenticatedEntrepriseDocumentsRoute,
   AuthenticatedEntrepriseEquipmentRoute: AuthenticatedEntrepriseEquipmentRoute,
