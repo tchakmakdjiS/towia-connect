@@ -446,8 +446,11 @@ export type Database = {
           created_at: string
           id: string
           label: string
+          latitude: number | null
+          longitude: number | null
           metadata: Json
           mission_id: string
+          previous_status: Database["public"]["Enums"]["mission_status"] | null
           status: Database["public"]["Enums"]["mission_status"] | null
         }
         Insert: {
@@ -455,8 +458,11 @@ export type Database = {
           created_at?: string
           id?: string
           label: string
+          latitude?: number | null
+          longitude?: number | null
           metadata?: Json
           mission_id: string
+          previous_status?: Database["public"]["Enums"]["mission_status"] | null
           status?: Database["public"]["Enums"]["mission_status"] | null
         }
         Update: {
@@ -464,8 +470,11 @@ export type Database = {
           created_at?: string
           id?: string
           label?: string
+          latitude?: number | null
+          longitude?: number | null
           metadata?: Json
           mission_id?: string
+          previous_status?: Database["public"]["Enums"]["mission_status"] | null
           status?: Database["public"]["Enums"]["mission_status"] | null
         }
         Relationships: [
@@ -581,6 +590,7 @@ export type Database = {
         Row: {
           accepted_at: string | null
           address: string | null
+          amount: number | null
           arrival_at: string | null
           cancelled_at: string | null
           category: Database["public"]["Enums"]["mission_category"]
@@ -591,10 +601,12 @@ export type Database = {
           created_at: string
           departure_time: string | null
           description: string | null
+          distance_km: number | null
           id: string
           is_demo: boolean
           latitude: number | null
           longitude: number | null
+          operator_comment: string | null
           operator_id: string | null
           photo_url: string | null
           postal_code: string | null
@@ -607,10 +619,12 @@ export type Database = {
           vehicle_model: string | null
           vehicle_registration: string | null
           vehicle_year: number | null
+          work_done: string | null
         }
         Insert: {
           accepted_at?: string | null
           address?: string | null
+          amount?: number | null
           arrival_at?: string | null
           cancelled_at?: string | null
           category?: Database["public"]["Enums"]["mission_category"]
@@ -621,10 +635,12 @@ export type Database = {
           created_at?: string
           departure_time?: string | null
           description?: string | null
+          distance_km?: number | null
           id?: string
           is_demo?: boolean
           latitude?: number | null
           longitude?: number | null
+          operator_comment?: string | null
           operator_id?: string | null
           photo_url?: string | null
           postal_code?: string | null
@@ -637,10 +653,12 @@ export type Database = {
           vehicle_model?: string | null
           vehicle_registration?: string | null
           vehicle_year?: number | null
+          work_done?: string | null
         }
         Update: {
           accepted_at?: string | null
           address?: string | null
+          amount?: number | null
           arrival_at?: string | null
           cancelled_at?: string | null
           category?: Database["public"]["Enums"]["mission_category"]
@@ -651,10 +669,12 @@ export type Database = {
           created_at?: string
           departure_time?: string | null
           description?: string | null
+          distance_km?: number | null
           id?: string
           is_demo?: boolean
           latitude?: number | null
           longitude?: number | null
+          operator_comment?: string | null
           operator_id?: string | null
           photo_url?: string | null
           postal_code?: string | null
@@ -667,6 +687,7 @@ export type Database = {
           vehicle_model?: string | null
           vehicle_registration?: string | null
           vehicle_year?: number | null
+          work_done?: string | null
         }
         Relationships: [
           {
@@ -763,6 +784,7 @@ export type Database = {
           last_latitude: number | null
           last_longitude: number | null
           last_name: string | null
+          last_position_at: string | null
           phone: string | null
           photo_url: string | null
           postal_code: string | null
@@ -796,6 +818,7 @@ export type Database = {
           last_latitude?: number | null
           last_longitude?: number | null
           last_name?: string | null
+          last_position_at?: string | null
           phone?: string | null
           photo_url?: string | null
           postal_code?: string | null
@@ -829,6 +852,7 @@ export type Database = {
           last_latitude?: number | null
           last_longitude?: number | null
           last_name?: string | null
+          last_position_at?: string | null
           phone?: string | null
           photo_url?: string | null
           postal_code?: string | null
