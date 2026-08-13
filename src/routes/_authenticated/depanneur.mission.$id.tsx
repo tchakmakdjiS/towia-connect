@@ -202,7 +202,10 @@ function OperatorMissionDetail() {
       clientId: m.client_id,
     });
     setBusy(false);
-    if (error) return toast.error(error);
+    if (error) {
+      toast.error(error);
+      return;
+    }
     toast.success("Mission acceptée");
     refresh();
   };
@@ -212,7 +215,10 @@ function OperatorMissionDetail() {
     setBusy(true);
     const error = await declineOffer({ offerId: offer.data.id, missionId: m.id, actorId: user!.id });
     setBusy(false);
-    if (error) return toast.error(error);
+    if (error) {
+      toast.error(error);
+      return;
+    }
     toast.success("Proposition refusée");
     void navigate({ to: "/depanneur/dashboard" });
   };
@@ -229,7 +235,10 @@ function OperatorMissionDetail() {
       next: step.next,
     });
     setBusy(false);
-    if (error) return toast.error(error);
+    if (error) {
+      toast.error(error);
+      return;
+    }
     refresh();
   };
 
@@ -283,7 +292,10 @@ function OperatorMissionDetail() {
       });
     }
     setBusy(false);
-    if (error) return toast.error(error);
+    if (error) {
+      toast.error(error);
+      return;
+    }
     toast.success("Mission terminée");
     setProofFiles([]);
     refresh();

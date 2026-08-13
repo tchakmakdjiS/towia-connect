@@ -69,8 +69,8 @@ export async function currentPosition(): Promise<{ latitude: number; longitude: 
 }
 
 export function haversineKm(
-  a: { latitude?: number | null; longitude?: number | null },
-  b: { latitude?: number | null; longitude?: number | null },
+  a: { latitude?: number | null | undefined; longitude?: number | null | undefined },
+  b: { latitude?: number | null | undefined; longitude?: number | null | undefined },
 ): number | null {
   if (a.latitude == null || a.longitude == null || b.latitude == null || b.longitude == null)
     return null;
