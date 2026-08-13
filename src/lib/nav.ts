@@ -9,9 +9,11 @@ export const CLIENT_NAV: NavItem[] = [
 
 export const OPERATOR_NAV: NavItem[] = [
   { to: "/depanneur/dashboard", label: "Tableau de bord" },
-  { to: "/depanneur/missions", label: "Missions disponibles" },
+  { to: "/depanneur/missions", label: "Mes missions" },
+  { to: "/depanneur/revenus", label: "Revenus" },
   { to: "/depanneur/profil", label: "Mon profil" },
 ];
+
 
 export const COMPANY_NAV: NavItem[] = [
   { to: "/entreprise/dashboard", label: "Tableau de bord" },
