@@ -1,5 +1,6 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { MissionStatus } from "@/lib/towia";
+import type { TablesUpdate } from "@/integrations/supabase/types";
 
 /** Étapes terrain du dépanneur (statuts réels de la base). */
 export const OPERATOR_STEPS: Record<
@@ -126,10 +127,10 @@ export async function advanceMissionStatus(params: {
   actorId: string;
   previous: MissionStatus;
   next: MissionStatus;
-  extra?: Record<string, unknown>;
+  extra?: Partial<TablesUpdate<"missions">>;
 }): Promise<string | null> {
   const now = new Date().toISOString();
-  const patch: Record<string, unknown> = {
+  const patch: TablesUpdate<"missions"> = {
     status: params.next,
     ...(params.next === "EN_ROUTE" ? { departure_time: now } : {}),
     ...(params.next === "ARRIVED" ? { arrival_at: now } : {}),
