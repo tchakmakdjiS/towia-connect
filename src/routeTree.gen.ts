@@ -45,6 +45,7 @@ import { Route as AuthenticatedEntrepriseOperatorsRouteImport } from './routes/_
 import { Route as AuthenticatedEntrepriseProfilRouteImport } from './routes/_authenticated/entreprise.profil'
 import { Route as AuthenticatedEntrepriseRevenueRouteImport } from './routes/_authenticated/entreprise.revenue'
 import { Route as AuthenticatedEntrepriseVehiclesRouteImport } from './routes/_authenticated/entreprise.vehicles'
+import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
 import { Route as AuthenticatedClientMissionIdRouteImport } from './routes/_authenticated/client.mission.$id'
 import { Route as AuthenticatedDepanneurMissionIdRouteImport } from './routes/_authenticated/depanneur.mission.$id'
 
@@ -251,6 +252,11 @@ const AuthenticatedEntrepriseVehiclesRoute =
     path: '/entreprise/vehicles',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
+  id: '/api/public/stripe-webhook',
+  path: '/api/public/stripe-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedClientMissionIdRoute =
   AuthenticatedClientMissionIdRouteImport.update({
     id: '/client/mission/$id',
@@ -296,6 +302,7 @@ export interface FileRoutesByFullPath {
   '/entreprise/profil': typeof AuthenticatedEntrepriseProfilRoute
   '/entreprise/revenue': typeof AuthenticatedEntrepriseRevenueRoute
   '/entreprise/vehicles': typeof AuthenticatedEntrepriseVehiclesRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/client/': typeof AuthenticatedClientIndexRoute
   '/depanneur/': typeof AuthenticatedDepanneurIndexRoute
@@ -335,6 +342,7 @@ export interface FileRoutesByTo {
   '/entreprise/profil': typeof AuthenticatedEntrepriseProfilRoute
   '/entreprise/revenue': typeof AuthenticatedEntrepriseRevenueRoute
   '/entreprise/vehicles': typeof AuthenticatedEntrepriseVehiclesRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/client': typeof AuthenticatedClientIndexRoute
   '/depanneur': typeof AuthenticatedDepanneurIndexRoute
@@ -376,6 +384,7 @@ export interface FileRoutesById {
   '/_authenticated/entreprise/profil': typeof AuthenticatedEntrepriseProfilRoute
   '/_authenticated/entreprise/revenue': typeof AuthenticatedEntrepriseRevenueRoute
   '/_authenticated/entreprise/vehicles': typeof AuthenticatedEntrepriseVehiclesRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/client/': typeof AuthenticatedClientIndexRoute
   '/_authenticated/depanneur/': typeof AuthenticatedDepanneurIndexRoute
@@ -417,6 +426,7 @@ export interface FileRouteTypes {
     | '/entreprise/profil'
     | '/entreprise/revenue'
     | '/entreprise/vehicles'
+    | '/api/public/stripe-webhook'
     | '/admin/'
     | '/client/'
     | '/depanneur/'
@@ -456,6 +466,7 @@ export interface FileRouteTypes {
     | '/entreprise/profil'
     | '/entreprise/revenue'
     | '/entreprise/vehicles'
+    | '/api/public/stripe-webhook'
     | '/admin'
     | '/client'
     | '/depanneur'
@@ -496,6 +507,7 @@ export interface FileRouteTypes {
     | '/_authenticated/entreprise/profil'
     | '/_authenticated/entreprise/revenue'
     | '/_authenticated/entreprise/vehicles'
+    | '/api/public/stripe-webhook'
     | '/_authenticated/admin/'
     | '/_authenticated/client/'
     | '/_authenticated/depanneur/'
@@ -514,6 +526,7 @@ export interface RootRouteChildren {
   MotDePasseOublieRoute: typeof MotDePasseOublieRoute
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -770,6 +783,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEntrepriseVehiclesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/stripe-webhook': {
+      id: '/api/public/stripe-webhook'
+      path: '/api/public/stripe-webhook'
+      fullPath: '/api/public/stripe-webhook'
+      preLoaderRoute: typeof ApiPublicStripeWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/client/mission/$id': {
       id: '/_authenticated/client/mission/$id'
       path: '/client/mission/$id'
@@ -864,6 +884,7 @@ const rootRouteChildren: RootRouteChildren = {
   MotDePasseOublieRoute: MotDePasseOublieRoute,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
