@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   calculateMissionPrice,
   clampPercentage,
-  toRule,
+  
   DEFAULT_PLATFORM_FEE_PERCENTAGE,
   type PriceBreakdown,
   type PricingRule,
