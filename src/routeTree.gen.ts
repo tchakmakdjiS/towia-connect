@@ -47,6 +47,7 @@ import { Route as AuthenticatedEntrepriseRevenueRouteImport } from './routes/_au
 import { Route as AuthenticatedEntrepriseVehiclesRouteImport } from './routes/_authenticated/entreprise.vehicles'
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
 import { Route as AuthenticatedClientMissionIdRouteImport } from './routes/_authenticated/client.mission.$id'
+import { Route as AuthenticatedClientPaiementIdRouteImport } from './routes/_authenticated/client.paiement.$id'
 import { Route as AuthenticatedDepanneurMissionIdRouteImport } from './routes/_authenticated/depanneur.mission.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -263,6 +264,12 @@ const AuthenticatedClientMissionIdRoute =
     path: '/client/mission/$id',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedClientPaiementIdRoute =
+  AuthenticatedClientPaiementIdRouteImport.update({
+    id: '/client/paiement/$id',
+    path: '/client/paiement/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedDepanneurMissionIdRoute =
   AuthenticatedDepanneurMissionIdRouteImport.update({
     id: '/depanneur/mission/$id',
@@ -308,6 +315,7 @@ export interface FileRoutesByFullPath {
   '/depanneur/': typeof AuthenticatedDepanneurIndexRoute
   '/entreprise/': typeof AuthenticatedEntrepriseIndexRoute
   '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
+  '/client/paiement/$id': typeof AuthenticatedClientPaiementIdRoute
   '/depanneur/mission/$id': typeof AuthenticatedDepanneurMissionIdRoute
 }
 export interface FileRoutesByTo {
@@ -348,6 +356,7 @@ export interface FileRoutesByTo {
   '/depanneur': typeof AuthenticatedDepanneurIndexRoute
   '/entreprise': typeof AuthenticatedEntrepriseIndexRoute
   '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
+  '/client/paiement/$id': typeof AuthenticatedClientPaiementIdRoute
   '/depanneur/mission/$id': typeof AuthenticatedDepanneurMissionIdRoute
 }
 export interface FileRoutesById {
@@ -390,6 +399,7 @@ export interface FileRoutesById {
   '/_authenticated/depanneur/': typeof AuthenticatedDepanneurIndexRoute
   '/_authenticated/entreprise/': typeof AuthenticatedEntrepriseIndexRoute
   '/_authenticated/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
+  '/_authenticated/client/paiement/$id': typeof AuthenticatedClientPaiementIdRoute
   '/_authenticated/depanneur/mission/$id': typeof AuthenticatedDepanneurMissionIdRoute
 }
 export interface FileRouteTypes {
@@ -432,6 +442,7 @@ export interface FileRouteTypes {
     | '/depanneur/'
     | '/entreprise/'
     | '/client/mission/$id'
+    | '/client/paiement/$id'
     | '/depanneur/mission/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -472,6 +483,7 @@ export interface FileRouteTypes {
     | '/depanneur'
     | '/entreprise'
     | '/client/mission/$id'
+    | '/client/paiement/$id'
     | '/depanneur/mission/$id'
   id:
     | '__root__'
@@ -513,6 +525,7 @@ export interface FileRouteTypes {
     | '/_authenticated/depanneur/'
     | '/_authenticated/entreprise/'
     | '/_authenticated/client/mission/$id'
+    | '/_authenticated/client/paiement/$id'
     | '/_authenticated/depanneur/mission/$id'
   fileRoutesById: FileRoutesById
 }
@@ -797,6 +810,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedClientMissionIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/client/paiement/$id': {
+      id: '/_authenticated/client/paiement/$id'
+      path: '/client/paiement/$id'
+      fullPath: '/client/paiement/$id'
+      preLoaderRoute: typeof AuthenticatedClientPaiementIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/depanneur/mission/$id': {
       id: '/_authenticated/depanneur/mission/$id'
       path: '/depanneur/mission/$id'
@@ -836,6 +856,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDepanneurIndexRoute: typeof AuthenticatedDepanneurIndexRoute
   AuthenticatedEntrepriseIndexRoute: typeof AuthenticatedEntrepriseIndexRoute
   AuthenticatedClientMissionIdRoute: typeof AuthenticatedClientMissionIdRoute
+  AuthenticatedClientPaiementIdRoute: typeof AuthenticatedClientPaiementIdRoute
   AuthenticatedDepanneurMissionIdRoute: typeof AuthenticatedDepanneurMissionIdRoute
 }
 
@@ -868,6 +889,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDepanneurIndexRoute: AuthenticatedDepanneurIndexRoute,
   AuthenticatedEntrepriseIndexRoute: AuthenticatedEntrepriseIndexRoute,
   AuthenticatedClientMissionIdRoute: AuthenticatedClientMissionIdRoute,
+  AuthenticatedClientPaiementIdRoute: AuthenticatedClientPaiementIdRoute,
   AuthenticatedDepanneurMissionIdRoute: AuthenticatedDepanneurMissionIdRoute,
 }
 
