@@ -66,7 +66,7 @@ function AdminPricing() {
     setSavingId(rule["id"] as string);
     const { error } = await supabase
       .from("pricing_rules")
-      .update(patch)
+      .update(patch as never)
       .eq("id", rule["id"] as string);
     setSavingId(null);
     if (error) {
@@ -78,7 +78,7 @@ function AdminPricing() {
       action: "pricing_rule_updated",
       entity: "pricing_rules",
       entity_id: rule["id"] as string,
-      metadata: patch,
+      metadata: patch as never,
     });
     toast.success("Tarif mis à jour");
     void queryClient.invalidateQueries({ queryKey: ["pricing-rules"] });
