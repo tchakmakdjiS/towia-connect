@@ -29,6 +29,7 @@ import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authentic
 import { Route as AuthenticatedClientIndexRouteImport } from './routes/_authenticated/client.index'
 import { Route as AuthenticatedClientDashboardRouteImport } from './routes/_authenticated/client.dashboard'
 import { Route as AuthenticatedClientMissionsRouteImport } from './routes/_authenticated/client.missions'
+import { Route as AuthenticatedClientPaiementsRouteImport } from './routes/_authenticated/client.paiements'
 import { Route as AuthenticatedClientProfilRouteImport } from './routes/_authenticated/client.profil'
 import { Route as AuthenticatedClientSosRouteImport } from './routes/_authenticated/client.sos'
 import { Route as AuthenticatedDepanneurIndexRouteImport } from './routes/_authenticated/depanneur.index'
@@ -156,6 +157,12 @@ const AuthenticatedClientMissionsRoute =
   AuthenticatedClientMissionsRouteImport.update({
     id: '/client/missions',
     path: '/client/missions',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedClientPaiementsRoute =
+  AuthenticatedClientPaiementsRouteImport.update({
+    id: '/client/paiements',
+    path: '/client/paiements',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedClientProfilRoute =
@@ -295,6 +302,7 @@ export interface FileRoutesByFullPath {
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/client/dashboard': typeof AuthenticatedClientDashboardRoute
   '/client/missions': typeof AuthenticatedClientMissionsRoute
+  '/client/paiements': typeof AuthenticatedClientPaiementsRoute
   '/client/profil': typeof AuthenticatedClientProfilRoute
   '/client/sos': typeof AuthenticatedClientSosRoute
   '/depanneur/dashboard': typeof AuthenticatedDepanneurDashboardRoute
@@ -336,6 +344,7 @@ export interface FileRoutesByTo {
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/client/dashboard': typeof AuthenticatedClientDashboardRoute
   '/client/missions': typeof AuthenticatedClientMissionsRoute
+  '/client/paiements': typeof AuthenticatedClientPaiementsRoute
   '/client/profil': typeof AuthenticatedClientProfilRoute
   '/client/sos': typeof AuthenticatedClientSosRoute
   '/depanneur/dashboard': typeof AuthenticatedDepanneurDashboardRoute
@@ -379,6 +388,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/client/dashboard': typeof AuthenticatedClientDashboardRoute
   '/_authenticated/client/missions': typeof AuthenticatedClientMissionsRoute
+  '/_authenticated/client/paiements': typeof AuthenticatedClientPaiementsRoute
   '/_authenticated/client/profil': typeof AuthenticatedClientProfilRoute
   '/_authenticated/client/sos': typeof AuthenticatedClientSosRoute
   '/_authenticated/depanneur/dashboard': typeof AuthenticatedDepanneurDashboardRoute
@@ -422,6 +432,7 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/client/dashboard'
     | '/client/missions'
+    | '/client/paiements'
     | '/client/profil'
     | '/client/sos'
     | '/depanneur/dashboard'
@@ -463,6 +474,7 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/client/dashboard'
     | '/client/missions'
+    | '/client/paiements'
     | '/client/profil'
     | '/client/sos'
     | '/depanneur/dashboard'
@@ -505,6 +517,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/users'
     | '/_authenticated/client/dashboard'
     | '/_authenticated/client/missions'
+    | '/_authenticated/client/paiements'
     | '/_authenticated/client/profil'
     | '/_authenticated/client/sos'
     | '/_authenticated/depanneur/dashboard'
@@ -684,6 +697,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedClientMissionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/client/paiements': {
+      id: '/_authenticated/client/paiements'
+      path: '/client/paiements'
+      fullPath: '/client/paiements'
+      preLoaderRoute: typeof AuthenticatedClientPaiementsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/client/profil': {
       id: '/_authenticated/client/profil'
       path: '/client/profil'
@@ -837,6 +857,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedClientDashboardRoute: typeof AuthenticatedClientDashboardRoute
   AuthenticatedClientMissionsRoute: typeof AuthenticatedClientMissionsRoute
+  AuthenticatedClientPaiementsRoute: typeof AuthenticatedClientPaiementsRoute
   AuthenticatedClientProfilRoute: typeof AuthenticatedClientProfilRoute
   AuthenticatedClientSosRoute: typeof AuthenticatedClientSosRoute
   AuthenticatedDepanneurDashboardRoute: typeof AuthenticatedDepanneurDashboardRoute
@@ -870,6 +891,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedClientDashboardRoute: AuthenticatedClientDashboardRoute,
   AuthenticatedClientMissionsRoute: AuthenticatedClientMissionsRoute,
+  AuthenticatedClientPaiementsRoute: AuthenticatedClientPaiementsRoute,
   AuthenticatedClientProfilRoute: AuthenticatedClientProfilRoute,
   AuthenticatedClientSosRoute: AuthenticatedClientSosRoute,
   AuthenticatedDepanneurDashboardRoute: AuthenticatedDepanneurDashboardRoute,
