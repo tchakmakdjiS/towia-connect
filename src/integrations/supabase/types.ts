@@ -326,14 +326,17 @@ export type Database = {
       invoices: {
         Row: {
           client_id: string
+          company_id: string | null
           created_at: string
           currency: string
           id: string
           invoice_number: string
           is_demo: boolean
+          issued_at: string
           mission_id: string
           operator_id: string | null
           payment_id: string | null
+          pdf_url: string | null
           status: string
           subtotal: number
           tax_amount: number
@@ -341,14 +344,17 @@ export type Database = {
         }
         Insert: {
           client_id: string
+          company_id?: string | null
           created_at?: string
           currency?: string
           id?: string
           invoice_number: string
           is_demo?: boolean
+          issued_at?: string
           mission_id: string
           operator_id?: string | null
           payment_id?: string | null
+          pdf_url?: string | null
           status?: string
           subtotal?: number
           tax_amount?: number
@@ -356,20 +362,30 @@ export type Database = {
         }
         Update: {
           client_id?: string
+          company_id?: string | null
           created_at?: string
           currency?: string
           id?: string
           invoice_number?: string
           is_demo?: boolean
+          issued_at?: string
           mission_id?: string
           operator_id?: string | null
           payment_id?: string | null
+          pdf_url?: string | null
           status?: string
           subtotal?: number
           tax_amount?: number
           total?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "invoices_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "invoices_mission_id_fkey"
             columns: ["mission_id"]
@@ -602,14 +618,17 @@ export type Database = {
           departure_time: string | null
           description: string | null
           distance_km: number | null
+          estimated_amount: number | null
           id: string
           is_demo: boolean
           latitude: number | null
           longitude: number | null
           operator_comment: string | null
           operator_id: string | null
+          payment_status: string
           photo_url: string | null
           postal_code: string | null
+          price_breakdown: Json | null
           priority: Database["public"]["Enums"]["mission_priority"]
           request_id: string | null
           status: Database["public"]["Enums"]["mission_status"]
@@ -636,14 +655,17 @@ export type Database = {
           departure_time?: string | null
           description?: string | null
           distance_km?: number | null
+          estimated_amount?: number | null
           id?: string
           is_demo?: boolean
           latitude?: number | null
           longitude?: number | null
           operator_comment?: string | null
           operator_id?: string | null
+          payment_status?: string
           photo_url?: string | null
           postal_code?: string | null
+          price_breakdown?: Json | null
           priority?: Database["public"]["Enums"]["mission_priority"]
           request_id?: string | null
           status?: Database["public"]["Enums"]["mission_status"]
@@ -670,14 +692,17 @@ export type Database = {
           departure_time?: string | null
           description?: string | null
           distance_km?: number | null
+          estimated_amount?: number | null
           id?: string
           is_demo?: boolean
           latitude?: number | null
           longitude?: number | null
           operator_comment?: string | null
           operator_id?: string | null
+          payment_status?: string
           photo_url?: string | null
           postal_code?: string | null
+          price_breakdown?: Json | null
           priority?: Database["public"]["Enums"]["mission_priority"]
           request_id?: string | null
           status?: Database["public"]["Enums"]["mission_status"]
@@ -760,6 +785,69 @@ export type Database = {
             columns: ["mission_id"]
             isOneToOne: false
             referencedRelation: "missions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      operator_pricing: {
+        Row: {
+          active: boolean
+          base_price: number
+          company_id: string | null
+          created_at: string
+          emergency_surcharge: number
+          id: string
+          minimum_price: number
+          night_surcharge: number
+          operator_id: string | null
+          price_per_km: number
+          service_type: Database["public"]["Enums"]["mission_category"]
+          updated_at: string
+          weekend_surcharge: number
+        }
+        Insert: {
+          active?: boolean
+          base_price?: number
+          company_id?: string | null
+          created_at?: string
+          emergency_surcharge?: number
+          id?: string
+          minimum_price?: number
+          night_surcharge?: number
+          operator_id?: string | null
+          price_per_km?: number
+          service_type: Database["public"]["Enums"]["mission_category"]
+          updated_at?: string
+          weekend_surcharge?: number
+        }
+        Update: {
+          active?: boolean
+          base_price?: number
+          company_id?: string | null
+          created_at?: string
+          emergency_surcharge?: number
+          id?: string
+          minimum_price?: number
+          night_surcharge?: number
+          operator_id?: string | null
+          price_per_km?: number
+          service_type?: Database["public"]["Enums"]["mission_category"]
+          updated_at?: string
+          weekend_surcharge?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "operator_pricing_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "operator_pricing_operator_id_fkey"
+            columns: ["operator_id"]
+            isOneToOne: false
+            referencedRelation: "operators"
             referencedColumns: ["id"]
           },
         ]
@@ -880,12 +968,17 @@ export type Database = {
       payments: {
         Row: {
           amount: number
+          breakdown: Json | null
+          cancelled_at: string | null
           client_id: string
           commission_rate: number
+          company_id: string | null
           created_at: string
           currency: string
+          failure_reason: string | null
           id: string
           is_demo: boolean
+          is_test: boolean
           mission_id: string
           operator_id: string | null
           paid_at: string | null
@@ -894,15 +987,23 @@ export type Database = {
           provider_payment_id: string | null
           refunded_at: string | null
           status: Database["public"]["Enums"]["payment_status"]
+          stripe_checkout_session_id: string | null
+          stripe_customer_id: string | null
+          stripe_payment_intent_id: string | null
         }
         Insert: {
           amount?: number
+          breakdown?: Json | null
+          cancelled_at?: string | null
           client_id: string
           commission_rate?: number
+          company_id?: string | null
           created_at?: string
           currency?: string
+          failure_reason?: string | null
           id?: string
           is_demo?: boolean
+          is_test?: boolean
           mission_id: string
           operator_id?: string | null
           paid_at?: string | null
@@ -911,15 +1012,23 @@ export type Database = {
           provider_payment_id?: string | null
           refunded_at?: string | null
           status?: Database["public"]["Enums"]["payment_status"]
+          stripe_checkout_session_id?: string | null
+          stripe_customer_id?: string | null
+          stripe_payment_intent_id?: string | null
         }
         Update: {
           amount?: number
+          breakdown?: Json | null
+          cancelled_at?: string | null
           client_id?: string
           commission_rate?: number
+          company_id?: string | null
           created_at?: string
           currency?: string
+          failure_reason?: string | null
           id?: string
           is_demo?: boolean
+          is_test?: boolean
           mission_id?: string
           operator_id?: string | null
           paid_at?: string | null
@@ -928,8 +1037,18 @@ export type Database = {
           provider_payment_id?: string | null
           refunded_at?: string | null
           status?: Database["public"]["Enums"]["payment_status"]
+          stripe_checkout_session_id?: string | null
+          stripe_customer_id?: string | null
+          stripe_payment_intent_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "payments_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "payments_mission_id_fkey"
             columns: ["mission_id"]
@@ -945,6 +1064,75 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      platform_settings: {
+        Row: {
+          created_at: string
+          key: string
+          updated_at: string
+          updated_by: string | null
+          value: Json
+        }
+        Insert: {
+          created_at?: string
+          key: string
+          updated_at?: string
+          updated_by?: string | null
+          value: Json
+        }
+        Update: {
+          created_at?: string
+          key?: string
+          updated_at?: string
+          updated_by?: string | null
+          value?: Json
+        }
+        Relationships: []
+      }
+      pricing_rules: {
+        Row: {
+          active: boolean
+          base_price: number
+          created_at: string
+          emergency_surcharge: number
+          id: string
+          minimum_price: number
+          name: string
+          night_surcharge: number
+          price_per_km: number
+          service_type: Database["public"]["Enums"]["mission_category"]
+          updated_at: string
+          weekend_surcharge: number
+        }
+        Insert: {
+          active?: boolean
+          base_price?: number
+          created_at?: string
+          emergency_surcharge?: number
+          id?: string
+          minimum_price?: number
+          name: string
+          night_surcharge?: number
+          price_per_km?: number
+          service_type: Database["public"]["Enums"]["mission_category"]
+          updated_at?: string
+          weekend_surcharge?: number
+        }
+        Update: {
+          active?: boolean
+          base_price?: number
+          created_at?: string
+          emergency_surcharge?: number
+          id?: string
+          minimum_price?: number
+          name?: string
+          night_surcharge?: number
+          price_per_km?: number
+          service_type?: Database["public"]["Enums"]["mission_category"]
+          updated_at?: string
+          weekend_surcharge?: number
+        }
+        Relationships: []
       }
       profiles: {
         Row: {
@@ -993,6 +1181,51 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      refunds: {
+        Row: {
+          administrator_id: string | null
+          amount: number
+          created_at: string
+          id: string
+          mission_id: string | null
+          payment_id: string
+          reason: string | null
+        }
+        Insert: {
+          administrator_id?: string | null
+          amount: number
+          created_at?: string
+          id?: string
+          mission_id?: string | null
+          payment_id: string
+          reason?: string | null
+        }
+        Update: {
+          administrator_id?: string | null
+          amount?: number
+          created_at?: string
+          id?: string
+          mission_id?: string | null
+          payment_id?: string
+          reason?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "refunds_mission_id_fkey"
+            columns: ["mission_id"]
+            isOneToOne: false
+            referencedRelation: "missions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "refunds_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       reviews: {
         Row: {

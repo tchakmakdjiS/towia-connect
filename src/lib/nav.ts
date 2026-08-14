@@ -4,6 +4,7 @@ export const CLIENT_NAV: NavItem[] = [
   { to: "/client/dashboard", label: "Tableau de bord" },
   { to: "/client/sos", label: "SOS assistance" },
   { to: "/client/missions", label: "Mes missions" },
+  { to: "/client/paiements", label: "Mes paiements" },
   { to: "/client/profil", label: "Mon profil" },
 ];
 
@@ -33,6 +34,7 @@ export const ADMIN_NAV: NavItem[] = [
   { to: "/admin/operators", label: "Professionnels" },
   { to: "/admin/companies", label: "Entreprises" },
   { to: "/admin/payments", label: "Paiements" },
+  { to: "/admin/tarifs", label: "Tarifs" },
   { to: "/admin/reviews", label: "Avis" },
   { to: "/admin/settings", label: "Paramètres" },
 ];

@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -19,6 +19,7 @@ import {
   type MissionPriority,
 } from "@/lib/towia";
 import { MISSION_TIMELINE, TIMELINE_ORDER, URGENCY_LABELS } from "@/lib/sos";
+import { PAYMENT_STATUS_LABELS } from "@/lib/pricing";
 
 export const Route = createFileRoute("/_authenticated/client/mission/$id")({
   head: () => ({
@@ -279,18 +280,47 @@ function ClientMissionDetail() {
             </ol>
           </Section>
 
-          <Section title="Paiement" description="Intégration Stripe prévue côté serveur.">
+          <Section title="Paiement" description="Paiement sécurisé, aucune donnée bancaire stockée.">
             {payment.data ? (
-              <div className="space-y-1 text-sm">
+              <div className="space-y-3 text-sm">
                 <p>Montant : {formatAmount(Number(payment.data.amount), payment.data.currency)}</p>
-                <p>Statut : {payment.data.status}</p>
+                <p>
+                  Statut : {PAYMENT_STATUS_LABELS[payment.data.status] ?? payment.data.status}
+                  {payment.data.is_test ? " (mode test)" : ""}
+                </p>
+                {payment.data.status !== "PAID" && payment.data.status !== "REFUNDED" ? (
+                  <Button asChild className="rounded-xl bg-gradient-primary">
+                    <Link to="/client/paiement/$id" params={{ id }}>
+                      Régler l'intervention
+                    </Link>
+                  </Button>
+                ) : null}
+              </div>
+            ) : m.status === "COMPLETED" ? (
+              <div className="space-y-3">
+                <p className="text-sm text-muted-foreground">
+                  Votre intervention est terminée, il reste à la régler.
+                </p>
+                <Button asChild className="rounded-xl bg-gradient-primary">
+                  <Link to="/client/paiement/$id" params={{ id }}>
+                    Payer maintenant
+                  </Link>
+                </Button>
               </div>
             ) : (
-              <p className="text-sm text-muted-foreground">
-                Aucun paiement enregistré pour cette mission.
-              </p>
+              <div className="space-y-3">
+                <p className="text-sm text-muted-foreground">
+                  Aucun paiement enregistré pour cette mission.
+                </p>
+                <Button asChild variant="secondary" className="rounded-xl">
+                  <Link to="/client/paiement/$id" params={{ id }}>
+                    Voir l'estimation
+                  </Link>
+                </Button>
+              </div>
             )}
           </Section>
+
 
           {m.status === "COMPLETED" ? (
             <Section title="Votre avis">

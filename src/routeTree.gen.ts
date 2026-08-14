@@ -25,10 +25,12 @@ import { Route as AuthenticatedAdminOperatorsRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminPaymentsRouteImport } from './routes/_authenticated/admin.payments'
 import { Route as AuthenticatedAdminReviewsRouteImport } from './routes/_authenticated/admin.reviews'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
+import { Route as AuthenticatedAdminTarifsRouteImport } from './routes/_authenticated/admin.tarifs'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
 import { Route as AuthenticatedClientIndexRouteImport } from './routes/_authenticated/client.index'
 import { Route as AuthenticatedClientDashboardRouteImport } from './routes/_authenticated/client.dashboard'
 import { Route as AuthenticatedClientMissionsRouteImport } from './routes/_authenticated/client.missions'
+import { Route as AuthenticatedClientPaiementsRouteImport } from './routes/_authenticated/client.paiements'
 import { Route as AuthenticatedClientProfilRouteImport } from './routes/_authenticated/client.profil'
 import { Route as AuthenticatedClientSosRouteImport } from './routes/_authenticated/client.sos'
 import { Route as AuthenticatedDepanneurIndexRouteImport } from './routes/_authenticated/depanneur.index'
@@ -45,7 +47,9 @@ import { Route as AuthenticatedEntrepriseOperatorsRouteImport } from './routes/_
 import { Route as AuthenticatedEntrepriseProfilRouteImport } from './routes/_authenticated/entreprise.profil'
 import { Route as AuthenticatedEntrepriseRevenueRouteImport } from './routes/_authenticated/entreprise.revenue'
 import { Route as AuthenticatedEntrepriseVehiclesRouteImport } from './routes/_authenticated/entreprise.vehicles'
+import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
 import { Route as AuthenticatedClientMissionIdRouteImport } from './routes/_authenticated/client.mission.$id'
+import { Route as AuthenticatedClientPaiementIdRouteImport } from './routes/_authenticated/client.paiement.$id'
 import { Route as AuthenticatedDepanneurMissionIdRouteImport } from './routes/_authenticated/depanneur.mission.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -133,6 +137,12 @@ const AuthenticatedAdminSettingsRoute =
     path: '/admin/settings',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminTarifsRoute =
+  AuthenticatedAdminTarifsRouteImport.update({
+    id: '/admin/tarifs',
+    path: '/admin/tarifs',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   id: '/admin/users',
   path: '/admin/users',
@@ -154,6 +164,12 @@ const AuthenticatedClientMissionsRoute =
   AuthenticatedClientMissionsRouteImport.update({
     id: '/client/missions',
     path: '/client/missions',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedClientPaiementsRoute =
+  AuthenticatedClientPaiementsRouteImport.update({
+    id: '/client/paiements',
+    path: '/client/paiements',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedClientProfilRoute =
@@ -251,10 +267,21 @@ const AuthenticatedEntrepriseVehiclesRoute =
     path: '/entreprise/vehicles',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
+  id: '/api/public/stripe-webhook',
+  path: '/api/public/stripe-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedClientMissionIdRoute =
   AuthenticatedClientMissionIdRouteImport.update({
     id: '/client/mission/$id',
     path: '/client/mission/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedClientPaiementIdRoute =
+  AuthenticatedClientPaiementIdRouteImport.update({
+    id: '/client/paiement/$id',
+    path: '/client/paiement/$id',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedDepanneurMissionIdRoute =
@@ -279,9 +306,11 @@ export interface FileRoutesByFullPath {
   '/admin/payments': typeof AuthenticatedAdminPaymentsRoute
   '/admin/reviews': typeof AuthenticatedAdminReviewsRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/tarifs': typeof AuthenticatedAdminTarifsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/client/dashboard': typeof AuthenticatedClientDashboardRoute
   '/client/missions': typeof AuthenticatedClientMissionsRoute
+  '/client/paiements': typeof AuthenticatedClientPaiementsRoute
   '/client/profil': typeof AuthenticatedClientProfilRoute
   '/client/sos': typeof AuthenticatedClientSosRoute
   '/depanneur/dashboard': typeof AuthenticatedDepanneurDashboardRoute
@@ -296,11 +325,13 @@ export interface FileRoutesByFullPath {
   '/entreprise/profil': typeof AuthenticatedEntrepriseProfilRoute
   '/entreprise/revenue': typeof AuthenticatedEntrepriseRevenueRoute
   '/entreprise/vehicles': typeof AuthenticatedEntrepriseVehiclesRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/client/': typeof AuthenticatedClientIndexRoute
   '/depanneur/': typeof AuthenticatedDepanneurIndexRoute
   '/entreprise/': typeof AuthenticatedEntrepriseIndexRoute
   '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
+  '/client/paiement/$id': typeof AuthenticatedClientPaiementIdRoute
   '/depanneur/mission/$id': typeof AuthenticatedDepanneurMissionIdRoute
 }
 export interface FileRoutesByTo {
@@ -318,9 +349,11 @@ export interface FileRoutesByTo {
   '/admin/payments': typeof AuthenticatedAdminPaymentsRoute
   '/admin/reviews': typeof AuthenticatedAdminReviewsRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/tarifs': typeof AuthenticatedAdminTarifsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/client/dashboard': typeof AuthenticatedClientDashboardRoute
   '/client/missions': typeof AuthenticatedClientMissionsRoute
+  '/client/paiements': typeof AuthenticatedClientPaiementsRoute
   '/client/profil': typeof AuthenticatedClientProfilRoute
   '/client/sos': typeof AuthenticatedClientSosRoute
   '/depanneur/dashboard': typeof AuthenticatedDepanneurDashboardRoute
@@ -335,11 +368,13 @@ export interface FileRoutesByTo {
   '/entreprise/profil': typeof AuthenticatedEntrepriseProfilRoute
   '/entreprise/revenue': typeof AuthenticatedEntrepriseRevenueRoute
   '/entreprise/vehicles': typeof AuthenticatedEntrepriseVehiclesRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/client': typeof AuthenticatedClientIndexRoute
   '/depanneur': typeof AuthenticatedDepanneurIndexRoute
   '/entreprise': typeof AuthenticatedEntrepriseIndexRoute
   '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
+  '/client/paiement/$id': typeof AuthenticatedClientPaiementIdRoute
   '/depanneur/mission/$id': typeof AuthenticatedDepanneurMissionIdRoute
 }
 export interface FileRoutesById {
@@ -359,9 +394,11 @@ export interface FileRoutesById {
   '/_authenticated/admin/payments': typeof AuthenticatedAdminPaymentsRoute
   '/_authenticated/admin/reviews': typeof AuthenticatedAdminReviewsRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/_authenticated/admin/tarifs': typeof AuthenticatedAdminTarifsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/client/dashboard': typeof AuthenticatedClientDashboardRoute
   '/_authenticated/client/missions': typeof AuthenticatedClientMissionsRoute
+  '/_authenticated/client/paiements': typeof AuthenticatedClientPaiementsRoute
   '/_authenticated/client/profil': typeof AuthenticatedClientProfilRoute
   '/_authenticated/client/sos': typeof AuthenticatedClientSosRoute
   '/_authenticated/depanneur/dashboard': typeof AuthenticatedDepanneurDashboardRoute
@@ -376,11 +413,13 @@ export interface FileRoutesById {
   '/_authenticated/entreprise/profil': typeof AuthenticatedEntrepriseProfilRoute
   '/_authenticated/entreprise/revenue': typeof AuthenticatedEntrepriseRevenueRoute
   '/_authenticated/entreprise/vehicles': typeof AuthenticatedEntrepriseVehiclesRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/client/': typeof AuthenticatedClientIndexRoute
   '/_authenticated/depanneur/': typeof AuthenticatedDepanneurIndexRoute
   '/_authenticated/entreprise/': typeof AuthenticatedEntrepriseIndexRoute
   '/_authenticated/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
+  '/_authenticated/client/paiement/$id': typeof AuthenticatedClientPaiementIdRoute
   '/_authenticated/depanneur/mission/$id': typeof AuthenticatedDepanneurMissionIdRoute
 }
 export interface FileRouteTypes {
@@ -400,9 +439,11 @@ export interface FileRouteTypes {
     | '/admin/payments'
     | '/admin/reviews'
     | '/admin/settings'
+    | '/admin/tarifs'
     | '/admin/users'
     | '/client/dashboard'
     | '/client/missions'
+    | '/client/paiements'
     | '/client/profil'
     | '/client/sos'
     | '/depanneur/dashboard'
@@ -417,11 +458,13 @@ export interface FileRouteTypes {
     | '/entreprise/profil'
     | '/entreprise/revenue'
     | '/entreprise/vehicles'
+    | '/api/public/stripe-webhook'
     | '/admin/'
     | '/client/'
     | '/depanneur/'
     | '/entreprise/'
     | '/client/mission/$id'
+    | '/client/paiement/$id'
     | '/depanneur/mission/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -439,9 +482,11 @@ export interface FileRouteTypes {
     | '/admin/payments'
     | '/admin/reviews'
     | '/admin/settings'
+    | '/admin/tarifs'
     | '/admin/users'
     | '/client/dashboard'
     | '/client/missions'
+    | '/client/paiements'
     | '/client/profil'
     | '/client/sos'
     | '/depanneur/dashboard'
@@ -456,11 +501,13 @@ export interface FileRouteTypes {
     | '/entreprise/profil'
     | '/entreprise/revenue'
     | '/entreprise/vehicles'
+    | '/api/public/stripe-webhook'
     | '/admin'
     | '/client'
     | '/depanneur'
     | '/entreprise'
     | '/client/mission/$id'
+    | '/client/paiement/$id'
     | '/depanneur/mission/$id'
   id:
     | '__root__'
@@ -479,9 +526,11 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/payments'
     | '/_authenticated/admin/reviews'
     | '/_authenticated/admin/settings'
+    | '/_authenticated/admin/tarifs'
     | '/_authenticated/admin/users'
     | '/_authenticated/client/dashboard'
     | '/_authenticated/client/missions'
+    | '/_authenticated/client/paiements'
     | '/_authenticated/client/profil'
     | '/_authenticated/client/sos'
     | '/_authenticated/depanneur/dashboard'
@@ -496,11 +545,13 @@ export interface FileRouteTypes {
     | '/_authenticated/entreprise/profil'
     | '/_authenticated/entreprise/revenue'
     | '/_authenticated/entreprise/vehicles'
+    | '/api/public/stripe-webhook'
     | '/_authenticated/admin/'
     | '/_authenticated/client/'
     | '/_authenticated/depanneur/'
     | '/_authenticated/entreprise/'
     | '/_authenticated/client/mission/$id'
+    | '/_authenticated/client/paiement/$id'
     | '/_authenticated/depanneur/mission/$id'
   fileRoutesById: FileRoutesById
 }
@@ -514,6 +565,7 @@ export interface RootRouteChildren {
   MotDePasseOublieRoute: typeof MotDePasseOublieRoute
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -630,6 +682,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/tarifs': {
+      id: '/_authenticated/admin/tarifs'
+      path: '/admin/tarifs'
+      fullPath: '/admin/tarifs'
+      preLoaderRoute: typeof AuthenticatedAdminTarifsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/users': {
       id: '/_authenticated/admin/users'
       path: '/admin/users'
@@ -656,6 +715,13 @@ declare module '@tanstack/react-router' {
       path: '/client/missions'
       fullPath: '/client/missions'
       preLoaderRoute: typeof AuthenticatedClientMissionsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/client/paiements': {
+      id: '/_authenticated/client/paiements'
+      path: '/client/paiements'
+      fullPath: '/client/paiements'
+      preLoaderRoute: typeof AuthenticatedClientPaiementsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/client/profil': {
@@ -770,11 +836,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEntrepriseVehiclesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/stripe-webhook': {
+      id: '/api/public/stripe-webhook'
+      path: '/api/public/stripe-webhook'
+      fullPath: '/api/public/stripe-webhook'
+      preLoaderRoute: typeof ApiPublicStripeWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/client/mission/$id': {
       id: '/_authenticated/client/mission/$id'
       path: '/client/mission/$id'
       fullPath: '/client/mission/$id'
       preLoaderRoute: typeof AuthenticatedClientMissionIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/client/paiement/$id': {
+      id: '/_authenticated/client/paiement/$id'
+      path: '/client/paiement/$id'
+      fullPath: '/client/paiement/$id'
+      preLoaderRoute: typeof AuthenticatedClientPaiementIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/depanneur/mission/$id': {
@@ -794,9 +874,11 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminPaymentsRoute: typeof AuthenticatedAdminPaymentsRoute
   AuthenticatedAdminReviewsRoute: typeof AuthenticatedAdminReviewsRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
+  AuthenticatedAdminTarifsRoute: typeof AuthenticatedAdminTarifsRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedClientDashboardRoute: typeof AuthenticatedClientDashboardRoute
   AuthenticatedClientMissionsRoute: typeof AuthenticatedClientMissionsRoute
+  AuthenticatedClientPaiementsRoute: typeof AuthenticatedClientPaiementsRoute
   AuthenticatedClientProfilRoute: typeof AuthenticatedClientProfilRoute
   AuthenticatedClientSosRoute: typeof AuthenticatedClientSosRoute
   AuthenticatedDepanneurDashboardRoute: typeof AuthenticatedDepanneurDashboardRoute
@@ -816,6 +898,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDepanneurIndexRoute: typeof AuthenticatedDepanneurIndexRoute
   AuthenticatedEntrepriseIndexRoute: typeof AuthenticatedEntrepriseIndexRoute
   AuthenticatedClientMissionIdRoute: typeof AuthenticatedClientMissionIdRoute
+  AuthenticatedClientPaiementIdRoute: typeof AuthenticatedClientPaiementIdRoute
   AuthenticatedDepanneurMissionIdRoute: typeof AuthenticatedDepanneurMissionIdRoute
 }
 
@@ -826,9 +909,11 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminPaymentsRoute: AuthenticatedAdminPaymentsRoute,
   AuthenticatedAdminReviewsRoute: AuthenticatedAdminReviewsRoute,
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
+  AuthenticatedAdminTarifsRoute: AuthenticatedAdminTarifsRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedClientDashboardRoute: AuthenticatedClientDashboardRoute,
   AuthenticatedClientMissionsRoute: AuthenticatedClientMissionsRoute,
+  AuthenticatedClientPaiementsRoute: AuthenticatedClientPaiementsRoute,
   AuthenticatedClientProfilRoute: AuthenticatedClientProfilRoute,
   AuthenticatedClientSosRoute: AuthenticatedClientSosRoute,
   AuthenticatedDepanneurDashboardRoute: AuthenticatedDepanneurDashboardRoute,
@@ -848,6 +933,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDepanneurIndexRoute: AuthenticatedDepanneurIndexRoute,
   AuthenticatedEntrepriseIndexRoute: AuthenticatedEntrepriseIndexRoute,
   AuthenticatedClientMissionIdRoute: AuthenticatedClientMissionIdRoute,
+  AuthenticatedClientPaiementIdRoute: AuthenticatedClientPaiementIdRoute,
   AuthenticatedDepanneurMissionIdRoute: AuthenticatedDepanneurMissionIdRoute,
 }
 
@@ -864,6 +950,7 @@ const rootRouteChildren: RootRouteChildren = {
   MotDePasseOublieRoute: MotDePasseOublieRoute,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
