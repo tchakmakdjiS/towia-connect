@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -19,6 +19,7 @@ import {
   type MissionPriority,
 } from "@/lib/towia";
 import { MISSION_TIMELINE, TIMELINE_ORDER, URGENCY_LABELS } from "@/lib/sos";
+import { PAYMENT_STATUS_LABELS } from "@/lib/pricing";
 
 export const Route = createFileRoute("/_authenticated/client/mission/$id")({
   head: () => ({
