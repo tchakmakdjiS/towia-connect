@@ -18,6 +18,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as MotDePasseOublieRouteImport } from './routes/mot-de-passe-oublie'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthenticatedMonProfilRouteImport } from './routes/_authenticated/mon-profil'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminCompaniesRouteImport } from './routes/_authenticated/admin.companies'
 import { Route as AuthenticatedAdminMissionsRouteImport } from './routes/_authenticated/admin.missions'
@@ -27,6 +28,7 @@ import { Route as AuthenticatedAdminReviewsRouteImport } from './routes/_authent
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminTarifsRouteImport } from './routes/_authenticated/admin.tarifs'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
+import { Route as AuthenticatedAutomobilisteIndexRouteImport } from './routes/_authenticated/automobiliste.index'
 import { Route as AuthenticatedClientIndexRouteImport } from './routes/_authenticated/client.index'
 import { Route as AuthenticatedClientDashboardRouteImport } from './routes/_authenticated/client.dashboard'
 import { Route as AuthenticatedClientMissionsRouteImport } from './routes/_authenticated/client.missions'
@@ -96,6 +98,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedMonProfilRoute = AuthenticatedMonProfilRouteImport.update({
+  id: '/mon-profil',
+  path: '/mon-profil',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
@@ -148,6 +155,12 @@ const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   path: '/admin/users',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAutomobilisteIndexRoute =
+  AuthenticatedAutomobilisteIndexRouteImport.update({
+    id: '/automobiliste/',
+    path: '/automobiliste/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedClientIndexRoute =
   AuthenticatedClientIndexRouteImport.update({
     id: '/client/',
@@ -300,6 +313,7 @@ export interface FileRoutesByFullPath {
   '/mot-de-passe-oublie': typeof MotDePasseOublieRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/mon-profil': typeof AuthenticatedMonProfilRoute
   '/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/admin/missions': typeof AuthenticatedAdminMissionsRoute
   '/admin/operators': typeof AuthenticatedAdminOperatorsRoute
@@ -327,6 +341,7 @@ export interface FileRoutesByFullPath {
   '/entreprise/vehicles': typeof AuthenticatedEntrepriseVehiclesRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/automobiliste/': typeof AuthenticatedAutomobilisteIndexRoute
   '/client/': typeof AuthenticatedClientIndexRoute
   '/depanneur/': typeof AuthenticatedDepanneurIndexRoute
   '/entreprise/': typeof AuthenticatedEntrepriseIndexRoute
@@ -343,6 +358,7 @@ export interface FileRoutesByTo {
   '/mot-de-passe-oublie': typeof MotDePasseOublieRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/mon-profil': typeof AuthenticatedMonProfilRoute
   '/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/admin/missions': typeof AuthenticatedAdminMissionsRoute
   '/admin/operators': typeof AuthenticatedAdminOperatorsRoute
@@ -370,6 +386,7 @@ export interface FileRoutesByTo {
   '/entreprise/vehicles': typeof AuthenticatedEntrepriseVehiclesRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/automobiliste': typeof AuthenticatedAutomobilisteIndexRoute
   '/client': typeof AuthenticatedClientIndexRoute
   '/depanneur': typeof AuthenticatedDepanneurIndexRoute
   '/entreprise': typeof AuthenticatedEntrepriseIndexRoute
@@ -388,6 +405,7 @@ export interface FileRoutesById {
   '/mot-de-passe-oublie': typeof MotDePasseOublieRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/mon-profil': typeof AuthenticatedMonProfilRoute
   '/_authenticated/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/_authenticated/admin/missions': typeof AuthenticatedAdminMissionsRoute
   '/_authenticated/admin/operators': typeof AuthenticatedAdminOperatorsRoute
@@ -415,6 +433,7 @@ export interface FileRoutesById {
   '/_authenticated/entreprise/vehicles': typeof AuthenticatedEntrepriseVehiclesRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/automobiliste/': typeof AuthenticatedAutomobilisteIndexRoute
   '/_authenticated/client/': typeof AuthenticatedClientIndexRoute
   '/_authenticated/depanneur/': typeof AuthenticatedDepanneurIndexRoute
   '/_authenticated/entreprise/': typeof AuthenticatedEntrepriseIndexRoute
@@ -433,6 +452,7 @@ export interface FileRouteTypes {
     | '/mot-de-passe-oublie'
     | '/register'
     | '/reset-password'
+    | '/mon-profil'
     | '/admin/companies'
     | '/admin/missions'
     | '/admin/operators'
@@ -460,6 +480,7 @@ export interface FileRouteTypes {
     | '/entreprise/vehicles'
     | '/api/public/stripe-webhook'
     | '/admin/'
+    | '/automobiliste/'
     | '/client/'
     | '/depanneur/'
     | '/entreprise/'
@@ -476,6 +497,7 @@ export interface FileRouteTypes {
     | '/mot-de-passe-oublie'
     | '/register'
     | '/reset-password'
+    | '/mon-profil'
     | '/admin/companies'
     | '/admin/missions'
     | '/admin/operators'
@@ -503,6 +525,7 @@ export interface FileRouteTypes {
     | '/entreprise/vehicles'
     | '/api/public/stripe-webhook'
     | '/admin'
+    | '/automobiliste'
     | '/client'
     | '/depanneur'
     | '/entreprise'
@@ -520,6 +543,7 @@ export interface FileRouteTypes {
     | '/mot-de-passe-oublie'
     | '/register'
     | '/reset-password'
+    | '/_authenticated/mon-profil'
     | '/_authenticated/admin/companies'
     | '/_authenticated/admin/missions'
     | '/_authenticated/admin/operators'
@@ -547,6 +571,7 @@ export interface FileRouteTypes {
     | '/_authenticated/entreprise/vehicles'
     | '/api/public/stripe-webhook'
     | '/_authenticated/admin/'
+    | '/_authenticated/automobiliste/'
     | '/_authenticated/client/'
     | '/_authenticated/depanneur/'
     | '/_authenticated/entreprise/'
@@ -633,6 +658,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/mon-profil': {
+      id: '/_authenticated/mon-profil'
+      path: '/mon-profil'
+      fullPath: '/mon-profil'
+      preLoaderRoute: typeof AuthenticatedMonProfilRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
       path: '/admin'
@@ -694,6 +726,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/users'
       fullPath: '/admin/users'
       preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/automobiliste/': {
+      id: '/_authenticated/automobiliste/'
+      path: '/automobiliste'
+      fullPath: '/automobiliste/'
+      preLoaderRoute: typeof AuthenticatedAutomobilisteIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/client/': {
@@ -868,6 +907,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedMonProfilRoute: typeof AuthenticatedMonProfilRoute
   AuthenticatedAdminCompaniesRoute: typeof AuthenticatedAdminCompaniesRoute
   AuthenticatedAdminMissionsRoute: typeof AuthenticatedAdminMissionsRoute
   AuthenticatedAdminOperatorsRoute: typeof AuthenticatedAdminOperatorsRoute
@@ -894,6 +934,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedEntrepriseRevenueRoute: typeof AuthenticatedEntrepriseRevenueRoute
   AuthenticatedEntrepriseVehiclesRoute: typeof AuthenticatedEntrepriseVehiclesRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAutomobilisteIndexRoute: typeof AuthenticatedAutomobilisteIndexRoute
   AuthenticatedClientIndexRoute: typeof AuthenticatedClientIndexRoute
   AuthenticatedDepanneurIndexRoute: typeof AuthenticatedDepanneurIndexRoute
   AuthenticatedEntrepriseIndexRoute: typeof AuthenticatedEntrepriseIndexRoute
@@ -903,6 +944,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedMonProfilRoute: AuthenticatedMonProfilRoute,
   AuthenticatedAdminCompaniesRoute: AuthenticatedAdminCompaniesRoute,
   AuthenticatedAdminMissionsRoute: AuthenticatedAdminMissionsRoute,
   AuthenticatedAdminOperatorsRoute: AuthenticatedAdminOperatorsRoute,
@@ -929,6 +971,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedEntrepriseRevenueRoute: AuthenticatedEntrepriseRevenueRoute,
   AuthenticatedEntrepriseVehiclesRoute: AuthenticatedEntrepriseVehiclesRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAutomobilisteIndexRoute: AuthenticatedAutomobilisteIndexRoute,
   AuthenticatedClientIndexRoute: AuthenticatedClientIndexRoute,
   AuthenticatedDepanneurIndexRoute: AuthenticatedDepanneurIndexRoute,
   AuthenticatedEntrepriseIndexRoute: AuthenticatedEntrepriseIndexRoute,

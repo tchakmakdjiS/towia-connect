@@ -142,9 +142,16 @@ function OperatorDashboard() {
     };
   }, [online, operatorId]);
 
+  const verification = operator.data?.verification ?? "PENDING";
+  const verified = verification === "VERIFIED";
+
   const toggleOnline = async () => {
     if (!operator.data) {
       toast.error("Profil professionnel incomplet.");
+      return;
+    }
+    if (!verified) {
+      toast.error("Votre compte doit être validé par TowIA avant de recevoir des missions.");
       return;
     }
     const next = !online;
