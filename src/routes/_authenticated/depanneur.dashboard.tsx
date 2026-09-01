@@ -142,9 +142,16 @@ function OperatorDashboard() {
     };
   }, [online, operatorId]);
 
+  const verification = operator.data?.verification ?? "PENDING";
+  const verified = verification === "VERIFIED";
+
   const toggleOnline = async () => {
     if (!operator.data) {
       toast.error("Profil professionnel incomplet.");
+      return;
+    }
+    if (!verified) {
+      toast.error("Votre compte doit être validé par TowIA avant de recevoir des missions.");
       return;
     }
     const next = !online;
@@ -218,7 +225,30 @@ function OperatorDashboard() {
   return (
     <AppShell title="Espace dépanneur" subtitle="Vos interventions" nav={OPERATOR_NAV}>
       <div className="space-y-6">
+        {!verified ? (
+          <div
+            className={`surface-card border p-4 ${
+              verification === "SUSPENDED" ? "border-destructive/50" : "border-warning/50"
+            }`}
+          >
+            <p className="text-sm font-semibold">
+              {verification === "SUSPENDED"
+                ? "Compte suspendu"
+                : verification === "REJECTED"
+                  ? "Compte refusé"
+                  : "Compte en attente de validation"}
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              {verification === "SUSPENDED"
+                ? "Votre compte est suspendu : vous ne recevez plus de missions. Contactez TowIA."
+                : verification === "REJECTED"
+                  ? "Votre dossier a été refusé. Mettez à jour vos documents depuis votre profil."
+                  : "Votre inscription est en cours de vérification par TowIA. Vous ne recevrez aucune mission tant que votre compte n'est pas validé."}
+            </p>
+          </div>
+        ) : null}
         <div className="surface-card p-5">
+
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="text-xs uppercase tracking-wide text-muted-foreground">Statut</p>
@@ -241,9 +271,14 @@ function OperatorDashboard() {
               online ? "" : "bg-gradient-primary"
             }`}
             variant={online ? "secondary" : "default"}
+            disabled={!verified}
             onClick={() => void toggleOnline()}
           >
-            {online ? "PASSER HORS LIGNE" : "🟢 DISPONIBLE — PASSER EN LIGNE"}
+            {!verified
+              ? "EN ATTENTE DE VALIDATION"
+              : online
+                ? "PASSER HORS LIGNE"
+                : "🟢 DISPONIBLE — PASSER EN LIGNE"}
           </Button>
         </div>
 
