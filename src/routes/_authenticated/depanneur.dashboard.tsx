@@ -271,9 +271,14 @@ function OperatorDashboard() {
               online ? "" : "bg-gradient-primary"
             }`}
             variant={online ? "secondary" : "default"}
+            disabled={!verified}
             onClick={() => void toggleOnline()}
           >
-            {online ? "PASSER HORS LIGNE" : "🟢 DISPONIBLE — PASSER EN LIGNE"}
+            {!verified
+              ? "EN ATTENTE DE VALIDATION"
+              : online
+                ? "PASSER HORS LIGNE"
+                : "🟢 DISPONIBLE — PASSER EN LIGNE"}
           </Button>
         </div>
 
