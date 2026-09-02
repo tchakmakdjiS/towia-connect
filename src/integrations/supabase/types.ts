@@ -241,7 +241,10 @@ export type Database = {
           is_demo: boolean
           name: string
           operator_id: string | null
+          rejection_reason: string | null
+          reviewed_at: string | null
           status: Database["public"]["Enums"]["verification_status"]
+          storage_path: string | null
           type: string | null
         }
         Insert: {
@@ -253,7 +256,10 @@ export type Database = {
           is_demo?: boolean
           name: string
           operator_id?: string | null
+          rejection_reason?: string | null
+          reviewed_at?: string | null
           status?: Database["public"]["Enums"]["verification_status"]
+          storage_path?: string | null
           type?: string | null
         }
         Update: {
@@ -265,7 +271,10 @@ export type Database = {
           is_demo?: boolean
           name?: string
           operator_id?: string | null
+          rejection_reason?: string | null
+          reviewed_at?: string | null
           status?: Database["public"]["Enums"]["verification_status"]
+          storage_path?: string | null
           type?: string | null
         }
         Relationships: [
