@@ -286,13 +286,81 @@ function OperatorDashboard() {
           <StatCard label="Missions disponibles" value={pending.length} icon={<Siren className="size-5" />} />
           <StatCard label="Missions en cours" value={active.length} icon={<Activity className="size-5" />} />
           <StatCard
-            label="Terminées aujourd'hui"
-            value={completedToday.length}
+            label="Missions réalisées"
+            value={completedAll.length}
+            hint={`${completedToday.length} aujourd'hui`}
             icon={<CheckCircle2 className="size-5" />}
           />
-          <StatCard label="CA du jour" value={formatAmount(revenueToday)} icon={<Euro className="size-5" />} />
+          <StatCard
+            label="Chiffre d'affaires"
+            value={formatAmount(revenueTotal)}
+            hint={`${formatAmount(revenueToday)} aujourd'hui`}
+            icon={<Euro className="size-5" />}
+          />
           <StatCard label="Note moyenne" value={avg} icon={<Star className="size-5" />} />
         </div>
+
+        <Section title="Mon compte professionnel" description="Informations utilisées pour le dispatch.">
+          <dl className="grid gap-3 text-sm sm:grid-cols-2">
+            <div>
+              <dt className="text-xs uppercase tracking-wide text-muted-foreground">Statut du compte</dt>
+              <dd className="mt-1 font-medium">
+                {verification === "VERIFIED"
+                  ? "Validé"
+                  : verification === "SUSPENDED"
+                    ? "Suspendu"
+                    : verification === "REJECTED"
+                      ? "Refusé"
+                      : "En attente de validation"}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-xs uppercase tracking-wide text-muted-foreground">Zone d'intervention</dt>
+              <dd className="mt-1 font-medium">
+                {operator.data?.intervention_zone || "—"}
+                {operator.data?.service_radius_km
+                  ? ` · ${operator.data.service_radius_km} km`
+                  : ""}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-xs uppercase tracking-wide text-muted-foreground">Type de véhicule</dt>
+              <dd className="mt-1 font-medium">{operator.data?.vehicle_type || "—"}</dd>
+            </div>
+            <div>
+              <dt className="text-xs uppercase tracking-wide text-muted-foreground">Localisation actuelle</dt>
+              <dd className="mt-1 font-medium">
+                {operator.data?.last_latitude != null && operator.data?.last_longitude != null
+                  ? `${operator.data.last_latitude.toFixed(4)}, ${operator.data.last_longitude.toFixed(4)}`
+                  : "Non partagée"}
+                {operator.data?.last_position_at ? (
+                  <span className="block text-xs font-normal text-muted-foreground">
+                    Mise à jour {formatDate(operator.data.last_position_at)}
+                  </span>
+                ) : null}
+              </dd>
+            </div>
+            <div className="sm:col-span-2">
+              <dt className="text-xs uppercase tracking-wide text-muted-foreground">Services proposés</dt>
+              <dd className="mt-1 font-medium">
+                {(operator.data?.services ?? []).length > 0
+                  ? (operator.data!.services as string[])
+                      .map((s) => CATEGORY_LABELS[s as keyof typeof CATEGORY_LABELS] ?? s)
+                      .join(", ")
+                  : "—"}
+              </dd>
+            </div>
+          </dl>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Link to="/depanneur/profil">
+              <Button variant="secondary" className="rounded-xl">Modifier mon profil</Button>
+            </Link>
+            <Link to="/depanneur/documents">
+              <Button variant="secondary" className="rounded-xl">Mes documents</Button>
+            </Link>
+          </div>
+        </Section>
+
 
         <Section
           title="Nouvelles missions"
