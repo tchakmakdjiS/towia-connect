@@ -12,6 +12,7 @@ export const OPERATOR_NAV: NavItem[] = [
   { to: "/depanneur/dashboard", label: "Tableau de bord" },
   { to: "/depanneur/missions", label: "Mes missions" },
   { to: "/depanneur/revenus", label: "Revenus" },
+  { to: "/depanneur/documents", label: "Mes documents" },
   { to: "/depanneur/profil", label: "Mon profil" },
 ];
 
