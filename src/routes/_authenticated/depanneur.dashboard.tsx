@@ -215,6 +215,8 @@ function OperatorDashboard() {
     (m) => m.status === "COMPLETED" && inPeriod(m.completed_at, "today"),
   );
   const revenueToday = completedToday.reduce((sum, m) => sum + Number(m.amount ?? 0), 0);
+  const completedAll = list.filter((m) => m.status === "COMPLETED");
+  const revenueTotal = completedAll.reduce((sum, m) => sum + Number(m.amount ?? 0), 0);
   const ratings = reviews.data ?? [];
   const avg =
     ratings.length > 0
