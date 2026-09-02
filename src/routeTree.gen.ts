@@ -37,6 +37,7 @@ import { Route as AuthenticatedClientProfilRouteImport } from './routes/_authent
 import { Route as AuthenticatedClientSosRouteImport } from './routes/_authenticated/client.sos'
 import { Route as AuthenticatedDepanneurIndexRouteImport } from './routes/_authenticated/depanneur.index'
 import { Route as AuthenticatedDepanneurDashboardRouteImport } from './routes/_authenticated/depanneur.dashboard'
+import { Route as AuthenticatedDepanneurDocumentsRouteImport } from './routes/_authenticated/depanneur.documents'
 import { Route as AuthenticatedDepanneurMissionsRouteImport } from './routes/_authenticated/depanneur.missions'
 import { Route as AuthenticatedDepanneurProfilRouteImport } from './routes/_authenticated/depanneur.profil'
 import { Route as AuthenticatedDepanneurRevenusRouteImport } from './routes/_authenticated/depanneur.revenus'
@@ -208,6 +209,12 @@ const AuthenticatedDepanneurDashboardRoute =
     path: '/depanneur/dashboard',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedDepanneurDocumentsRoute =
+  AuthenticatedDepanneurDocumentsRouteImport.update({
+    id: '/depanneur/documents',
+    path: '/depanneur/documents',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedDepanneurMissionsRoute =
   AuthenticatedDepanneurMissionsRouteImport.update({
     id: '/depanneur/missions',
@@ -328,6 +335,7 @@ export interface FileRoutesByFullPath {
   '/client/profil': typeof AuthenticatedClientProfilRoute
   '/client/sos': typeof AuthenticatedClientSosRoute
   '/depanneur/dashboard': typeof AuthenticatedDepanneurDashboardRoute
+  '/depanneur/documents': typeof AuthenticatedDepanneurDocumentsRoute
   '/depanneur/missions': typeof AuthenticatedDepanneurMissionsRoute
   '/depanneur/profil': typeof AuthenticatedDepanneurProfilRoute
   '/depanneur/revenus': typeof AuthenticatedDepanneurRevenusRoute
@@ -373,6 +381,7 @@ export interface FileRoutesByTo {
   '/client/profil': typeof AuthenticatedClientProfilRoute
   '/client/sos': typeof AuthenticatedClientSosRoute
   '/depanneur/dashboard': typeof AuthenticatedDepanneurDashboardRoute
+  '/depanneur/documents': typeof AuthenticatedDepanneurDocumentsRoute
   '/depanneur/missions': typeof AuthenticatedDepanneurMissionsRoute
   '/depanneur/profil': typeof AuthenticatedDepanneurProfilRoute
   '/depanneur/revenus': typeof AuthenticatedDepanneurRevenusRoute
@@ -420,6 +429,7 @@ export interface FileRoutesById {
   '/_authenticated/client/profil': typeof AuthenticatedClientProfilRoute
   '/_authenticated/client/sos': typeof AuthenticatedClientSosRoute
   '/_authenticated/depanneur/dashboard': typeof AuthenticatedDepanneurDashboardRoute
+  '/_authenticated/depanneur/documents': typeof AuthenticatedDepanneurDocumentsRoute
   '/_authenticated/depanneur/missions': typeof AuthenticatedDepanneurMissionsRoute
   '/_authenticated/depanneur/profil': typeof AuthenticatedDepanneurProfilRoute
   '/_authenticated/depanneur/revenus': typeof AuthenticatedDepanneurRevenusRoute
@@ -467,6 +477,7 @@ export interface FileRouteTypes {
     | '/client/profil'
     | '/client/sos'
     | '/depanneur/dashboard'
+    | '/depanneur/documents'
     | '/depanneur/missions'
     | '/depanneur/profil'
     | '/depanneur/revenus'
@@ -512,6 +523,7 @@ export interface FileRouteTypes {
     | '/client/profil'
     | '/client/sos'
     | '/depanneur/dashboard'
+    | '/depanneur/documents'
     | '/depanneur/missions'
     | '/depanneur/profil'
     | '/depanneur/revenus'
@@ -558,6 +570,7 @@ export interface FileRouteTypes {
     | '/_authenticated/client/profil'
     | '/_authenticated/client/sos'
     | '/_authenticated/depanneur/dashboard'
+    | '/_authenticated/depanneur/documents'
     | '/_authenticated/depanneur/missions'
     | '/_authenticated/depanneur/profil'
     | '/_authenticated/depanneur/revenus'
@@ -791,6 +804,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDepanneurDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/depanneur/documents': {
+      id: '/_authenticated/depanneur/documents'
+      path: '/depanneur/documents'
+      fullPath: '/depanneur/documents'
+      preLoaderRoute: typeof AuthenticatedDepanneurDocumentsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/depanneur/missions': {
       id: '/_authenticated/depanneur/missions'
       path: '/depanneur/missions'
@@ -922,6 +942,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedClientProfilRoute: typeof AuthenticatedClientProfilRoute
   AuthenticatedClientSosRoute: typeof AuthenticatedClientSosRoute
   AuthenticatedDepanneurDashboardRoute: typeof AuthenticatedDepanneurDashboardRoute
+  AuthenticatedDepanneurDocumentsRoute: typeof AuthenticatedDepanneurDocumentsRoute
   AuthenticatedDepanneurMissionsRoute: typeof AuthenticatedDepanneurMissionsRoute
   AuthenticatedDepanneurProfilRoute: typeof AuthenticatedDepanneurProfilRoute
   AuthenticatedDepanneurRevenusRoute: typeof AuthenticatedDepanneurRevenusRoute
@@ -959,6 +980,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedClientProfilRoute: AuthenticatedClientProfilRoute,
   AuthenticatedClientSosRoute: AuthenticatedClientSosRoute,
   AuthenticatedDepanneurDashboardRoute: AuthenticatedDepanneurDashboardRoute,
+  AuthenticatedDepanneurDocumentsRoute: AuthenticatedDepanneurDocumentsRoute,
   AuthenticatedDepanneurMissionsRoute: AuthenticatedDepanneurMissionsRoute,
   AuthenticatedDepanneurProfilRoute: AuthenticatedDepanneurProfilRoute,
   AuthenticatedDepanneurRevenusRoute: AuthenticatedDepanneurRevenusRoute,
