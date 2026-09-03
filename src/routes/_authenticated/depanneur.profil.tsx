@@ -250,6 +250,17 @@ function OperatorProfile() {
               </button>
             ))}
           </div>
+          <button
+            type="button"
+            onClick={() => setAvailable247((v) => !v)}
+            className={`mt-3 w-full rounded-xl border p-3 text-xs font-medium ${
+              available247
+                ? "border-primary bg-primary/15 text-primary"
+                : "border-border text-muted-foreground"
+            }`}
+          >
+            Disponible 24h/24 · 7j/7 {available247 ? "✓" : ""}
+          </button>
           <Button className="mt-4 rounded-xl bg-gradient-primary" onClick={() => void save()}>
             Enregistrer mon profil
           </Button>
