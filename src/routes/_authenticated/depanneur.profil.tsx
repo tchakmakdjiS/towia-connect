@@ -48,6 +48,7 @@ function OperatorProfile() {
   const [availability, setAvailability] = useState<Availability>("UNAVAILABLE");
   const [vehicleType, setVehicleType] = useState<string>(VEHICLE_TYPES[0]!);
   const [radius, setRadius] = useState("30");
+  const [available247, setAvailable247] = useState(false);
   const [form, setForm] = useState({
     first_name: "",
     last_name: "",
