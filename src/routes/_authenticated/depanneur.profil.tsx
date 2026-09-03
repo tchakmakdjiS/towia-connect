@@ -25,13 +25,12 @@ export const Route = createFileRoute("/_authenticated/depanneur/profil")({
 });
 
 const VEHICLE_TYPES = [
-  "Plateau",
-  "Panier",
+  "Véhicule léger",
   "4x4 panier",
+  "Plateau",
   "Véhicule surbaissé",
   "Patrouilleur",
   "Véhicule bâché",
-  "Autre",
 ];
 
 const AVAILABILITY = [
@@ -49,6 +48,7 @@ function OperatorProfile() {
   const [availability, setAvailability] = useState<Availability>("UNAVAILABLE");
   const [vehicleType, setVehicleType] = useState<string>(VEHICLE_TYPES[0]!);
   const [radius, setRadius] = useState("30");
+  const [available247, setAvailable247] = useState(false);
   const [form, setForm] = useState({
     first_name: "",
     last_name: "",
@@ -95,6 +95,7 @@ function OperatorProfile() {
     setAvailability((d.availability ?? "UNAVAILABLE") as Availability);
     setVehicleType(d.vehicle_type ?? VEHICLE_TYPES[0]!);
     setRadius(String(d.service_radius_km ?? 30));
+    setAvailable247(!!d.available_24_7);
   }, [operator.data, user?.email]);
 
   const save = async () => {
@@ -106,6 +107,7 @@ function OperatorProfile() {
       availability,
       vehicle_type: vehicleType,
       service_radius_km: Number(radius) || 0,
+      available_24_7: available247,
       is_available: availability === "AVAILABLE",
     };
     const { error } = operator.data
@@ -248,6 +250,17 @@ function OperatorProfile() {
               </button>
             ))}
           </div>
+          <button
+            type="button"
+            onClick={() => setAvailable247((v) => !v)}
+            className={`mt-3 w-full rounded-xl border p-3 text-xs font-medium ${
+              available247
+                ? "border-primary bg-primary/15 text-primary"
+                : "border-border text-muted-foreground"
+            }`}
+          >
+            Disponible 24h/24 · 7j/7 {available247 ? "✓" : ""}
+          </button>
           <Button className="mt-4 rounded-xl bg-gradient-primary" onClick={() => void save()}>
             Enregistrer mon profil
           </Button>
