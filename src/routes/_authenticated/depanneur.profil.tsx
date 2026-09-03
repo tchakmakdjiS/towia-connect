@@ -107,6 +107,7 @@ function OperatorProfile() {
       availability,
       vehicle_type: vehicleType,
       service_radius_km: Number(radius) || 0,
+      available_24_7: available247,
       is_available: availability === "AVAILABLE",
     };
     const { error } = operator.data
