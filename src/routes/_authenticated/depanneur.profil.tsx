@@ -95,6 +95,7 @@ function OperatorProfile() {
     setAvailability((d.availability ?? "UNAVAILABLE") as Availability);
     setVehicleType(d.vehicle_type ?? VEHICLE_TYPES[0]!);
     setRadius(String(d.service_radius_km ?? 30));
+    setAvailable247(!!d.available_24_7);
   }, [operator.data, user?.email]);
 
   const save = async () => {
