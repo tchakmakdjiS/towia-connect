@@ -25,13 +25,12 @@ export const Route = createFileRoute("/_authenticated/depanneur/profil")({
 });
 
 const VEHICLE_TYPES = [
-  "Plateau",
-  "Panier",
+  "Véhicule léger",
   "4x4 panier",
+  "Plateau",
   "Véhicule surbaissé",
   "Patrouilleur",
   "Véhicule bâché",
-  "Autre",
 ];
 
 const AVAILABILITY = [
