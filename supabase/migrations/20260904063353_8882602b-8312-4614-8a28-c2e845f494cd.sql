@@ -1,0 +1,10 @@
+REVOKE ALL ON FUNCTION public.has_offer_for_mission(uuid, uuid, boolean) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.mission_client_id(uuid) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.mission_company_id(uuid) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.operator_serves_client(uuid, uuid) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.pro_serves_client(uuid, uuid) FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION public.has_offer_for_mission(uuid, uuid, boolean) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.mission_client_id(uuid) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.mission_company_id(uuid) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.operator_serves_client(uuid, uuid) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.pro_serves_client(uuid, uuid) TO authenticated;
