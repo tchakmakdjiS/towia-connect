@@ -51,6 +51,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (active) {
           setRole(null);
           setProfile(null);
+          setLoading(false);
         }
         return;
       }
@@ -65,19 +66,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const priority: AppRole[] = ["admin", "company", "tow_operator", "customer"];
       setRole(priority.find((p) => roles.includes(p)) ?? null);
       setProfile((profileRes.data as Profile | null) ?? null);
+      // Only release the loading gate once the role is known, otherwise
+      // role-based redirects fire with a null role.
+      setLoading(false);
     };
 
     const { data: sub } = supabase.auth.onAuthStateChange((_event, nextSession) => {
       if (!active) return;
       setSession(nextSession);
-      setLoading(false);
+      if (!nextSession) setLoading(false);
       void loadUserData(nextSession?.user.id);
     });
 
     void supabase.auth.getSession().then(({ data }) => {
       if (!active) return;
       setSession(data.session);
-      setLoading(false);
+      if (!data.session) setLoading(false);
       void loadUserData(data.session?.user.id);
     });
 
