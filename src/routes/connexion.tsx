@@ -86,7 +86,7 @@ function LoginPage() {
             </div>
             <Button
               type="submit"
-              disabled={submitting}
+              disabled={submitting || !ready}
               className="w-full rounded-xl bg-gradient-primary"
             >
               {submitting ? "Connexion..." : "Se connecter"}
