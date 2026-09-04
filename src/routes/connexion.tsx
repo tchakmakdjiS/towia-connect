@@ -28,6 +28,9 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => setReady(true), []);
 
   useEffect(() => {
     if (!loading && session) void navigate({ to: roleHome(role), replace: true });
@@ -83,7 +86,7 @@ function LoginPage() {
             </div>
             <Button
               type="submit"
-              disabled={submitting}
+              disabled={submitting || !ready}
               className="w-full rounded-xl bg-gradient-primary"
             >
               {submitting ? "Connexion..." : "Se connecter"}
