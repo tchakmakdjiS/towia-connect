@@ -1384,6 +1384,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      has_offer_for_mission: {
+        Args: { _mission_id: string; _only_pending?: boolean; _user_id: string }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -1391,9 +1395,19 @@ export type Database = {
         }
         Returns: boolean
       }
+      mission_client_id: { Args: { _mission_id: string }; Returns: string }
+      mission_company_id: { Args: { _mission_id: string }; Returns: string }
       my_operator_id: { Args: { _user_id: string }; Returns: string }
+      operator_serves_client: {
+        Args: { _client_id: string; _operator_id: string }
+        Returns: boolean
+      }
       owns_company: {
         Args: { _company_id: string; _user_id: string }
+        Returns: boolean
+      }
+      pro_serves_client: {
+        Args: { _client_id: string; _user_id: string }
         Returns: boolean
       }
     }
