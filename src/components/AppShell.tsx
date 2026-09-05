@@ -116,6 +116,7 @@ export function AppShell({
             ) : null}
           </div>
           {action}
+          <NotificationBell />
           <UserMenu />
         </header>
 
