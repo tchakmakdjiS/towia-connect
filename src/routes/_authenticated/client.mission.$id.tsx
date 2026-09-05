@@ -152,6 +152,12 @@ function ClientMissionDetail() {
 
   const m = mission.data;
 
+  useMissionRealtime(id, [
+    ["mission", id],
+    ["mission-events", id],
+    ["mission-payment", id],
+  ]);
+
   return (
     <AppShell title="Détail de la mission" subtitle="Suivi en direct" nav={CLIENT_NAV}>
       {!m ? (
