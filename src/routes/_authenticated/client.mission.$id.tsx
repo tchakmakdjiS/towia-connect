@@ -287,6 +287,26 @@ function ClientMissionDetail() {
             </ol>
           </Section>
 
+          <Section
+            title="Historique détaillé"
+            description="Chaque étape avec sa date et son heure exactes."
+          >
+            {(events.data ?? []).length === 0 ? (
+              <p className="text-sm text-muted-foreground">Aucun événement enregistré.</p>
+            ) : (
+              <ol className="space-y-3 border-l border-border pl-4">
+                {(events.data ?? []).map((e) => (
+                  <li key={e.id} className="relative text-sm">
+                    <span className="absolute -left-[21px] top-1.5 size-2 rounded-full bg-primary" />
+                    <p className="font-medium">{e.label}</p>
+                    <p className="text-xs text-muted-foreground">{formatDate(e.created_at)}</p>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </Section>
+
+
           <Section title="Paiement" description="Paiement sécurisé, aucune donnée bancaire stockée.">
             {payment.data ? (
               <div className="space-y-3 text-sm">
