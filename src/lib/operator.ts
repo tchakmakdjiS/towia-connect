@@ -251,16 +251,7 @@ export async function acceptOffer(params: {
     .neq("id", params.offerId)
     .eq("status", "PENDING");
 
-  const pos = await currentPosition();
-  await supabase.from("mission_events").insert({
-    mission_id: params.missionId,
-    status: "ACCEPTED",
-    previous_status: "PROPOSED",
-    label: STATUS_EVENT_LABELS.ACCEPTED!,
-    actor_id: params.actorId,
-    latitude: pos?.latitude ?? null,
-    longitude: pos?.longitude ?? null,
-  });
+  await attachPositionToLastEvent(params.missionId, "ACCEPTED");
   await notifyMissionUser({
     userId: params.clientId,
     missionId: params.missionId,
