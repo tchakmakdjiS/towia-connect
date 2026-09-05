@@ -19,6 +19,7 @@ import {
   type MissionPriority,
 } from "@/lib/towia";
 import { MISSION_TIMELINE, TIMELINE_ORDER, URGENCY_LABELS } from "@/lib/sos";
+import { useMissionRealtime } from "@/lib/realtime";
 import { PAYMENT_STATUS_LABELS } from "@/lib/pricing";
 
 export const Route = createFileRoute("/_authenticated/client/mission/$id")({
@@ -151,6 +152,12 @@ function ClientMissionDetail() {
 
   const m = mission.data;
 
+  useMissionRealtime(id, [
+    ["mission", id],
+    ["mission-events", id],
+    ["mission-payment", id],
+  ]);
+
   return (
     <AppShell title="Détail de la mission" subtitle="Suivi en direct" nav={CLIENT_NAV}>
       {!m ? (
@@ -279,6 +286,26 @@ function ClientMissionDetail() {
               })}
             </ol>
           </Section>
+
+          <Section
+            title="Historique détaillé"
+            description="Chaque étape avec sa date et son heure exactes."
+          >
+            {(events.data ?? []).length === 0 ? (
+              <p className="text-sm text-muted-foreground">Aucun événement enregistré.</p>
+            ) : (
+              <ol className="space-y-3 border-l border-border pl-4">
+                {(events.data ?? []).map((e) => (
+                  <li key={e.id} className="relative text-sm">
+                    <span className="absolute -left-[21px] top-1.5 size-2 rounded-full bg-primary" />
+                    <p className="font-medium">{e.label}</p>
+                    <p className="text-xs text-muted-foreground">{formatDate(e.created_at)}</p>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </Section>
+
 
           <Section title="Paiement" description="Paiement sécurisé, aucune donnée bancaire stockée.">
             {payment.data ? (

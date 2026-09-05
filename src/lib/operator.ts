@@ -120,7 +120,48 @@ export async function notifyMissionUser(params: {
   });
 }
 
-/** Change le statut d'une mission, journalise l'événement et notifie le client. */
+/** Enchaînements de statuts autorisés (miroir de la règle appliquée en base). */
+export const ALLOWED_TRANSITIONS: Record<MissionStatus, MissionStatus[]> = {
+  CREATED: ["AI_ANALYSIS", "SEARCHING", "CANCELLED"],
+  AI_ANALYSIS: ["SEARCHING", "CANCELLED"],
+  SEARCHING: ["PROPOSED", "ACCEPTED", "CANCELLED"],
+  PROPOSED: ["ACCEPTED", "SEARCHING", "CANCELLED"],
+  ACCEPTED: ["EN_ROUTE", "CANCELLED"],
+  EN_ROUTE: ["ARRIVED", "CANCELLED"],
+  ARRIVED: ["IN_PROGRESS", "CANCELLED"],
+  IN_PROGRESS: ["COMPLETED", "DISPUTED", "CANCELLED"],
+  COMPLETED: ["DISPUTED"],
+  CANCELLED: [],
+  DISPUTED: ["COMPLETED", "CANCELLED"],
+};
+
+export function canTransition(from: MissionStatus, to: MissionStatus): boolean {
+  return (ALLOWED_TRANSITIONS[from] ?? []).includes(to);
+}
+
+/** Complète l'événement créé automatiquement en base avec la position du dépanneur. */
+async function attachPositionToLastEvent(missionId: string, status: MissionStatus) {
+  const pos = await currentPosition();
+  if (!pos) return;
+  const { data } = await supabase
+    .from("mission_events")
+    .select("id")
+    .eq("mission_id", missionId)
+    .eq("status", status)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (!data) return;
+  await supabase
+    .from("mission_events")
+    .update({ latitude: pos.latitude, longitude: pos.longitude })
+    .eq("id", data.id);
+}
+
+/**
+ * Change le statut d'une mission. La base journalise automatiquement
+ * l'événement (date, auteur, mission) ; le client est ensuite notifié.
+ */
 export async function advanceMissionStatus(params: {
   missionId: string;
   clientId: string;
@@ -129,6 +170,9 @@ export async function advanceMissionStatus(params: {
   next: MissionStatus;
   extra?: Partial<TablesUpdate<"missions">>;
 }): Promise<string | null> {
+  if (!canTransition(params.previous, params.next)) {
+    return "Cette étape n'est pas possible depuis le statut actuel de la mission.";
+  }
   const now = new Date().toISOString();
   const patch: TablesUpdate<"missions"> = {
     status: params.next,
@@ -140,16 +184,7 @@ export async function advanceMissionStatus(params: {
   const { error } = await supabase.from("missions").update(patch).eq("id", params.missionId);
   if (error) return error.message;
 
-  const pos = await currentPosition();
-  await supabase.from("mission_events").insert({
-    mission_id: params.missionId,
-    status: params.next,
-    previous_status: params.previous,
-    label: STATUS_EVENT_LABELS[params.next] ?? params.next,
-    actor_id: params.actorId,
-    latitude: pos?.latitude ?? null,
-    longitude: pos?.longitude ?? null,
-  });
+  await attachPositionToLastEvent(params.missionId, params.next);
   await notifyMissionUser({
     userId: params.clientId,
     missionId: params.missionId,
@@ -216,16 +251,7 @@ export async function acceptOffer(params: {
     .neq("id", params.offerId)
     .eq("status", "PENDING");
 
-  const pos = await currentPosition();
-  await supabase.from("mission_events").insert({
-    mission_id: params.missionId,
-    status: "ACCEPTED",
-    previous_status: "PROPOSED",
-    label: STATUS_EVENT_LABELS.ACCEPTED!,
-    actor_id: params.actorId,
-    latitude: pos?.latitude ?? null,
-    longitude: pos?.longitude ?? null,
-  });
+  await attachPositionToLastEvent(params.missionId, "ACCEPTED");
   await notifyMissionUser({
     userId: params.clientId,
     missionId: params.missionId,
@@ -254,12 +280,6 @@ export async function declineOffer(params: {
     .eq("id", params.offerId);
   if (error) return error.message;
 
-  await supabase.from("mission_events").insert({
-    mission_id: params.missionId,
-    status: "SEARCHING",
-    previous_status: "PROPOSED",
-    label: "Proposition refusée par un dépanneur",
-    actor_id: params.actorId,
-  });
+  // L'événement « Recherche d'un dépanneur » est journalisé automatiquement en base.
   return null;
 }

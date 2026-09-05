@@ -253,12 +253,8 @@ export const dispatchMission = createServerFn({ method: "POST" })
       );
       if (offerError) throw new Error(offerError.message);
 
+      // Le passage en PROPOSED est journalisé automatiquement par la base.
       await supabaseAdmin.from("missions").update({ status: "PROPOSED" }).eq("id", mission.id);
-      await supabaseAdmin.from("mission_events").insert({
-        mission_id: mission.id,
-        status: "PROPOSED",
-        label: `Mission proposée à ${ranked.length} professionnel(s)`,
-      });
     }
 
     return { offers: ranked.length };
