@@ -280,12 +280,6 @@ export async function declineOffer(params: {
     .eq("id", params.offerId);
   if (error) return error.message;
 
-  await supabase.from("mission_events").insert({
-    mission_id: params.missionId,
-    status: "SEARCHING",
-    previous_status: "PROPOSED",
-    label: "Proposition refusée par un dépanneur",
-    actor_id: params.actorId,
-  });
+  // L'événement « Recherche d'un dépanneur » est journalisé automatiquement en base.
   return null;
 }
