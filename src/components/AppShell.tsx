@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/sheet";
 import { TowiaLogo } from "@/components/TowiaLogo";
 import { UserMenu } from "@/components/UserMenu";
+import { NotificationBell } from "@/components/NotificationBell";
 import { requiredRoleForPath, roleHome } from "@/lib/towia";
 
 export type NavItem = { to: string; label: string };
