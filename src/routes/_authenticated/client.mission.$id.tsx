@@ -19,6 +19,7 @@ import {
   type MissionPriority,
 } from "@/lib/towia";
 import { MISSION_TIMELINE, TIMELINE_ORDER, URGENCY_LABELS } from "@/lib/sos";
+import { useMissionRealtime } from "@/lib/realtime";
 import { PAYMENT_STATUS_LABELS } from "@/lib/pricing";
 
 export const Route = createFileRoute("/_authenticated/client/mission/$id")({
