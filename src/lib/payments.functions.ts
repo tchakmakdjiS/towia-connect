@@ -177,11 +177,11 @@ export const createMissionCheckout = createServerFn({ method: "POST" })
 
     let paymentId = existing?.id as string | undefined;
     if (paymentId) {
-      await supabaseAdmin.from("payments").update(payload).eq("id", paymentId);
+      await supabaseAdmin.from("payments").update(payload as any).eq("id", paymentId);
     } else {
       const { data: created, error: insertError } = await supabaseAdmin
         .from("payments")
-        .insert(payload)
+        .insert(payload as any)
         .select("id")
         .single();
       if (insertError || !created) throw new Error(insertError?.message ?? "Paiement impossible");
@@ -192,7 +192,7 @@ export const createMissionCheckout = createServerFn({ method: "POST" })
       .from("missions")
       .update({
         estimated_amount: breakdown.total,
-        price_breakdown: breakdown as unknown as Record<string, unknown>,
+        price_breakdown: breakdown as any,
         payment_status: "pending",
       })
       .eq("id", mission.id);
