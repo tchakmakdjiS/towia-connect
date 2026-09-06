@@ -8,7 +8,6 @@ import {
   type PricingRule,
 } from "@/lib/pricing-core";
 import type { MissionCategory, MissionPriority } from "@/lib/towia";
-import { markPaid } from "@/lib/payments.server";
 
 type Ctx = { supabase: any; userId: string };
 
@@ -263,6 +262,7 @@ export const confirmTestPayment = createServerFn({ method: "POST" })
       return { ok: false };
     }
 
+    const { markPaid } = await import("@/lib/payments.server");
     await markPaid(supabaseAdmin, payment);
     return { ok: true };
   });
