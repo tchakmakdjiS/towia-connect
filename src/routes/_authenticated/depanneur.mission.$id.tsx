@@ -28,6 +28,7 @@ import {
   haversineKm,
   navigationUrl,
 } from "@/lib/operator";
+import { useMissionRealtime } from "@/lib/realtime";
 
 export const Route = createFileRoute("/_authenticated/depanneur/mission/$id")({
   head: () => ({
@@ -156,6 +157,11 @@ function OperatorMissionDetail() {
   });
 
   const m = mission.data;
+  useMissionRealtime(id, [
+    ["operator-mission", id],
+    ["mission-events", id],
+    ["operator-mission-offer", id, operator.data?.id],
+  ]);
   const refresh = () => {
     void queryClient.invalidateQueries({ queryKey: ["operator-mission", id] });
     void queryClient.invalidateQueries({ queryKey: ["mission-events", id] });
