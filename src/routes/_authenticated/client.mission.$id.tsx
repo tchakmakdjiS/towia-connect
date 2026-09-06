@@ -79,6 +79,10 @@ function ClientMissionDetail() {
     queryFn: async () => {
       const { data } = await supabase
         .from("operators")
+        .select(
+          "id, first_name, last_name, professional_name, company_name, phone, photo_url, rating, vehicle_label, vehicle_type, services, intervention_zone, city, availability, is_available, verification, last_latitude, last_longitude",
+        )
+
         .select("*")
         .eq("id", mission.data!.operator_id!)
         .maybeSingle();
