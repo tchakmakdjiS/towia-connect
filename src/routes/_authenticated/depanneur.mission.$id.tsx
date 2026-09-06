@@ -28,6 +28,7 @@ import {
   haversineKm,
   navigationUrl,
 } from "@/lib/operator";
+import { useMissionRealtime } from "@/lib/realtime";
 
 export const Route = createFileRoute("/_authenticated/depanneur/mission/$id")({
   head: () => ({
