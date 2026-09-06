@@ -861,6 +861,38 @@ export type Database = {
           },
         ]
       }
+      operator_sensitive: {
+        Row: {
+          created_at: string
+          iban: string | null
+          operator_id: string
+          siret: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          iban?: string | null
+          operator_id: string
+          siret?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          iban?: string | null
+          operator_id?: string
+          siret?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "operator_sensitive_operator_id_fkey"
+            columns: ["operator_id"]
+            isOneToOne: true
+            referencedRelation: "operators"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       operators: {
         Row: {
           address: string | null
@@ -873,7 +905,6 @@ export type Database = {
           email: string | null
           equipment: string[]
           first_name: string | null
-          iban: string | null
           id: string
           intervention_zone: string | null
           is_available: boolean
@@ -889,7 +920,6 @@ export type Database = {
           rating: number | null
           service_radius_km: number
           services: string[]
-          siret: string | null
           updated_at: string
           user_id: string | null
           vehicle_label: string | null
@@ -907,7 +937,6 @@ export type Database = {
           email?: string | null
           equipment?: string[]
           first_name?: string | null
-          iban?: string | null
           id?: string
           intervention_zone?: string | null
           is_available?: boolean
@@ -923,7 +952,6 @@ export type Database = {
           rating?: number | null
           service_radius_km?: number
           services?: string[]
-          siret?: string | null
           updated_at?: string
           user_id?: string | null
           vehicle_label?: string | null
@@ -941,7 +969,6 @@ export type Database = {
           email?: string | null
           equipment?: string[]
           first_name?: string | null
-          iban?: string | null
           id?: string
           intervention_zone?: string | null
           is_available?: boolean
@@ -957,7 +984,6 @@ export type Database = {
           rating?: number | null
           service_radius_km?: number
           services?: string[]
-          siret?: string | null
           updated_at?: string
           user_id?: string | null
           vehicle_label?: string | null
