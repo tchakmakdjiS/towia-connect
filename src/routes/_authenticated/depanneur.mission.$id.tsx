@@ -156,6 +156,11 @@ function OperatorMissionDetail() {
   });
 
   const m = mission.data;
+  useMissionRealtime(id, [
+    ["operator-mission", id],
+    ["mission-events", id],
+    ["operator-mission-offer", id, operator.data?.id],
+  ]);
   const refresh = () => {
     void queryClient.invalidateQueries({ queryKey: ["operator-mission", id] });
     void queryClient.invalidateQueries({ queryKey: ["mission-events", id] });
