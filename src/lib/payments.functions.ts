@@ -8,6 +8,7 @@ import {
   type PricingRule,
 } from "@/lib/pricing-core";
 import type { MissionCategory, MissionPriority } from "@/lib/towia";
+import { markPaid } from "@/lib/payments.server";
 
 type Ctx = { supabase: any; userId: string };
 
@@ -215,7 +216,7 @@ export const createMissionCheckout = createServerFn({ method: "POST" })
       cancel_url: `${origin}/client/paiement/${mission.id}?paiement=annule`,
     });
 
-    await ctx.supabase
+    await supabaseAdmin
       .from("payments")
       .update({
         status: "PROCESSING",
@@ -248,20 +249,21 @@ export const confirmTestPayment = createServerFn({ method: "POST" })
     if (payment.client_id !== ctx.userId) throw new Error("Accès refusé");
     if (payment.status === "PAID") return { ok: true };
 
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
     if (data.outcome === "failed") {
-      await ctx.supabase
+      await supabaseAdmin
         .from("payments")
         .update({ status: "FAILED", failure_reason: "Échec simulé (mode test)" })
         .eq("id", payment.id);
-      await ctx.supabase
+      await supabaseAdmin
         .from("missions")
         .update({ payment_status: "failed" })
         .eq("id", payment.mission_id);
       return { ok: false };
     }
 
-    const { markPaid } = await import("@/lib/payments.server");
-    await markPaid(ctx.supabase, payment);
+    await markPaid(supabaseAdmin, payment);
     return { ok: true };
   });
 
@@ -296,11 +298,12 @@ export const refundPayment = createServerFn({ method: "POST" })
       });
     }
 
-    await ctx.supabase
+    const { supabaseAdmin: adminClient } = await import("@/integrations/supabase/client.server");
+    await adminClient
       .from("payments")
       .update({ status: "REFUNDED", refunded_at: new Date().toISOString() })
       .eq("id", payment.id);
-    await ctx.supabase
+    await adminClient
       .from("missions")
       .update({ payment_status: "refunded" })
       .eq("id", payment.mission_id);
