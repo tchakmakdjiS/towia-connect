@@ -76,21 +76,34 @@ function OperatorProfile() {
     },
   });
 
+  const sensitive = useQuery({
+    queryKey: ["operator-sensitive", operator.data?.id],
+    enabled: !!operator.data?.id,
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("operator_sensitive")
+        .select("siret")
+        .eq("operator_id", operator.data!.id)
+        .maybeSingle();
+      return data;
+    },
+  });
+
   useEffect(() => {
     const d = operator.data;
     if (!d) return;
-    setForm({
+    setForm((prev) => ({
+      ...prev,
       first_name: d.first_name ?? "",
       last_name: d.last_name ?? "",
       phone: d.phone ?? "",
       email: d.email ?? user?.email ?? "",
       company_name: d.company_name ?? "",
-      siret: d.siret ?? "",
       address: d.address ?? "",
       city: d.city ?? "",
       postal_code: d.postal_code ?? "",
       intervention_zone: d.intervention_zone ?? "",
-    });
+    }));
     setServices((d.services ?? []) as MissionCategory[]);
     setAvailability((d.availability ?? "UNAVAILABLE") as Availability);
     setVehicleType(d.vehicle_type ?? VEHICLE_TYPES[0]!);
@@ -98,10 +111,16 @@ function OperatorProfile() {
     setAvailable247(!!d.available_24_7);
   }, [operator.data, user?.email]);
 
+  useEffect(() => {
+    if (sensitive.data === undefined) return;
+    setForm((prev) => ({ ...prev, siret: sensitive.data?.siret ?? "" }));
+  }, [sensitive.data]);
+
   const save = async () => {
     if (!user) return;
+    const { siret, ...rest } = form;
     const payload = {
-      ...form,
+      ...rest,
       user_id: user.id,
       services,
       availability,
@@ -110,16 +129,37 @@ function OperatorProfile() {
       available_24_7: available247,
       is_available: availability === "AVAILABLE",
     };
-    const { error } = operator.data
-      ? await supabase.from("operators").update(payload).eq("id", operator.data.id)
-      : await supabase.from("operators").insert(payload);
-    if (error) {
-      toast.error("Enregistrement impossible. Veuillez réessayer.");
-      return;
+    const existingId = operator.data?.id;
+    let operatorId = existingId ?? null;
+    if (existingId) {
+      const { error } = await supabase.from("operators").update(payload).eq("id", existingId);
+      if (error) {
+        toast.error("Enregistrement impossible. Veuillez réessayer.");
+        return;
+      }
+    } else {
+      const { data: created, error } = await supabase
+        .from("operators")
+        .insert(payload)
+        .select("id")
+        .maybeSingle();
+      if (error || !created) {
+        toast.error("Enregistrement impossible. Veuillez réessayer.");
+        return;
+      }
+      operatorId = created.id;
+    }
+
+    if (operatorId) {
+      await supabase
+        .from("operator_sensitive")
+        .upsert({ operator_id: operatorId, siret }, { onConflict: "operator_id" });
     }
     toast.success("Profil professionnel enregistré");
     void queryClient.invalidateQueries({ queryKey: ["operator", user.id] });
+    void queryClient.invalidateQueries({ queryKey: ["operator-sensitive", operatorId] });
   };
+
 
   const shareLocation = () => {
     if (typeof navigator === "undefined" || !navigator.geolocation || !operator.data) {

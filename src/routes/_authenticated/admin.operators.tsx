@@ -63,6 +63,20 @@ function AdminOperators() {
     },
   });
 
+  const sensitive = useQuery({
+    queryKey: ["admin-operator-sensitive", openId],
+    enabled: !!openId,
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("operator_sensitive")
+        .select("siret")
+        .eq("operator_id", openId!)
+        .maybeSingle();
+      return data;
+    },
+  });
+
+
   const documents = useQuery({
     queryKey: ["admin-operator-documents", openId],
     enabled: !!openId,
