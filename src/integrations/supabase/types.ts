@@ -1217,6 +1217,78 @@ export type Database = {
         }
         Relationships: []
       }
+      quotes: {
+        Row: {
+          base_price: number
+          breakdown: Json | null
+          created_at: string
+          currency: string
+          distance_km: number | null
+          distance_price: number
+          id: string
+          minimum_applied: boolean
+          mission_id: string
+          operator_id: string | null
+          price_per_km: number
+          rule_name: string | null
+          service_type: Database["public"]["Enums"]["mission_category"]
+          source: string
+          supplements: Json
+          total_estimate: number
+        }
+        Insert: {
+          base_price?: number
+          breakdown?: Json | null
+          created_at?: string
+          currency?: string
+          distance_km?: number | null
+          distance_price?: number
+          id?: string
+          minimum_applied?: boolean
+          mission_id: string
+          operator_id?: string | null
+          price_per_km?: number
+          rule_name?: string | null
+          service_type: Database["public"]["Enums"]["mission_category"]
+          source?: string
+          supplements?: Json
+          total_estimate?: number
+        }
+        Update: {
+          base_price?: number
+          breakdown?: Json | null
+          created_at?: string
+          currency?: string
+          distance_km?: number | null
+          distance_price?: number
+          id?: string
+          minimum_applied?: boolean
+          mission_id?: string
+          operator_id?: string | null
+          price_per_km?: number
+          rule_name?: string | null
+          service_type?: Database["public"]["Enums"]["mission_category"]
+          source?: string
+          supplements?: Json
+          total_estimate?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quotes_mission_id_fkey"
+            columns: ["mission_id"]
+            isOneToOne: false
+            referencedRelation: "missions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quotes_operator_id_fkey"
+            columns: ["operator_id"]
+            isOneToOne: false
+            referencedRelation: "operators"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       refunds: {
         Row: {
           administrator_id: string | null
