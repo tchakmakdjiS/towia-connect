@@ -171,11 +171,15 @@ export const createMissionCheckout = createServerFn({ method: "POST" })
       failure_reason: null,
     };
 
+    // Écritures financières : uniquement côté serveur de confiance,
+    // jamais avec la session du client (le client ne peut pas modifier les montants).
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
     let paymentId = existing?.id as string | undefined;
     if (paymentId) {
-      await ctx.supabase.from("payments").update(payload).eq("id", paymentId);
+      await supabaseAdmin.from("payments").update(payload).eq("id", paymentId);
     } else {
-      const { data: created, error: insertError } = await ctx.supabase
+      const { data: created, error: insertError } = await supabaseAdmin
         .from("payments")
         .insert(payload)
         .select("id")
@@ -184,7 +188,7 @@ export const createMissionCheckout = createServerFn({ method: "POST" })
       paymentId = created.id;
     }
 
-    await ctx.supabase
+    await supabaseAdmin
       .from("missions")
       .update({
         estimated_amount: breakdown.total,
@@ -192,6 +196,7 @@ export const createMissionCheckout = createServerFn({ method: "POST" })
         payment_status: "pending",
       })
       .eq("id", mission.id);
+
 
     if (isTest) {
       return { mode: "test" as const, paymentId: paymentId!, breakdown };
