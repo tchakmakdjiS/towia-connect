@@ -51,6 +51,7 @@ import { Route as AuthenticatedEntrepriseProfilRouteImport } from './routes/_aut
 import { Route as AuthenticatedEntrepriseRevenueRouteImport } from './routes/_authenticated/entreprise.revenue'
 import { Route as AuthenticatedEntrepriseVehiclesRouteImport } from './routes/_authenticated/entreprise.vehicles'
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
+import { Route as AuthenticatedAdminMissionIdRouteImport } from './routes/_authenticated/admin.mission.$id'
 import { Route as AuthenticatedClientMissionIdRouteImport } from './routes/_authenticated/client.mission.$id'
 import { Route as AuthenticatedClientPaiementIdRouteImport } from './routes/_authenticated/client.paiement.$id'
 import { Route as AuthenticatedDepanneurMissionIdRouteImport } from './routes/_authenticated/depanneur.mission.$id'
@@ -292,6 +293,12 @@ const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
   path: '/api/public/stripe-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminMissionIdRoute =
+  AuthenticatedAdminMissionIdRouteImport.update({
+    id: '/admin/mission/$id',
+    path: '/admin/mission/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedClientMissionIdRoute =
   AuthenticatedClientMissionIdRouteImport.update({
     id: '/client/mission/$id',
@@ -353,6 +360,7 @@ export interface FileRoutesByFullPath {
   '/client/': typeof AuthenticatedClientIndexRoute
   '/depanneur/': typeof AuthenticatedDepanneurIndexRoute
   '/entreprise/': typeof AuthenticatedEntrepriseIndexRoute
+  '/admin/mission/$id': typeof AuthenticatedAdminMissionIdRoute
   '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
   '/client/paiement/$id': typeof AuthenticatedClientPaiementIdRoute
   '/depanneur/mission/$id': typeof AuthenticatedDepanneurMissionIdRoute
@@ -399,6 +407,7 @@ export interface FileRoutesByTo {
   '/client': typeof AuthenticatedClientIndexRoute
   '/depanneur': typeof AuthenticatedDepanneurIndexRoute
   '/entreprise': typeof AuthenticatedEntrepriseIndexRoute
+  '/admin/mission/$id': typeof AuthenticatedAdminMissionIdRoute
   '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
   '/client/paiement/$id': typeof AuthenticatedClientPaiementIdRoute
   '/depanneur/mission/$id': typeof AuthenticatedDepanneurMissionIdRoute
@@ -447,6 +456,7 @@ export interface FileRoutesById {
   '/_authenticated/client/': typeof AuthenticatedClientIndexRoute
   '/_authenticated/depanneur/': typeof AuthenticatedDepanneurIndexRoute
   '/_authenticated/entreprise/': typeof AuthenticatedEntrepriseIndexRoute
+  '/_authenticated/admin/mission/$id': typeof AuthenticatedAdminMissionIdRoute
   '/_authenticated/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
   '/_authenticated/client/paiement/$id': typeof AuthenticatedClientPaiementIdRoute
   '/_authenticated/depanneur/mission/$id': typeof AuthenticatedDepanneurMissionIdRoute
@@ -495,6 +505,7 @@ export interface FileRouteTypes {
     | '/client/'
     | '/depanneur/'
     | '/entreprise/'
+    | '/admin/mission/$id'
     | '/client/mission/$id'
     | '/client/paiement/$id'
     | '/depanneur/mission/$id'
@@ -541,6 +552,7 @@ export interface FileRouteTypes {
     | '/client'
     | '/depanneur'
     | '/entreprise'
+    | '/admin/mission/$id'
     | '/client/mission/$id'
     | '/client/paiement/$id'
     | '/depanneur/mission/$id'
@@ -588,6 +600,7 @@ export interface FileRouteTypes {
     | '/_authenticated/client/'
     | '/_authenticated/depanneur/'
     | '/_authenticated/entreprise/'
+    | '/_authenticated/admin/mission/$id'
     | '/_authenticated/client/mission/$id'
     | '/_authenticated/client/paiement/$id'
     | '/_authenticated/depanneur/mission/$id'
@@ -902,6 +915,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicStripeWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/mission/$id': {
+      id: '/_authenticated/admin/mission/$id'
+      path: '/admin/mission/$id'
+      fullPath: '/admin/mission/$id'
+      preLoaderRoute: typeof AuthenticatedAdminMissionIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/client/mission/$id': {
       id: '/_authenticated/client/mission/$id'
       path: '/client/mission/$id'
@@ -959,6 +979,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedClientIndexRoute: typeof AuthenticatedClientIndexRoute
   AuthenticatedDepanneurIndexRoute: typeof AuthenticatedDepanneurIndexRoute
   AuthenticatedEntrepriseIndexRoute: typeof AuthenticatedEntrepriseIndexRoute
+  AuthenticatedAdminMissionIdRoute: typeof AuthenticatedAdminMissionIdRoute
   AuthenticatedClientMissionIdRoute: typeof AuthenticatedClientMissionIdRoute
   AuthenticatedClientPaiementIdRoute: typeof AuthenticatedClientPaiementIdRoute
   AuthenticatedDepanneurMissionIdRoute: typeof AuthenticatedDepanneurMissionIdRoute
@@ -997,6 +1018,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedClientIndexRoute: AuthenticatedClientIndexRoute,
   AuthenticatedDepanneurIndexRoute: AuthenticatedDepanneurIndexRoute,
   AuthenticatedEntrepriseIndexRoute: AuthenticatedEntrepriseIndexRoute,
+  AuthenticatedAdminMissionIdRoute: AuthenticatedAdminMissionIdRoute,
   AuthenticatedClientMissionIdRoute: AuthenticatedClientMissionIdRoute,
   AuthenticatedClientPaiementIdRoute: AuthenticatedClientPaiementIdRoute,
   AuthenticatedDepanneurMissionIdRoute: AuthenticatedDepanneurMissionIdRoute,
