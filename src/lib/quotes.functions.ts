@@ -81,3 +81,67 @@ export const getOrCreateMissionQuote = createServerFn({ method: "POST" })
       persisted: true,
     };
   });
+
+export type QuotePreview = {
+  breakdown: PriceBreakdown | null;
+  distanceKm: number | null;
+  distanceKnown: boolean;
+};
+
+/**
+ * Estimation AVANT création de la mission (écran de confirmation automobiliste).
+ * La distance provient du dépanneur disponible le plus proche ; si aucune
+ * position n'est connue, elle reste inconnue (jamais inventée).
+ */
+export const previewQuote = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(
+    (data: {
+      serviceType: string;
+      priority: "NORMAL" | "HIGH" | "EMERGENCY";
+      latitude?: number | null;
+      longitude?: number | null;
+    }) => data,
+  )
+  .handler(async ({ data }): Promise<QuotePreview> => {
+    const { resolveRule, platformFeePercentage } = await import("@/lib/quote-engine.server");
+    const { calculateMissionPrice } = await import("@/lib/pricing-core");
+    const { computeDistanceKm, toCoords } = await import("@/lib/distance");
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+    const applicable = await resolveRule(supabaseAdmin, {
+      category: data.serviceType as any,
+      operator_id: null,
+      company_id: null,
+    });
+    if (!applicable) return { breakdown: null, distanceKm: null, distanceKnown: false };
+
+    let distanceKm: number | null = null;
+    const clientCoords = toCoords(data.latitude ?? null, data.longitude ?? null);
+    if (clientCoords) {
+      const { data: operators } = await supabaseAdmin
+        .from("operators")
+        .select("last_latitude, last_longitude")
+        .eq("verification", "VERIFIED")
+        .neq("availability", "UNAVAILABLE");
+      const distances: number[] = [];
+      for (const o of operators ?? []) {
+        const coords = toCoords(o.last_latitude, o.last_longitude);
+        if (!coords) continue;
+        const { km } = await computeDistanceKm(coords, clientCoords);
+        if (km != null) distances.push(km);
+      }
+      if (distances.length > 0) distanceKm = Math.min(...distances);
+    }
+
+    const feePct = await platformFeePercentage(supabaseAdmin);
+    const breakdown = calculateMissionPrice({
+      serviceType: data.serviceType as any,
+      priority: data.priority,
+      distanceKm,
+      rule: applicable.rule,
+      source: applicable.source,
+      platformFeePercentage: feePct,
+    });
+    return { breakdown, distanceKm, distanceKnown: distanceKm != null };
+  });
