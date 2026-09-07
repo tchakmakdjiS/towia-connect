@@ -25,6 +25,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { sosNextStep, dispatchMission } from "@/lib/sos.functions";
+import { previewQuote, getOrCreateMissionQuote, type QuotePreview } from "@/lib/quotes.functions";
+import { PriceEstimate } from "@/components/PriceEstimate";
 import { EMPTY_COLLECTED, URGENCY_LABELS, type SosCollected, type SosMessage } from "@/lib/sos";
 import { MISSION_CATEGORIES, CATEGORY_LABELS, type MissionCategory } from "@/lib/towia";
 
@@ -327,6 +329,12 @@ function SosPage() {
       }
     } catch {
       toast.message("Recherche en cours…");
+    }
+
+    try {
+      await getOrCreateMissionQuote({ data: { missionId: mission.id } });
+    } catch {
+      // Le devis sera calculé à l'ouverture de la mission.
     }
 
     setSubmitting(false);
