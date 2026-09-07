@@ -25,6 +25,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { sosNextStep, dispatchMission } from "@/lib/sos.functions";
+import { previewQuote, getOrCreateMissionQuote, type QuotePreview } from "@/lib/quotes.functions";
+import { PriceEstimate } from "@/components/PriceEstimate";
 import { EMPTY_COLLECTED, URGENCY_LABELS, type SosCollected, type SosMessage } from "@/lib/sos";
 import { MISSION_CATEGORIES, CATEGORY_LABELS, type MissionCategory } from "@/lib/towia";
 
@@ -241,6 +243,36 @@ function SosPage() {
     setPhotos((prev) => prev.filter((p) => p.id !== photo.id));
   };
 
+  const [quote, setQuote] = useState<QuotePreview | null>(null);
+  const [quoteLoading, setQuoteLoading] = useState(false);
+
+  // Devis estimatif affiché avant confirmation définitive.
+  useEffect(() => {
+    if (phase !== "recap" || !collected.service_type) return;
+    let cancelled = false;
+    setQuoteLoading(true);
+    previewQuote({
+      data: {
+        serviceType: collected.service_type,
+        priority: collected.urgency,
+        latitude: position?.latitude ?? null,
+        longitude: position?.longitude ?? null,
+      },
+    })
+      .then((result) => {
+        if (!cancelled) setQuote(result);
+      })
+      .catch(() => {
+        if (!cancelled) setQuote(null);
+      })
+      .finally(() => {
+        if (!cancelled) setQuoteLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [phase, collected.service_type, collected.urgency, position?.latitude, position?.longitude]);
+
   /** 9 — confirmation : la demande devient "pending" et une mission est créée. */
   const confirm = async () => {
     if (!user || !requestId || !collected.service_type) return;
@@ -327,6 +359,12 @@ function SosPage() {
       }
     } catch {
       toast.message("Recherche en cours…");
+    }
+
+    try {
+      await getOrCreateMissionQuote({ data: { missionId: mission.id } });
+    } catch {
+      // Le devis sera calculé à l'ouverture de la mission.
     }
 
     setSubmitting(false);
@@ -606,6 +644,31 @@ function SosPage() {
                 <Row label="Urgence" value={URGENCY_LABELS[collected.urgency]} />
                 <Row label="Description" value={collected.problem_description ?? "—"} />
                 <Row label="Photos" value={String(photos.length)} />
+                <Row
+                  label="Distance estimée"
+                  value={
+                    quote?.distanceKm != null
+                      ? `${quote.distanceKm.toFixed(1)} km`
+                      : "Distance à confirmer"
+                  }
+                />
+
+                {quoteLoading ? (
+                  <p className="text-xs text-muted-foreground">Calcul du devis en cours…</p>
+                ) : quote?.breakdown ? (
+                  <>
+                    <PriceEstimate breakdown={quote.breakdown} title="Récapitulatif du devis" />
+                    <p className="text-xs text-muted-foreground">
+                      Prix estimatif : le montant définitif est confirmé une fois l'intervention
+                      réalisée.
+                    </p>
+                  </>
+                ) : (
+                  <p className="text-xs text-muted-foreground">
+                    Aucun tarif actif pour ce service : le prix vous sera communiqué par le
+                    professionnel.
+                  </p>
+                )}
 
                 <div className="flex flex-col gap-2 pt-3 sm:flex-row">
                   <Button

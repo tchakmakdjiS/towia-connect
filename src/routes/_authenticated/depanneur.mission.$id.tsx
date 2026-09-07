@@ -48,6 +48,21 @@ function OperatorMissionDetail() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [busy, setBusy] = useState(false);
+
+  // Devis figé de la mission : lecture seule côté dépanneur.
+  const quote = useQuery({
+    queryKey: ["mission-quote", id],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("quotes")
+        .select("*")
+        .eq("mission_id", id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      return data;
+    },
+  });
   const [report, setReport] = useState({
     work_done: "",
     distance_km: "",
@@ -341,6 +356,33 @@ function OperatorMissionDetail() {
             <p className="mt-3 rounded-2xl bg-muted/40 p-3 text-sm">{m.description}</p>
           ) : null}
         </Section>
+
+        {quote.data ? (
+          <Section
+            title="Devis TowIA"
+            description="Tarif calculé par la plateforme, non modifiable."
+          >
+            <dl className="grid gap-2 text-sm sm:grid-cols-2">
+              <Info label="Type d'intervention" value={CATEGORY_LABELS[m.category]} />
+              <Info
+                label="Distance retenue"
+                value={
+                  quote.data.distance_km != null
+                    ? `${Number(quote.data.distance_km).toFixed(1)} km`
+                    : "Distance à confirmer"
+                }
+              />
+              <Info label="Prix de base" value={formatAmount(Number(quote.data.base_price))} />
+              <Info
+                label="Prix kilométrique"
+                value={formatAmount(Number(quote.data.distance_price))}
+              />
+            </dl>
+            <p className="mt-3 text-lg font-semibold text-primary">
+              Prix estimatif : {formatAmount(Number(quote.data.total_estimate))}
+            </p>
+          </Section>
+        ) : null}
 
         {analysis.data ? (
           <Section title="Analyse IA" description="Informations recueillies par l'assistant TowIA.">
