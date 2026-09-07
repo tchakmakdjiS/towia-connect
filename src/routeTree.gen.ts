@@ -26,6 +26,7 @@ import { Route as AuthenticatedAdminOperatorsRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminPaymentsRouteImport } from './routes/_authenticated/admin.payments'
 import { Route as AuthenticatedAdminReviewsRouteImport } from './routes/_authenticated/admin.reviews'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
+import { Route as AuthenticatedAdminTarificationRouteImport } from './routes/_authenticated/admin.tarification'
 import { Route as AuthenticatedAdminTarifsRouteImport } from './routes/_authenticated/admin.tarifs'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
 import { Route as AuthenticatedAutomobilisteIndexRouteImport } from './routes/_authenticated/automobiliste.index'
@@ -144,6 +145,12 @@ const AuthenticatedAdminSettingsRoute =
   AuthenticatedAdminSettingsRouteImport.update({
     id: '/admin/settings',
     path: '/admin/settings',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminTarificationRoute =
+  AuthenticatedAdminTarificationRouteImport.update({
+    id: '/admin/tarification',
+    path: '/admin/tarification',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminTarifsRoute =
@@ -334,6 +341,7 @@ export interface FileRoutesByFullPath {
   '/admin/payments': typeof AuthenticatedAdminPaymentsRoute
   '/admin/reviews': typeof AuthenticatedAdminReviewsRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/tarification': typeof AuthenticatedAdminTarificationRoute
   '/admin/tarifs': typeof AuthenticatedAdminTarifsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/client/dashboard': typeof AuthenticatedClientDashboardRoute
@@ -381,6 +389,7 @@ export interface FileRoutesByTo {
   '/admin/payments': typeof AuthenticatedAdminPaymentsRoute
   '/admin/reviews': typeof AuthenticatedAdminReviewsRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/tarification': typeof AuthenticatedAdminTarificationRoute
   '/admin/tarifs': typeof AuthenticatedAdminTarifsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/client/dashboard': typeof AuthenticatedClientDashboardRoute
@@ -430,6 +439,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/payments': typeof AuthenticatedAdminPaymentsRoute
   '/_authenticated/admin/reviews': typeof AuthenticatedAdminReviewsRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/_authenticated/admin/tarification': typeof AuthenticatedAdminTarificationRoute
   '/_authenticated/admin/tarifs': typeof AuthenticatedAdminTarifsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/client/dashboard': typeof AuthenticatedClientDashboardRoute
@@ -479,6 +489,7 @@ export interface FileRouteTypes {
     | '/admin/payments'
     | '/admin/reviews'
     | '/admin/settings'
+    | '/admin/tarification'
     | '/admin/tarifs'
     | '/admin/users'
     | '/client/dashboard'
@@ -526,6 +537,7 @@ export interface FileRouteTypes {
     | '/admin/payments'
     | '/admin/reviews'
     | '/admin/settings'
+    | '/admin/tarification'
     | '/admin/tarifs'
     | '/admin/users'
     | '/client/dashboard'
@@ -574,6 +586,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/payments'
     | '/_authenticated/admin/reviews'
     | '/_authenticated/admin/settings'
+    | '/_authenticated/admin/tarification'
     | '/_authenticated/admin/tarifs'
     | '/_authenticated/admin/users'
     | '/_authenticated/client/dashboard'
@@ -738,6 +751,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/settings'
       fullPath: '/admin/settings'
       preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/tarification': {
+      id: '/_authenticated/admin/tarification'
+      path: '/admin/tarification'
+      fullPath: '/admin/tarification'
+      preLoaderRoute: typeof AuthenticatedAdminTarificationRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/tarifs': {
@@ -954,6 +974,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminPaymentsRoute: typeof AuthenticatedAdminPaymentsRoute
   AuthenticatedAdminReviewsRoute: typeof AuthenticatedAdminReviewsRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
+  AuthenticatedAdminTarificationRoute: typeof AuthenticatedAdminTarificationRoute
   AuthenticatedAdminTarifsRoute: typeof AuthenticatedAdminTarifsRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedClientDashboardRoute: typeof AuthenticatedClientDashboardRoute
@@ -993,6 +1014,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminPaymentsRoute: AuthenticatedAdminPaymentsRoute,
   AuthenticatedAdminReviewsRoute: AuthenticatedAdminReviewsRoute,
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
+  AuthenticatedAdminTarificationRoute: AuthenticatedAdminTarificationRoute,
   AuthenticatedAdminTarifsRoute: AuthenticatedAdminTarifsRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedClientDashboardRoute: AuthenticatedClientDashboardRoute,
