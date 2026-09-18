@@ -12,6 +12,8 @@ import {
   Trash2,
   Pencil,
   CheckCircle2,
+  Mic,
+  MicOff,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import type { TablesUpdate } from "@/integrations/supabase/types";
@@ -65,7 +67,8 @@ function SosPage() {
   const [thinking, setThinking] = useState(false);
   const [input, setInput] = useState("");
   const [starting, setStarting] = useState(false);
-
+const [listening, setListening] = useState(false);
+const recognitionRef = useRef<any>(null);
   const [position, setPosition] = useState<{ latitude: number; longitude: number } | null>(null);
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -82,7 +85,11 @@ function SosPage() {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages, thinking]);
-
+useEffect(() => {
+  return () => {
+    recognitionRef.current?.abort?.();
+  };
+}, []);
   const persist = async (
     id: string,
     patch: TablesUpdate<"assistance_requests">,
@@ -148,6 +155,80 @@ function SosPage() {
       setThinking(false);
     }
   };
+const toggleVoiceInput = () => {
+  if (thinking) return;
+
+  if (listening) {
+    recognitionRef.current?.stop?.();
+    return;
+  }
+
+  if (typeof window === "undefined") return;
+
+  const SpeechRecognition =
+    (window as any).SpeechRecognition ??
+    (window as any).webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    toast.error("La saisie vocale n'est pas disponible sur ce navigateur.");
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+
+  recognition.lang = "fr-FR";
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  recognition.maxAlternatives = 1;
+
+  recognition.onstart = () => {
+    setListening(true);
+  };
+
+  recognition.onresult = (event: any) => {
+    let transcript = "";
+
+    for (
+      let i = event.resultIndex;
+      i < event.results.length;
+      i += 1
+    ) {
+      transcript += event.results[i][0]?.transcript ?? "";
+    }
+
+    if (transcript.trim()) {
+      setInput(transcript.trim());
+    }
+  };
+
+  recognition.onerror = (event: any) => {
+    setListening(false);
+
+    if (
+      event.error === "not-allowed" ||
+      event.error === "service-not-allowed"
+    ) {
+      toast.error("Autorisez le microphone pour utiliser la saisie vocale.");
+    } else if (event.error !== "aborted") {
+      toast.error("La reconnaissance vocale a rencontré un problème. Réessayez.");
+    }
+  };
+
+  recognition.onend = () => {
+    setListening(false);
+    recognitionRef.current = null;
+  };
+
+  recognitionRef.current = recognition;
+
+  try {
+    recognition.start();
+  } catch {
+    recognitionRef.current = null;
+    setListening(false);
+    toast.error("Impossible de démarrer le microphone. Réessayez.");
+  }
+};
 
   const answer = (value: string) => {
     if (!value.trim() || thinking) return;
