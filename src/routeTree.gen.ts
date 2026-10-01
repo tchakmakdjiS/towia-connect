@@ -56,6 +56,7 @@ import { Route as AuthenticatedAdminMissionIdRouteImport } from './routes/_authe
 import { Route as AuthenticatedClientMissionIdRouteImport } from './routes/_authenticated/client.mission.$id'
 import { Route as AuthenticatedClientPaiementIdRouteImport } from './routes/_authenticated/client.paiement.$id'
 import { Route as AuthenticatedDepanneurMissionIdRouteImport } from './routes/_authenticated/depanneur.mission.$id'
+import { Route as AuthenticatedEntrepriseMissionIdRouteImport } from './routes/_authenticated/entreprise.mission.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -324,6 +325,12 @@ const AuthenticatedDepanneurMissionIdRoute =
     path: '/depanneur/mission/$id',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedEntrepriseMissionIdRoute =
+  AuthenticatedEntrepriseMissionIdRouteImport.update({
+    id: '/entreprise/mission/$id',
+    path: '/entreprise/mission/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -372,6 +379,7 @@ export interface FileRoutesByFullPath {
   '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
   '/client/paiement/$id': typeof AuthenticatedClientPaiementIdRoute
   '/depanneur/mission/$id': typeof AuthenticatedDepanneurMissionIdRoute
+  '/entreprise/mission/$id': typeof AuthenticatedEntrepriseMissionIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -420,6 +428,7 @@ export interface FileRoutesByTo {
   '/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
   '/client/paiement/$id': typeof AuthenticatedClientPaiementIdRoute
   '/depanneur/mission/$id': typeof AuthenticatedDepanneurMissionIdRoute
+  '/entreprise/mission/$id': typeof AuthenticatedEntrepriseMissionIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -470,6 +479,7 @@ export interface FileRoutesById {
   '/_authenticated/client/mission/$id': typeof AuthenticatedClientMissionIdRoute
   '/_authenticated/client/paiement/$id': typeof AuthenticatedClientPaiementIdRoute
   '/_authenticated/depanneur/mission/$id': typeof AuthenticatedDepanneurMissionIdRoute
+  '/_authenticated/entreprise/mission/$id': typeof AuthenticatedEntrepriseMissionIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -520,6 +530,7 @@ export interface FileRouteTypes {
     | '/client/mission/$id'
     | '/client/paiement/$id'
     | '/depanneur/mission/$id'
+    | '/entreprise/mission/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -568,6 +579,7 @@ export interface FileRouteTypes {
     | '/client/mission/$id'
     | '/client/paiement/$id'
     | '/depanneur/mission/$id'
+    | '/entreprise/mission/$id'
   id:
     | '__root__'
     | '/'
@@ -617,6 +629,7 @@ export interface FileRouteTypes {
     | '/_authenticated/client/mission/$id'
     | '/_authenticated/client/paiement/$id'
     | '/_authenticated/depanneur/mission/$id'
+    | '/_authenticated/entreprise/mission/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -963,6 +976,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDepanneurMissionIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/entreprise/mission/$id': {
+      id: '/_authenticated/entreprise/mission/$id'
+      path: '/entreprise/mission/$id'
+      fullPath: '/entreprise/mission/$id'
+      preLoaderRoute: typeof AuthenticatedEntrepriseMissionIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -1004,6 +1024,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedClientMissionIdRoute: typeof AuthenticatedClientMissionIdRoute
   AuthenticatedClientPaiementIdRoute: typeof AuthenticatedClientPaiementIdRoute
   AuthenticatedDepanneurMissionIdRoute: typeof AuthenticatedDepanneurMissionIdRoute
+  AuthenticatedEntrepriseMissionIdRoute: typeof AuthenticatedEntrepriseMissionIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -1044,6 +1065,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedClientMissionIdRoute: AuthenticatedClientMissionIdRoute,
   AuthenticatedClientPaiementIdRoute: AuthenticatedClientPaiementIdRoute,
   AuthenticatedDepanneurMissionIdRoute: AuthenticatedDepanneurMissionIdRoute,
+  AuthenticatedEntrepriseMissionIdRoute: AuthenticatedEntrepriseMissionIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
