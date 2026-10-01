@@ -1482,6 +1482,37 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      company_available_missions: {
+        Args: { _mission_id?: string }
+        Returns: {
+          address: string
+          category: Database["public"]["Enums"]["mission_category"]
+          city: string
+          created_at: string
+          description: string
+          distance_km: number
+          estimated_amount: number
+          has_offer: boolean
+          id: string
+          latitude: number
+          longitude: number
+          postal_code: string
+          priority: Database["public"]["Enums"]["mission_priority"]
+          status: Database["public"]["Enums"]["mission_status"]
+          vehicle_make: string
+          vehicle_model: string
+          vehicle_registration: string
+          vehicle_year: number
+        }[]
+      }
+      company_decline_mission: {
+        Args: { _mission_id: string }
+        Returns: undefined
+      }
+      company_take_mission: {
+        Args: { _mission_id: string; _operator_id: string }
+        Returns: string
+      }
       has_offer_for_mission: {
         Args: { _mission_id: string; _only_pending?: boolean; _user_id: string }
         Returns: boolean
