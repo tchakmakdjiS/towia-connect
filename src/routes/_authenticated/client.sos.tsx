@@ -170,7 +170,7 @@ const toggleVoiceInput = () => {
     (window as any).webkitSpeechRecognition;
 
   if (!SpeechRecognition) {
-    toast.error("La saisie vocale n'est pas disponible sur ce navigateur.");
+    toast.error("Votre navigateur ne prend pas en charge la saisie vocale.");
     return;
   }
 
@@ -541,10 +541,21 @@ const toggleVoiceInput = () => {
                   onKeyDown={(e) => {
                     if (e.key === "Enter") answer(input);
                   }}
-                  placeholder="Écrivez votre réponse…"
+                  placeholder={listening ? "Écoute en cours..." : "Écrivez votre réponse…"}
                   className="rounded-xl"
                   disabled={thinking}
                 />
+                <Button
+                  type="button"
+                  variant={listening ? "destructive" : "secondary"}
+                  onClick={toggleVoiceInput}
+                  disabled={thinking}
+                  aria-label={listening ? "Arrêter l'écoute" : "Saisie vocale"}
+                  title={listening ? "Arrêter l'écoute" : "Saisie vocale"}
+                  className={`rounded-xl ${listening ? "animate-pulse" : ""}`}
+                >
+                  {listening ? <MicOff className="size-4" /> : <Mic className="size-4" />}
+                </Button>
                 <Button
                   onClick={() => answer(input)}
                   disabled={thinking || !input.trim()}
@@ -553,6 +564,11 @@ const toggleVoiceInput = () => {
                   <Send className="size-4" />
                 </Button>
               </div>
+              {listening ? (
+                <p className="flex items-center gap-2 pt-1 text-xs text-destructive">
+                  <span className="size-2 rounded-full bg-destructive" /> Écoute en cours... appuyez à nouveau pour arrêter.
+                </p>
+              ) : null}
 
               {collected.service_type ? (
                 <div className="flex flex-wrap items-center gap-2 pt-2 text-xs">
