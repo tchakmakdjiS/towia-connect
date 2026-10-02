@@ -49,7 +49,7 @@ function CompanyMissionDetail() {
     queryFn: async () => {
       const { data: own } = await supabase
         .from("missions")
-        .select("*, operators(first_name, last_name, professional_name, phone, last_latitude, last_longitude, last_position_at)")
+        .select("*, operators(first_name, last_name, professional_name, user_id, phone, last_latitude, last_longitude, last_position_at)")
         .eq("id", id)
         .eq("company_id", companyId!)
         .maybeSingle();
@@ -224,5 +224,136 @@ function Info({ label, value }: { label: string; value: string }) {
       <dt className="text-xs uppercase tracking-wide text-muted-foreground">{label}</dt>
       <dd className="mt-0.5">{value}</dd>
     </div>
+  );
+}
+
+type TrackEvent = {
+  id: string;
+  label: string;
+  status: MissionStatus | null;
+  created_at: string;
+  latitude: number | null;
+  longitude: number | null;
+  actor_id: string | null;
+};
+
+type TrackMission = {
+  status: MissionStatus;
+  client_id: string;
+  accepted_at: string | null;
+  departure_time: string | null;
+  arrival_at: string | null;
+  completed_at: string | null;
+  operators: {
+    first_name: string | null;
+    last_name: string | null;
+    professional_name: string | null;
+    user_id: string | null;
+    phone: string | null;
+    last_latitude: number | null;
+    last_longitude: number | null;
+    last_position_at: string | null;
+  } | null;
+};
+
+const TRACK_STEPS: { status: MissionStatus; icon: string; label: string }[] = [
+  { status: "ACCEPTED", icon: "✓", label: "Mission acceptée" },
+  { status: "EN_ROUTE", icon: "🚗", label: "Dépanneur en route" },
+  { status: "ARRIVED", icon: "📍", label: "Dépanneur arrivé" },
+  { status: "IN_PROGRESS", icon: "🔧", label: "Intervention en cours" },
+  { status: "COMPLETED", icon: "✓", label: "Intervention terminée" },
+];
+
+const LIVE_LABELS: Partial<Record<MissionStatus, string>> = {
+  ACCEPTED: "Mission acceptée",
+  EN_ROUTE: "En route",
+  ARRIVED: "Arrivé sur place",
+  IN_PROGRESS: "Intervention en cours",
+  COMPLETED: "Intervention terminée",
+  CANCELLED: "Mission annulée",
+  DISPUTED: "Litige",
+};
+
+function CompanyTracking({ mission, events }: { mission: TrackMission; events: TrackEvent[] }) {
+  const reached = TRACK_STEPS.findIndex((s) => s.status === mission.status);
+  const eventTime = (s: MissionStatus) =>
+    [...events].reverse().find((e) => e.status === s)?.created_at ?? null;
+  const times: Record<string, string | null> = {
+    ACCEPTED: mission.accepted_at ?? eventTime("ACCEPTED"),
+    EN_ROUTE: mission.departure_time ?? eventTime("EN_ROUTE"),
+    ARRIVED: mission.arrival_at ?? eventTime("ARRIVED"),
+    IN_PROGRESS: eventTime("IN_PROGRESS"),
+    COMPLETED: mission.completed_at ?? eventTime("COMPLETED"),
+  };
+  const op = mission.operators;
+  const opName = op ? op.professional_name || [op.first_name, op.last_name].filter(Boolean).join(" ") : "—";
+  const actor = (id: string | null) =>
+    !id ? "Système" : id === mission.client_id ? "Automobiliste" : op?.user_id && id === op.user_id ? "Dépanneur" : "Entreprise / plateforme";
+
+  return (
+    <>
+      <Section title="Suivi en direct" description="Mis à jour automatiquement">
+        <div className="mb-4 flex flex-wrap items-center gap-3">
+          <span className="rounded-full bg-primary/15 px-3 py-1 text-sm font-semibold text-primary">
+            {LIVE_LABELS[mission.status] ?? mission.status}
+          </span>
+          <span className="text-sm text-muted-foreground">Dépanneur : {opName}</span>
+          {op?.phone ? (
+            <a href={`tel:${op.phone}`} className="text-sm text-primary underline">{op.phone}</a>
+          ) : null}
+        </div>
+        <ol className="space-y-1">
+          {TRACK_STEPS.map((s, i) => {
+            const done = reached >= i || !!times[s.status];
+            return (
+              <li key={s.status}>
+                <div className={`flex items-center justify-between gap-3 rounded-xl px-3 py-2 text-sm ${done ? "bg-primary/10 text-foreground" : "text-muted-foreground"}`}>
+                  <span><span className="mr-2">{s.icon}</span>{s.label}</span>
+                  <span className="text-xs">{times[s.status] ? formatDate(times[s.status]) : "—"}</span>
+                </div>
+                {i < TRACK_STEPS.length - 1 ? <p className="pl-5 text-xs text-muted-foreground">↓</p> : null}
+              </li>
+            );
+          })}
+        </ol>
+        <p className="mt-4 text-xs text-muted-foreground">
+          Position du dépanneur :{" "}
+          {op?.last_latitude != null && op.last_longitude != null ? (
+            <a
+              className="text-primary underline"
+              target="_blank"
+              rel="noreferrer"
+              href={`https://www.google.com/maps?q=${op.last_latitude},${op.last_longitude}`}
+            >
+              {op.last_latitude.toFixed(4)}, {op.last_longitude.toFixed(4)}
+              {op.last_position_at ? ` (${formatDate(op.last_position_at)})` : ""}
+            </a>
+          ) : (
+            "non partagée"
+          )}
+        </p>
+      </Section>
+
+      <Section title="Historique des événements">
+        {events.length === 0 ? (
+          <EmptyState title="Aucun événement" />
+        ) : (
+          <ol className="space-y-2">
+            {events.map((e) => (
+              <li key={e.id} className="rounded-xl border border-border p-3 text-sm">
+                <div className="flex justify-between gap-3">
+                  <span className="font-medium">{e.label}</span>
+                  <span className="text-xs text-muted-foreground">{formatDate(e.created_at)}</span>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Par : {actor(e.actor_id)}
+                  {e.latitude != null && e.longitude != null ? ` · GPS ${e.latitude.toFixed(4)}, ${e.longitude.toFixed(4)}` : ""}
+                </p>
+              </li>
+            ))}
+          </ol>
+        )}
+      </Section>
+    </>
   );
 }
