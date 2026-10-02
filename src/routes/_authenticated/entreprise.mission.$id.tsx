@@ -49,7 +49,7 @@ function CompanyMissionDetail() {
     queryFn: async () => {
       const { data: own } = await supabase
         .from("missions")
-        .select("*, operators(first_name, last_name, professional_name, phone)")
+        .select("*, operators(first_name, last_name, professional_name, phone, last_latitude, last_longitude, last_position_at)")
         .eq("id", id)
         .eq("company_id", companyId!)
         .maybeSingle();
@@ -67,7 +67,7 @@ function CompanyMissionDetail() {
     queryFn: async () => {
       const { data } = await supabase
         .from("mission_events")
-        .select("id, label, created_at")
+        .select("id, label, status, created_at, latitude, longitude, actor_id")
         .eq("mission_id", id)
         .order("created_at", { ascending: true });
       return data ?? [];
@@ -209,20 +209,7 @@ function CompanyMissionDetail() {
             ) : null}
 
             {data.kind === "own" ? (
-              <Section title="Suivi">
-                {(events.data ?? []).length === 0 ? (
-                  <EmptyState title="Aucun événement" />
-                ) : (
-                  <ol className="space-y-2">
-                    {events.data!.map((e) => (
-                      <li key={e.id} className="flex justify-between gap-3 text-sm">
-                        <span>{e.label}</span>
-                        <span className="text-xs text-muted-foreground">{formatDate(e.created_at)}</span>
-                      </li>
-                    ))}
-                  </ol>
-                )}
-              </Section>
+              <CompanyTracking mission={data.m} events={events.data ?? []} />
             ) : null}
           </>
         )}
