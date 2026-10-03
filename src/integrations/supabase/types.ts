@@ -895,6 +895,7 @@ export type Database = {
       }
       operators: {
         Row: {
+          account_status: string
           address: string | null
           availability: Database["public"]["Enums"]["availability_status"]
           available_24_7: boolean
@@ -927,6 +928,7 @@ export type Database = {
           verification: Database["public"]["Enums"]["verification_status"]
         }
         Insert: {
+          account_status?: string
           address?: string | null
           availability?: Database["public"]["Enums"]["availability_status"]
           available_24_7?: boolean
@@ -959,6 +961,7 @@ export type Database = {
           verification?: Database["public"]["Enums"]["verification_status"]
         }
         Update: {
+          account_status?: string
           address?: string | null
           availability?: Database["public"]["Enums"]["availability_status"]
           available_24_7?: boolean
