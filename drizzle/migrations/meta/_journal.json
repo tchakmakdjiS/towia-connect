@@ -8,6 +8,13 @@
       "when": 1790842846852,
       "tag": "0000_company_take_mission",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791015243189,
+      "tag": "0001_team_operator_accounts",
+      "breakpoints": true
     }
   ]
 }
