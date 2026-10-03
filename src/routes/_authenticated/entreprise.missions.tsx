@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { AppShell } from "@/components/AppShell";
 import { COMPANY_NAV } from "@/lib/nav";
@@ -42,6 +42,26 @@ function CompanyMissions() {
   const company = useCompany();
   const companyId = company.data?.id;
   const [period, setPeriod] = useState<PeriodFilter>("all");
+  const qc = useQueryClient();
+
+  // Suivi en direct : tout changement d'une mission de l'entreprise rafraîchit la liste.
+  useEffect(() => {
+    if (!companyId) return;
+    const channel = supabase
+      .channel(`company-missions-${companyId}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "missions", filter: `company_id=eq.${companyId}` },
+        () => {
+          void qc.invalidateQueries({ queryKey: ["company-missions-all", companyId] });
+          void qc.invalidateQueries({ queryKey: ["company-available-missions", companyId] });
+        },
+      )
+      .subscribe();
+    return () => {
+      void supabase.removeChannel(channel);
+    };
+  }, [companyId, qc]);
 
   const available = useQuery({
     queryKey: ["company-available-missions", companyId],
