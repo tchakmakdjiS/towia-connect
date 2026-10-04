@@ -84,7 +84,8 @@ function CompanyMissionDetail() {
         .from("operators")
         .select("id, first_name, last_name, professional_name, availability, is_available, verification, last_latitude, last_longitude")
         .eq("company_id", companyId!)
-        .neq("verification", "SUSPENDED");
+        .neq("verification", "SUSPENDED")
+        .neq("account_status", "DISABLED");
       if (error) throw error;
       return data;
     },

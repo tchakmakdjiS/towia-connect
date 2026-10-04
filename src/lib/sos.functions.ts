@@ -189,7 +189,8 @@ export const dispatchMission = createServerFn({ method: "POST" })
       .select(
         "id, services, equipment, rating, intervention_zone, is_available, availability, verification, last_latitude, last_longitude, service_radius_km",
       )
-      .eq("verification", "VERIFIED");
+      .eq("verification", "VERIFIED")
+      .neq("account_status", "DISABLED");
     if (operatorsError) throw new Error(operatorsError.message);
 
     const toRad = (v: number) => (v * Math.PI) / 180;
