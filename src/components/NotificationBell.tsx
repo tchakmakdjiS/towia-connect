@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Bell } from "lucide-react";
 import { toast } from "sonner";
@@ -10,7 +11,8 @@ import { formatDate } from "@/lib/towia";
 
 /** Cloche de notifications en direct (missions acceptées, en route, arrivée, etc.). */
 export function NotificationBell() {
-  const { user } = useAuth();
+  const { user, role } = useAuth();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const notifications = useQuery({
@@ -98,7 +100,18 @@ export function NotificationBell() {
             </li>
           ) : (
             list.map((n) => (
-              <li key={n.id} className={`px-4 py-3 ${n.read_at ? "" : "bg-muted/40"}`}>
+              <li
+                key={n.id}
+                className={`px-4 py-3 ${n.read_at ? "" : "bg-muted/40"} ${n.mission_id ? "cursor-pointer hover:bg-muted" : ""}`}
+                onClick={() => {
+                  if (!n.mission_id) return;
+                  if (!n.read_at) void supabase.from("notifications").update({ read_at: new Date().toISOString() }).eq("id", n.id);
+                  const id = n.mission_id;
+                  if (role === "tow_operator") void navigate({ to: "/depanneur/mission/$id", params: { id } });
+                  else if (role === "company") void navigate({ to: "/entreprise/mission/$id", params: { id } });
+                  else if (role === "customer") void navigate({ to: "/client/mission/$id", params: { id } });
+                }}
+              >
                 <p className="text-sm font-medium">{n.title}</p>
                 {n.body ? <p className="text-xs text-muted-foreground">{n.body}</p> : null}
                 <p className="mt-1 text-[11px] text-muted-foreground">{formatDate(n.created_at)}</p>
