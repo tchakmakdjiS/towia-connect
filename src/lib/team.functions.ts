@@ -39,6 +39,8 @@ export const inviteTeamOperator = createServerFn({ method: "POST" })
       if (/already|registered|exists/i.test(msg)) {
         throw new Error("Un compte TowIA existe déjà avec cette adresse e-mail.");
       }
+      if (/not allowed|invalid/i.test(msg)) throw new Error("Cette adresse e-mail n'est pas valide ou ne peut pas recevoir d'e-mail.");
+      if (/rate|limit/i.test(msg)) throw new Error("Trop d'invitations envoyées. Réessayez dans quelques minutes.");
       throw new Error(msg || "Invitation impossible");
     }
 
