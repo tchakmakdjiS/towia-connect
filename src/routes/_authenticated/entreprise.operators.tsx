@@ -100,7 +100,7 @@ function CompanyOperators() {
 
   const setStatus = async (id: string, account_status: "ACTIVE" | "DISABLED") => {
     const { error } = await supabase.from("operators").update({ account_status }).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success(account_status === "DISABLED" ? "Dépanneur désactivé" : "Dépanneur réactivé");
     refresh();
   };
@@ -110,7 +110,7 @@ function CompanyOperators() {
       .from("operators")
       .update({ first_name: edit.first_name, last_name: edit.last_name, phone: edit.phone || null })
       .eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setEditing(null);
     refresh();
   };
