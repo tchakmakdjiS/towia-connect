@@ -1006,6 +1006,7 @@ export type Database = {
       payments: {
         Row: {
           amount: number
+          beneficiary_type: string
           breakdown: Json | null
           cancelled_at: string | null
           client_id: string
@@ -1031,6 +1032,7 @@ export type Database = {
         }
         Insert: {
           amount?: number
+          beneficiary_type?: string
           breakdown?: Json | null
           cancelled_at?: string | null
           client_id: string
@@ -1056,6 +1058,7 @@ export type Database = {
         }
         Update: {
           amount?: number
+          beneficiary_type?: string
           breakdown?: Json | null
           cancelled_at?: string | null
           client_id?: string

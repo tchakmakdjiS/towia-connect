@@ -15,6 +15,13 @@
       "when": 1791015243189,
       "tag": "0001_team_operator_accounts",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791184160470,
+      "tag": "0002_payment_beneficiary",
+      "breakpoints": true
     }
   ]
 }
