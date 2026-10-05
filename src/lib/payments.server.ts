@@ -48,7 +48,30 @@ export async function markPaid(supabase: any, payment: any) {
       body: "Votre facture est disponible dans vos paiements.",
     },
   ];
-  if (payment.operator_id) {
+  // Beneficiary: the company when the mission was taken by a company (internal operator),
+  // otherwise the independent operator.
+  const { data: missionRow } = await supabase
+    .from("missions")
+    .select("company_id")
+    .eq("id", payment.mission_id)
+    .maybeSingle();
+  const companyId: string | null = missionRow?.company_id ?? payment.company_id ?? null;
+  if (companyId) {
+    const { data: company } = await supabase
+      .from("companies")
+      .select("owner_id")
+      .eq("id", companyId)
+      .maybeSingle();
+    if (company?.owner_id) {
+      notifications.push({
+        user_id: company.owner_id,
+        mission_id: payment.mission_id,
+        event: "PAYMENT_CONFIRMED",
+        title: "Paiement client confirmé",
+        body: "Le paiement de la mission a été encaissé pour votre entreprise.",
+      });
+    }
+  } else if (payment.operator_id) {
     const { data: operator } = await supabase
       .from("operators")
       .select("user_id")

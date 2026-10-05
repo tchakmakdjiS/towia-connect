@@ -214,9 +214,9 @@ function OperatorDashboard() {
   const completedToday = list.filter(
     (m) => m.status === "COMPLETED" && inPeriod(m.completed_at, "today"),
   );
-  const revenueToday = completedToday.reduce((sum, m) => sum + Number(m.amount ?? 0), 0);
+  const revenueToday = completedToday.filter((m) => !m.company_id).reduce((sum, m) => sum + Number(m.amount ?? 0), 0);
   const completedAll = list.filter((m) => m.status === "COMPLETED");
-  const revenueTotal = completedAll.reduce((sum, m) => sum + Number(m.amount ?? 0), 0);
+  const revenueTotal = completedAll.filter((m) => !m.company_id).reduce((sum, m) => sum + Number(m.amount ?? 0), 0);
   const ratings = reviews.data ?? [];
   const avg =
     ratings.length > 0

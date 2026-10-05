@@ -58,9 +58,12 @@ function OperatorRevenue() {
     },
   });
 
-  const rows = (missions.data ?? []).filter((m) =>
+  const inRange = (missions.data ?? []).filter((m) =>
     inPeriod(m.completed_at ?? m.created_at, period),
   );
+  // Missions done for a company are paid to the company, not to the operator personally.
+  const rows = inRange.filter((m) => !m.company_id);
+  const forCompany = inRange.filter((m) => !!m.company_id);
   const gross = rows.reduce((sum, m) => sum + Number(m.amount ?? 0), 0);
   const { platformFee, professionalAmount } = splitAmount(gross);
 
@@ -125,6 +128,29 @@ function OperatorRevenue() {
             </ul>
           )}
         </Section>
+
+        {forCompany.length > 0 ? (
+          <Section title="Missions réalisées pour l'entreprise">
+            <p className="mb-3 text-xs text-muted-foreground">
+              Ces interventions sont encaissées par votre entreprise et ne sont pas comptées dans vos revenus personnels.
+            </p>
+            <ul className="space-y-2">
+              {forCompany.map((m) => (
+                <li key={m.id} className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-border p-4 text-sm">
+                  <div>
+                    <p className="font-medium">{CATEGORY_LABELS[m.category]}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {formatDate(m.completed_at ?? m.created_at)}{m.city ? ` · ${m.city}` : ""}
+                    </p>
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    Mission réalisée pour l'entreprise{m.amount ? ` · ${formatAmount(Number(m.amount))}` : ""}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </Section>
+        ) : null}
       </div>
     </AppShell>
   );
