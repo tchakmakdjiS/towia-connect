@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { InvoiceActions } from "@/components/InvoiceActions";
 import { useQuery } from "@tanstack/react-query";
 import { Wallet, Receipt, PiggyBank } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -121,11 +122,23 @@ function CompanyRevenue() {
           ) : (
             <ul className="space-y-2">
               {invoices.data!.map((i) => (
-                <li key={i.id} className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-border p-4 text-sm">
-                  <span>{i.invoice_number}</span>
-                  <span className="text-xs text-muted-foreground">
-                    {formatAmount(Number(i.total), i.currency)} · {i.status}
-                  </span>
+                <li key={i.id} className="space-y-2 rounded-2xl border border-border p-4 text-sm">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                      <p className="font-medium">{i.invoice_number}</p>
+                      <Link
+                        to="/entreprise/mission/$id"
+                        params={{ id: i.mission_id }}
+                        className="text-xs text-primary underline-offset-4 hover:underline"
+                      >
+                        Mission #{i.mission_id.slice(0, 6).toUpperCase()}
+                      </Link>
+                    </div>
+                    <span className="text-xs text-muted-foreground">
+                      {formatAmount(Number(i.total), i.currency)} · {STATUS_LABEL[i.status] ?? i.status}
+                    </span>
+                  </div>
+                  <InvoiceActions invoiceId={i.id} />
                 </li>
               ))}
             </ul>
