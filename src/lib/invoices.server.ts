@@ -7,7 +7,7 @@ export const INVOICE_BUCKET = "invoices";
 // WinAnsi-safe amount formatting (Intl uses narrow no-break spaces the standard fonts can't encode).
 function eur(n: number) {
   const [i, d] = Math.abs(n).toFixed(2).split(".");
-  return `${n < 0 ? "-" : ""}${i.replace(/\B(?=(\d{3})+(?!\d))/g, " ")},${d} EUR`;
+  return `${n < 0 ? "-" : ""}${(i ?? "0").replace(/\B(?=(\d{3})+(?!\d))/g, " ")},${d} EUR`;
 }
 function safe(s: unknown) {
   return String(s ?? "").replace(/[^\x20-\x7E\u00A0-\u00FF€’–—]/g, "");
