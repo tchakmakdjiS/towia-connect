@@ -22,6 +22,13 @@
       "when": 1791184160470,
       "tag": "0002_payment_beneficiary",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791268781996,
+      "tag": "0003_invoice_storage_path",
+      "breakpoints": true
     }
   ]
 }

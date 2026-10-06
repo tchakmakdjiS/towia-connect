@@ -347,6 +347,7 @@ export type Database = {
           payment_id: string | null
           pdf_url: string | null
           status: string
+          storage_path: string | null
           subtotal: number
           tax_amount: number
           total: number
@@ -365,6 +366,7 @@ export type Database = {
           payment_id?: string | null
           pdf_url?: string | null
           status?: string
+          storage_path?: string | null
           subtotal?: number
           tax_amount?: number
           total?: number
@@ -383,6 +385,7 @@ export type Database = {
           payment_id?: string | null
           pdf_url?: string | null
           status?: string
+          storage_path?: string | null
           subtotal?: number
           tax_amount?: number
           total?: number
