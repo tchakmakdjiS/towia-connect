@@ -8,6 +8,7 @@ import { CLIENT_NAV } from "@/lib/nav";
 import { Section, EmptyState } from "@/components/ui-kit";
 import { CATEGORY_LABELS, formatAmount, formatDate } from "@/lib/towia";
 import { PAYMENT_STATUS_LABELS } from "@/lib/pricing";
+import { InvoiceActions } from "@/components/InvoiceActions";
 
 export const Route = createFileRoute("/_authenticated/client/paiements")({
   head: () => ({
@@ -85,8 +86,9 @@ function ClientPayments() {
                       Voir la mission
                     </Link>
                     {p.status === "PAID" && invoice ? (
-                      <span className="flex items-center gap-1 text-muted-foreground">
+                      <span className="flex w-full flex-wrap items-center gap-2 text-muted-foreground">
                         <Receipt className="size-3.5" /> Facture {invoice.invoice_number}
+                        <InvoiceActions invoiceId={invoice.id} />
                       </span>
                     ) : p.status !== "PAID" ? (
                       <Link
