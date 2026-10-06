@@ -46,6 +46,15 @@ function AdminPayments() {
     },
   });
 
+  const invoices = useQuery({
+    queryKey: ["admin-invoices"],
+    queryFn: async () => {
+      const { data } = await supabase.from("invoices").select("id, payment_id, invoice_number");
+      return data ?? [];
+    },
+  });
+  const invoiceByPayment = new Map((invoices.data ?? []).map((i) => [i.payment_id, i]));
+
   const list = payments.data ?? [];
   const paid = list.filter((p) => p.status === "PAID");
   const gross = paid.reduce((s, p) => s + Number(p.amount ?? 0), 0);
@@ -96,6 +105,12 @@ function AdminPayments() {
                     Commission {formatAmount(Number(p.platform_fee ?? 0), p.currency)} · Professionnel{" "}
                     {formatAmount(Number(p.professional_amount ?? 0), p.currency)}
                   </p>
+                  {invoiceByPayment.get(p.id) ? (
+                    <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                      <span>Facture {invoiceByPayment.get(p.id)!.invoice_number}</span>
+                      <InvoiceActions invoiceId={invoiceByPayment.get(p.id)!.id} />
+                    </div>
+                  ) : null}
                   {p.status === "PAID" ? (
                     openId === p.id ? (
                       <div className="mt-3 space-y-2">

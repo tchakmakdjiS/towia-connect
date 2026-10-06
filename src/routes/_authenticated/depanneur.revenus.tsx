@@ -10,6 +10,7 @@ import { Section, StatCard, EmptyState } from "@/components/ui-kit";
 import { Button } from "@/components/ui/button";
 import { CATEGORY_LABELS, formatAmount, formatDate, splitAmount } from "@/lib/towia";
 import { PERIOD_OPTIONS, inPeriod, type PeriodFilter } from "@/lib/operator";
+import { InvoiceActions } from "@/components/InvoiceActions";
 
 export const Route = createFileRoute("/_authenticated/depanneur/revenus")({
   head: () => ({
@@ -57,6 +58,21 @@ function OperatorRevenue() {
       return data;
     },
   });
+
+  // Only invoices of independent missions (RLS hides company invoices from team operators).
+  const invoices = useQuery({
+    queryKey: ["operator-invoices", operatorId],
+    enabled: !!operatorId,
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("invoices")
+        .select("id, mission_id, invoice_number")
+        .eq("operator_id", operatorId!)
+        .is("company_id", null);
+      return data ?? [];
+    },
+  });
+  const invoiceByMission = new Map((invoices.data ?? []).map((i) => [i.mission_id, i]));
 
   const inRange = (missions.data ?? []).filter((m) =>
     inPeriod(m.completed_at ?? m.created_at, period),
@@ -122,6 +138,12 @@ function OperatorRevenue() {
                         </p>
                       </div>
                     </div>
+                    {invoiceByMission.get(m.id) ? (
+                      <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                        <span>Facture {invoiceByMission.get(m.id)!.invoice_number}</span>
+                        <InvoiceActions invoiceId={invoiceByMission.get(m.id)!.id} />
+                      </div>
+                    ) : null}
                   </li>
                 );
               })}
