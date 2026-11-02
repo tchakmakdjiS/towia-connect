@@ -1,5 +1,5 @@
 /** Server-only: builds invoice PDFs and stores them in the private "invoices" bucket. */
-import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+import { PDFDocument, StandardFonts, rgb } from "pdf-lib/es";
 import { CATEGORY_LABELS } from "@/lib/towia";
 
 export const INVOICE_BUCKET = "invoices";
