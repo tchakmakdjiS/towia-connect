@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.5"
+    PostgrestVersion: "14.15"
   }
   public: {
     Tables: {
@@ -347,6 +347,7 @@ export type Database = {
           payment_id: string | null
           pdf_url: string | null
           status: string
+          storage_path: string | null
           subtotal: number
           tax_amount: number
           total: number
@@ -365,6 +366,7 @@ export type Database = {
           payment_id?: string | null
           pdf_url?: string | null
           status?: string
+          storage_path?: string | null
           subtotal?: number
           tax_amount?: number
           total?: number
@@ -383,6 +385,7 @@ export type Database = {
           payment_id?: string | null
           pdf_url?: string | null
           status?: string
+          storage_path?: string | null
           subtotal?: number
           tax_amount?: number
           total?: number
@@ -895,6 +898,7 @@ export type Database = {
       }
       operators: {
         Row: {
+          account_status: string
           address: string | null
           availability: Database["public"]["Enums"]["availability_status"]
           available_24_7: boolean
@@ -927,6 +931,7 @@ export type Database = {
           verification: Database["public"]["Enums"]["verification_status"]
         }
         Insert: {
+          account_status?: string
           address?: string | null
           availability?: Database["public"]["Enums"]["availability_status"]
           available_24_7?: boolean
@@ -959,6 +964,7 @@ export type Database = {
           verification?: Database["public"]["Enums"]["verification_status"]
         }
         Update: {
+          account_status?: string
           address?: string | null
           availability?: Database["public"]["Enums"]["availability_status"]
           available_24_7?: boolean
@@ -1003,6 +1009,7 @@ export type Database = {
       payments: {
         Row: {
           amount: number
+          beneficiary_type: string
           breakdown: Json | null
           cancelled_at: string | null
           client_id: string
@@ -1028,6 +1035,7 @@ export type Database = {
         }
         Insert: {
           amount?: number
+          beneficiary_type?: string
           breakdown?: Json | null
           cancelled_at?: string | null
           client_id: string
@@ -1053,6 +1061,7 @@ export type Database = {
         }
         Update: {
           amount?: number
+          beneficiary_type?: string
           breakdown?: Json | null
           cancelled_at?: string | null
           client_id?: string
@@ -1482,6 +1491,37 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      company_available_missions: {
+        Args: { _mission_id?: string }
+        Returns: {
+          address: string
+          category: Database["public"]["Enums"]["mission_category"]
+          city: string
+          created_at: string
+          description: string
+          distance_km: number
+          estimated_amount: number
+          has_offer: boolean
+          id: string
+          latitude: number
+          longitude: number
+          postal_code: string
+          priority: Database["public"]["Enums"]["mission_priority"]
+          status: Database["public"]["Enums"]["mission_status"]
+          vehicle_make: string
+          vehicle_model: string
+          vehicle_registration: string
+          vehicle_year: number
+        }[]
+      }
+      company_decline_mission: {
+        Args: { _mission_id: string }
+        Returns: undefined
+      }
+      company_take_mission: {
+        Args: { _mission_id: string; _operator_id: string }
+        Returns: string
+      }
       has_offer_for_mission: {
         Args: { _mission_id: string; _only_pending?: boolean; _user_id: string }
         Returns: boolean

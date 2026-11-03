@@ -11,7 +11,7 @@ export const CLIENT_NAV: NavItem[] = [
 export const OPERATOR_NAV: NavItem[] = [
   { to: "/depanneur/dashboard", label: "Tableau de bord" },
   { to: "/depanneur/missions", label: "Mes missions" },
-  { to: "/depanneur/revenus", label: "Revenus" },
+  { to: "/depanneur/revenus", label: "Paiements" },
   { to: "/depanneur/documents", label: "Mes documents" },
   { to: "/depanneur/profil", label: "Mon profil" },
 ];
@@ -24,7 +24,7 @@ export const COMPANY_NAV: NavItem[] = [
   { to: "/entreprise/vehicles", label: "Véhicules" },
   { to: "/entreprise/equipment", label: "Équipements" },
   { to: "/entreprise/documents", label: "Documents" },
-  { to: "/entreprise/revenue", label: "Revenus" },
+  { to: "/entreprise/revenue", label: "Paiements" },
   { to: "/entreprise/profil", label: "Profil entreprise" },
 ];
 
