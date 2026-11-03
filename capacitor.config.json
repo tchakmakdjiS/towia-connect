@@ -1,0 +1,12 @@
+{
+  "appId": "app.towia.connect",
+  "appName": "TowIA",
+  "webDir": "public",
+  "server": {
+    "url": "https://towia-connect.lovable.app",
+    "cleartext": false,
+    "androidScheme": "https"
+  },
+  "android": { "allowMixedContent": false },
+  "ios": { "contentInset": "always" }
+}
