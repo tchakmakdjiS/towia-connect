@@ -18,7 +18,7 @@ export function shouldSend(
   if (!last) return true;
   const dt = next.at - last.at;
   if (dt < SEND_INTERVAL_MS) return false;
-  const movedM = haversineKm(last.lat, last.lng, next.lat, next.lng) * 1000;
+  const movedM = haversineKm({ lat: last.lat, lng: last.lng }, { lat: next.lat, lng: next.lng }) * 1000;
   return movedM >= MIN_MOVE_M || dt >= KEEPALIVE_MS;
 }
 
