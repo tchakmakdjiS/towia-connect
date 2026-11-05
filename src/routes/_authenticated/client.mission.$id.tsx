@@ -21,6 +21,8 @@ import {
 import { MISSION_TIMELINE, TIMELINE_ORDER, URGENCY_LABELS } from "@/lib/sos";
 import { useMissionRealtime } from "@/lib/realtime";
 import { PAYMENT_STATUS_LABELS } from "@/lib/pricing";
+import { LiveTrackingSection } from "@/components/LiveTrackingSection";
+import { isTrackable } from "@/lib/live-location";
 
 export const Route = createFileRoute("/_authenticated/client/mission/$id")({
   head: () => ({
@@ -80,7 +82,7 @@ function ClientMissionDetail() {
       const { data } = await supabase
         .from("operators")
         .select(
-          "id, first_name, last_name, professional_name, company_name, phone, photo_url, rating, vehicle_label, vehicle_type, services, intervention_zone, city, availability, is_available, verification, last_latitude, last_longitude",
+          "id, first_name, last_name, professional_name, company_name, phone, photo_url, rating, vehicle_label, vehicle_type, services, intervention_zone, city, availability, is_available, verification",
         )
         .eq("id", mission.data!.operator_id!)
         .maybeSingle();
@@ -197,6 +199,10 @@ function ClientMissionDetail() {
               </p>
             )}
           </Section>
+
+          {m.operator_id && isTrackable(m.status) && m.latitude != null && m.longitude != null ? (
+            <LiveTrackingSection missionId={id} client={{ lat: m.latitude, lng: m.longitude }} />
+          ) : null}
 
           {m.status === "SEARCHING" || m.status === "PROPOSED" ? (
             <Section

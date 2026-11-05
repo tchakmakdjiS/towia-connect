@@ -515,6 +515,54 @@ export type Database = {
           },
         ]
       }
+      mission_live_locations: {
+        Row: {
+          accuracy: number | null
+          heading: number | null
+          latitude: number
+          longitude: number
+          mission_id: string
+          operator_id: string
+          speed: number | null
+          updated_at: string
+        }
+        Insert: {
+          accuracy?: number | null
+          heading?: number | null
+          latitude: number
+          longitude: number
+          mission_id: string
+          operator_id: string
+          speed?: number | null
+          updated_at?: string
+        }
+        Update: {
+          accuracy?: number | null
+          heading?: number | null
+          latitude?: number
+          longitude?: number
+          mission_id?: string
+          operator_id?: string
+          speed?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mission_live_locations_mission_id_fkey"
+            columns: ["mission_id"]
+            isOneToOne: true
+            referencedRelation: "missions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mission_live_locations_operator_id_fkey"
+            columns: ["operator_id"]
+            isOneToOne: false
+            referencedRelation: "operators"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       mission_offers: {
         Row: {
           distance_km: number | null
@@ -1491,6 +1539,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_share_live_location: {
+        Args: { _mission_id: string; _operator_id: string; _user_id: string }
+        Returns: boolean
+      }
+      can_view_live_location: {
+        Args: { _mission_id: string; _user_id: string }
+        Returns: boolean
+      }
       company_available_missions: {
         Args: { _mission_id?: string }
         Returns: {

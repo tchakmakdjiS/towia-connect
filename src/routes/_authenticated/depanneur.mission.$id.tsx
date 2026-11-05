@@ -3,6 +3,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Navigation, Phone } from "lucide-react";
+import { LiveSharingPanel } from "@/components/LiveSharingPanel";
+import { isTrackable } from "@/lib/live-location";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { AppShell } from "@/components/AppShell";
@@ -465,6 +467,10 @@ function OperatorMissionDetail() {
                 </p>
               ) : null}
             </Section>
+
+            {isMine && operator.data && isTrackable(m.status) ? (
+              <LiveSharingPanel missionId={id} operatorId={operator.data.id} status={m.status} />
+            ) : null}
 
             {step ? (
               <Button

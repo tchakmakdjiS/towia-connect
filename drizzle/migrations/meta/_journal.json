@@ -29,6 +29,13 @@
       "when": 1791268781996,
       "tag": "0003_invoice_storage_path",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1793866148686,
+      "tag": "0004_mission_live_locations",
+      "breakpoints": true
     }
   ]
 }
