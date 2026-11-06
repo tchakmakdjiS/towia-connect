@@ -805,36 +805,66 @@ export type Database = {
           },
         ]
       }
+      notification_preferences: {
+        Row: {
+          categories: Json
+          push_enabled: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          categories?: Json
+          push_enabled?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          categories?: Json
+          push_enabled?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           body: string | null
+          category: string | null
           created_at: string
           event: string
           id: string
           is_demo: boolean
           mission_id: string | null
+          push_claimed_at: string | null
+          push_sent_count: number | null
           read_at: string | null
           title: string
           user_id: string
         }
         Insert: {
           body?: string | null
+          category?: string | null
           created_at?: string
           event: string
           id?: string
           is_demo?: boolean
           mission_id?: string | null
+          push_claimed_at?: string | null
+          push_sent_count?: number | null
           read_at?: string | null
           title: string
           user_id: string
         }
         Update: {
           body?: string | null
+          category?: string | null
           created_at?: string
           event?: string
           id?: string
           is_demo?: boolean
           mission_id?: string | null
+          push_claimed_at?: string | null
+          push_sent_count?: number | null
           read_at?: string | null
           title?: string
           user_id?: string
@@ -1274,6 +1304,36 @@ export type Database = {
         }
         Relationships: []
       }
+      push_subscriptions: {
+        Row: {
+          created_at: string
+          device_label: string | null
+          id: string
+          last_seen_at: string
+          platform: string | null
+          token: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          device_label?: string | null
+          id?: string
+          last_seen_at?: string
+          platform?: string | null
+          token: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          device_label?: string | null
+          id?: string
+          last_seen_at?: string
+          platform?: string | null
+          token?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       quotes: {
         Row: {
           base_price: number
@@ -1592,6 +1652,16 @@ export type Database = {
       mission_client_id: { Args: { _mission_id: string }; Returns: string }
       mission_company_id: { Args: { _mission_id: string }; Returns: string }
       my_operator_id: { Args: { _user_id: string }; Returns: string }
+      notification_category: { Args: { _event: string }; Returns: string }
+      notify_admins: {
+        Args: {
+          _body: string
+          _event: string
+          _mission: string
+          _title: string
+        }
+        Returns: undefined
+      }
       operator_serves_client: {
         Args: { _client_id: string; _operator_id: string }
         Returns: boolean
