@@ -36,6 +36,13 @@
       "when": 1793866148686,
       "tag": "0004_mission_live_locations",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1793953704502,
+      "tag": "0005_push_notifications",
+      "breakpoints": true
     }
   ]
 }
