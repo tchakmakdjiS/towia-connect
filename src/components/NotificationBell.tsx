@@ -31,6 +31,11 @@ export function NotificationBell() {
 
   useEffect(() => {
     if (!user) return;
+    void import("@/lib/push").then((m) => m.refreshPushIfGranted());
+  }, [user]);
+
+  useEffect(() => {
+    if (!user) return;
     const channel = supabase
       .channel(`notifications-${user.id}`)
       .on(
@@ -110,6 +115,7 @@ export function NotificationBell() {
                   if (role === "tow_operator") void navigate({ to: "/depanneur/mission/$id", params: { id } });
                   else if (role === "company") void navigate({ to: "/entreprise/mission/$id", params: { id } });
                   else if (role === "customer") void navigate({ to: "/client/mission/$id", params: { id } });
+                  else if (role === "admin") void navigate({ to: "/admin/mission/$id", params: { id } });
                 }}
               >
                 <p className="text-sm font-medium">{n.title}</p>
@@ -119,6 +125,11 @@ export function NotificationBell() {
             ))
           )}
         </ul>
+        <div className="border-t border-border px-4 py-2 text-right">
+          <button type="button" className="text-xs text-primary" onClick={() => void navigate({ to: "/notifications" })}>
+            Paramètres des notifications
+          </button>
+        </div>
       </PopoverContent>
     </Popover>
   );

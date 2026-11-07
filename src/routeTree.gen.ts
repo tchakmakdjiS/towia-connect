@@ -19,6 +19,7 @@ import { Route as MotDePasseOublieRouteImport } from './routes/mot-de-passe-oubl
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedMonProfilRouteImport } from './routes/_authenticated/mon-profil'
+import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminCompaniesRouteImport } from './routes/_authenticated/admin.companies'
 import { Route as AuthenticatedAdminMissionsRouteImport } from './routes/_authenticated/admin.missions'
@@ -108,6 +109,12 @@ const AuthenticatedMonProfilRoute = AuthenticatedMonProfilRouteImport.update({
   path: '/mon-profil',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedNotificationsRoute =
+  AuthenticatedNotificationsRouteImport.update({
+    id: '/notifications',
+    path: '/notifications',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
@@ -348,6 +355,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/mon-profil': typeof AuthenticatedMonProfilRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
   '/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/admin/missions': typeof AuthenticatedAdminMissionsRoute
   '/admin/operators': typeof AuthenticatedAdminOperatorsRoute
@@ -398,6 +406,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/mon-profil': typeof AuthenticatedMonProfilRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
   '/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/admin/missions': typeof AuthenticatedAdminMissionsRoute
   '/admin/operators': typeof AuthenticatedAdminOperatorsRoute
@@ -450,6 +459,7 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/mon-profil': typeof AuthenticatedMonProfilRoute
+  '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
   '/_authenticated/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/_authenticated/admin/missions': typeof AuthenticatedAdminMissionsRoute
   '/_authenticated/admin/operators': typeof AuthenticatedAdminOperatorsRoute
@@ -502,6 +512,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/mon-profil'
+    | '/notifications'
     | '/admin/companies'
     | '/admin/missions'
     | '/admin/operators'
@@ -552,6 +563,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/mon-profil'
+    | '/notifications'
     | '/admin/companies'
     | '/admin/missions'
     | '/admin/operators'
@@ -603,6 +615,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/_authenticated/mon-profil'
+    | '/_authenticated/notifications'
     | '/_authenticated/admin/companies'
     | '/_authenticated/admin/missions'
     | '/_authenticated/admin/operators'
@@ -728,6 +741,13 @@ declare module '@tanstack/react-router' {
       path: '/mon-profil'
       fullPath: '/mon-profil'
       preLoaderRoute: typeof AuthenticatedMonProfilRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/notifications': {
+      id: '/_authenticated/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/': {
@@ -1008,6 +1028,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedMonProfilRoute: typeof AuthenticatedMonProfilRoute
+  AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
   AuthenticatedAdminCompaniesRoute: typeof AuthenticatedAdminCompaniesRoute
   AuthenticatedAdminMissionsRoute: typeof AuthenticatedAdminMissionsRoute
   AuthenticatedAdminOperatorsRoute: typeof AuthenticatedAdminOperatorsRoute
@@ -1049,6 +1070,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedMonProfilRoute: AuthenticatedMonProfilRoute,
+  AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
   AuthenticatedAdminCompaniesRoute: AuthenticatedAdminCompaniesRoute,
   AuthenticatedAdminMissionsRoute: AuthenticatedAdminMissionsRoute,
   AuthenticatedAdminOperatorsRoute: AuthenticatedAdminOperatorsRoute,
