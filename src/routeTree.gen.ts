@@ -51,6 +51,7 @@ import { Route as AuthenticatedEntrepriseOperatorsRouteImport } from './routes/_
 import { Route as AuthenticatedEntrepriseProfilRouteImport } from './routes/_authenticated/entreprise.profil'
 import { Route as AuthenticatedEntrepriseRevenueRouteImport } from './routes/_authenticated/entreprise.revenue'
 import { Route as AuthenticatedEntrepriseVehiclesRouteImport } from './routes/_authenticated/entreprise.vehicles'
+import { Route as ApiPublicPushDispatchRouteImport } from './routes/api/public/push-dispatch'
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
 import { Route as AuthenticatedAdminMissionIdRouteImport } from './routes/_authenticated/admin.mission.$id'
 import { Route as AuthenticatedClientMissionIdRouteImport } from './routes/_authenticated/client.mission.$id'
@@ -296,6 +297,11 @@ const AuthenticatedEntrepriseVehiclesRoute =
     path: '/entreprise/vehicles',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiPublicPushDispatchRoute = ApiPublicPushDispatchRouteImport.update({
+  id: '/api/public/push-dispatch',
+  path: '/api/public/push-dispatch',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
   id: '/api/public/stripe-webhook',
   path: '/api/public/stripe-webhook',
@@ -369,6 +375,7 @@ export interface FileRoutesByFullPath {
   '/entreprise/profil': typeof AuthenticatedEntrepriseProfilRoute
   '/entreprise/revenue': typeof AuthenticatedEntrepriseRevenueRoute
   '/entreprise/vehicles': typeof AuthenticatedEntrepriseVehiclesRoute
+  '/api/public/push-dispatch': typeof ApiPublicPushDispatchRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/automobiliste/': typeof AuthenticatedAutomobilisteIndexRoute
@@ -418,6 +425,7 @@ export interface FileRoutesByTo {
   '/entreprise/profil': typeof AuthenticatedEntrepriseProfilRoute
   '/entreprise/revenue': typeof AuthenticatedEntrepriseRevenueRoute
   '/entreprise/vehicles': typeof AuthenticatedEntrepriseVehiclesRoute
+  '/api/public/push-dispatch': typeof ApiPublicPushDispatchRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/automobiliste': typeof AuthenticatedAutomobilisteIndexRoute
@@ -469,6 +477,7 @@ export interface FileRoutesById {
   '/_authenticated/entreprise/profil': typeof AuthenticatedEntrepriseProfilRoute
   '/_authenticated/entreprise/revenue': typeof AuthenticatedEntrepriseRevenueRoute
   '/_authenticated/entreprise/vehicles': typeof AuthenticatedEntrepriseVehiclesRoute
+  '/api/public/push-dispatch': typeof ApiPublicPushDispatchRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/automobiliste/': typeof AuthenticatedAutomobilisteIndexRoute
@@ -520,6 +529,7 @@ export interface FileRouteTypes {
     | '/entreprise/profil'
     | '/entreprise/revenue'
     | '/entreprise/vehicles'
+    | '/api/public/push-dispatch'
     | '/api/public/stripe-webhook'
     | '/admin/'
     | '/automobiliste/'
@@ -569,6 +579,7 @@ export interface FileRouteTypes {
     | '/entreprise/profil'
     | '/entreprise/revenue'
     | '/entreprise/vehicles'
+    | '/api/public/push-dispatch'
     | '/api/public/stripe-webhook'
     | '/admin'
     | '/automobiliste'
@@ -619,6 +630,7 @@ export interface FileRouteTypes {
     | '/_authenticated/entreprise/profil'
     | '/_authenticated/entreprise/revenue'
     | '/_authenticated/entreprise/vehicles'
+    | '/api/public/push-dispatch'
     | '/api/public/stripe-webhook'
     | '/_authenticated/admin/'
     | '/_authenticated/automobiliste/'
@@ -642,6 +654,7 @@ export interface RootRouteChildren {
   MotDePasseOublieRoute: typeof MotDePasseOublieRoute
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ApiPublicPushDispatchRoute: typeof ApiPublicPushDispatchRoute
   ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
 }
 
@@ -941,6 +954,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEntrepriseVehiclesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/push-dispatch': {
+      id: '/api/public/push-dispatch'
+      path: '/api/public/push-dispatch'
+      fullPath: '/api/public/push-dispatch'
+      preLoaderRoute: typeof ApiPublicPushDispatchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/stripe-webhook': {
       id: '/api/public/stripe-webhook'
       path: '/api/public/stripe-webhook'
@@ -1081,6 +1101,7 @@ const rootRouteChildren: RootRouteChildren = {
   MotDePasseOublieRoute: MotDePasseOublieRoute,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ApiPublicPushDispatchRoute: ApiPublicPushDispatchRoute,
   ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
 }
 export const routeTree = rootRouteImport
